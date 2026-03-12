@@ -47,6 +47,13 @@ function deleteFile($file)
     }
 }
 // Debug
+function debug($data)
+{
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+    die();
+}
 
 // Xóa session sau khi load trang
 function deleteSessionError()
@@ -56,4 +63,18 @@ function deleteSessionError()
         unset($_SESSION['errors']);
         unset($_SESSION['flash']);
     }
+}
+
+// upload - update album ảnh 
+function uploadFileAlbum($file, $folderUpload, $key)
+{
+    $pathStorage = $folderUpload . time() . $file['name'][$key];
+
+    $from = $file['tmp_name'][$key];
+    $to = PATH_ROOT . $pathStorage;
+
+    if (move_uploaded_file($from, $to)) {
+        return $pathStorage;
+    }
+    return null;
 }

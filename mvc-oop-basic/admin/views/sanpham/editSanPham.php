@@ -16,8 +16,11 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-11">
                     <h1>Sửa thông tin sản phẩm <?= $sanPham['ten_san_pham'] ?></h1>
+                </div>
+                <div class="col-1">
+                    <a href="http://localhost/SP26_DUAN1/mvc-oop-basic/admin/?act=san-pham" class="btn btn-secondary" style="min-width: 100px;margin-left: -25px;">Quay lại</a>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -150,7 +153,7 @@
                                                 <input type="hidden" name="current_img_ids[]" value="<?= $value['id'] ?>">
                                                 <td><img src="<?= BASE_URL . $value['link_hinh_anh'] ?>" style="width: 50px; height: 50px;" alt=""></td>
                                                 <td><input type="file" name="img_array[]" placeholder="Product name" class="form-control"></td>
-                                                <td class="mt-10"><button class="badge badge-danger" onclick="removeRow(<?= $key ?>,<?= $value['id'] ?>)"><i class="fa fa-trash"></i> Xóa</button></td>
+                                                <td class="mt-10"><button class="badge badge-danger" type="button" onclick="removeRow(<?= $key ?>,<?= $value['id'] ?>)"><i class="fa fa-trash"></i> Xóa</button></td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -164,12 +167,6 @@
                 </div>
 
                 <!-- /.card -->
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="#" class="btn btn-secondary">Cancel</a>
-                <input type="submit" value="Save Changes" class="btn btn-success float-right">
             </div>
         </div>
     </section>
@@ -186,16 +183,25 @@
     var faqs_row = count(<?= count($listAnhSanPham) ?>);
 
     function addfaqs() {
-        html = '<tr id="faqs-row' + faqs_row + '">';
+        html = '<tr id="faqs-row-' + faqs_row + '">';
         html += '<td><img src="https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg"  style="width:50px; height: 50px;"></td>';
         html += '<td><input type="file" name = "img_array[]" class="form-control"></td>';
-        html += '<td class="mt-10"><button class="badge badge-danger" onclick="removeRow(' + faqs_row + ',null);"><i class="fa fa-trash"></i> Xóa</button></td>';
+        html += '<td class="mt-10"><button type ="button" class="badge badge-danger" onclick="removeRow(' + faqs_row + ',null);"><i class="fa fa-trash"></i> Xóa</button></td>';
 
         html += '</tr>';
 
         $('#faqs tbody').append(html);
 
         faqs_row++;
+    }
+
+    function removeRow(rowId, imgId) {
+        $('#faqs-row-' + rowId).remove();
+        if (imgId !== null) {
+            var imgDeleteInput = document.getElementById('img_delete')
+            var currentValue = imgDeleteInput.value;
+            imgDeleteInput.value = currentValue ? currentValue + ',' + imgId : imgId;
+        }
     }
 </script>
 

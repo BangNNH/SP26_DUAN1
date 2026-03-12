@@ -223,31 +223,103 @@ class AdminSanPhamController
         }
     }
 
-    public function postEditAnhSanPham() {}
+    // update albuma ảnh sản phẩm
+    public function postEditAnhSanPham()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $san_pham_id = $_POST['san_pham_id'] ?? '';
 
-    // Sửa album ảnh
-    // -Sửa ảnh cũ
-    // +Thêm ảnh mới
-    // +Không ảnh mới
-    // -Không sửa ảnh cũ
-    // +Thêm ảnh mới
-    // +Không ảnh mới
-    // -Xóa ảnh cũ
+            // Lấy danh sách ảnh hiện tại của sản phẩm
+            $listAnhSanPhamCurrent = $this->modelSanPham->getListAnhSanPham($san_pham_id);
+
+            // Xử lý các ảnh được gửi từ form
+            $img_array = $_FILES['img_array'];
+            $img_delete = isset($_POST['img_delete']) ? explode(',', $_POST['img_delete']) : [];
+            $current_img_ids = $_POST['current_img_ids'] ?? [];
+
+            // Khai báo mảng để lưu ảnh thêm mới hoặc thay thế ảnh cũ
+            $upload_file = [];
+
+            // upload ảnh mới hoặc thay thế ảnh cũ
+            foreach ($img_array['name'] as $key => $value) {
+                if ($img_array['error'][$key] == UPLOAD_ERR_OK) {
+                    $new_file = uploadFileAlbum($img_array, './uploads/', $key);
+                    if ($new_file) {
+                        $upload_file[] = [
+                            'id' => $current_img_ids[$key] ?? null,
+                            'file' => $new_file,
+                        ];
+                    }
+                }
+            }
+            // Lưu ảnh mới vào db và xóa ảnh cũ
+            foreach ($upload_file as $file_info) {
+                if ($file_info['id']) {
+                    $old_file = $this->modelSanPham->getDetailAnhSanPham($file_info)['link_hinh_anh'];
+
+                    // Cập nhật ảnh cũ
+                    $this->modelSanPham->updateAnhSanPham($file_info['id'], $file_info['file']);
+
+                    //xóa ảnh cũ
+                    deleteFile($old_file);
+                } else {
+                    // Thêm ảnh mới
+                    $this->modelSanPham->insertAlbumAnhSanPham($san_pham_id, $file_info['file']);
+                }
+            }
+            // debug($upload_file);
+            // Xử lý xóa ảnh
+            foreach ($listAnhSanPhamCurrent as $anhSP) {
+                $anh_id = $anhSP['id'];
+                if (in_array($anh_id, $img_delete)) {
+                    // xóa ảnh trong db
+                    $this->modelSanPham->destroyAnhSanPham($anh_id);
+
+                    // xóa file
+                    deleteFile($anhSP['link_hinh_anh']);
+                }
+            }
+            header("Location: " . BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $san_pham_id);
+            exit();
+        }
+    }
+
+    //xóa sản phẩm
+    public function deleteSanPham()
+    {
+        // Lấy ra thông tin của sản phẩm cần xóa
+        $id = $_GET['id_san_pham'];
+        $sanPham = $this->modelSanPham->getDetailSanPham($id);
+
+        $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
 
 
+        if ($sanPham) {
+            $this->modelSanPham->destroySanPham($id);
+            deleteFile(($sanPham['hinh_anh']));
+        }
 
+        if ($listAnhSanPham) {
+            foreach ($listAnhSanPham as $key => $anhSP) {
+                deleteFile($anhSP['link_hinh_anh']);
+                $this->modelSanPham->destroyAnhSanPham($anhSP['id']);
+            }
+        }
+        header("Location: " . BASE_URL_ADMIN . '?act=san-pham');
+        exit();
+    }
 
-
-    // //xóa danh mục
-    // public function deleteDanhMuc()
-    // {
-    //     // Lấy ra thông tin của danh mục cần xóa
-    //     $id = $_GET['id_danh_muc'];
-    //     $danhMuc = $this->modelDanhMuc->getDetailDanhMuc($id);
-    //     if ($danhMuc) {
-    //         $this->modelDanhMuc->destroyDanhMuc($id);
-    //     }
-    //     header("Location: " . BASE_URL_ADMIN . '?act=danh-muc');
-    //     exit();
-    // }
+    // Xem chi tiết sản phẩm
+    public function detailSanPham()
+    {
+        $id = $_GET['id_san_pham'];
+        $sanPham = $this->modelSanPham->getDetailSanPham($id);
+        $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
+        if ($sanPham) {
+            require_once './views/sanpham/detailSanPham.php';
+        } else {
+            header("Location: " . BASE_URL_ADMIN . '?act=san-pham');
+            exit();
+        }
+    }
 }

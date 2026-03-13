@@ -4,9 +4,9 @@
 // Khai báo dưới dạng HẰNG SỐ để không phải dùng $GLOBALS
 
 // Đường dẫn đến client
-define('BASE_URL', 'http://localhost/SP26_DuAn1/mvc-oop-basic/');
+define('BASE_URL', 'http://localhost/SP26DuAn1/mvc-oop-basic/');
 // Đường dẫn đến admin
-define('BASE_URL_ADMIN', 'http://localhost/SP26_DuAn1/mvc-oop-basic/admin/');
+define('BASE_URL_ADMIN', 'http://localhost/SP26DuAn1/mvc-oop-basic/admin/');
 
 define('DB_HOST', 'localhost');
 define('DB_PORT', 3306);

@@ -7,12 +7,10 @@ require_once '../commons/function.php'; // Hàm hỗ trợ
 // Require toàn bộ file Controllers
 require_once './controllers/AdminDanhMucController.php';
 require_once './controllers/AdminSanPhamController.php';
-require_once './controllers/AdminDonHangController.php';
 
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
 require_once './models/AdminSanPham.php';
-require_once './models/AdminDonHang.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -39,9 +37,12 @@ match ($act) {
     'chi-tiet-san-pham' => (new AdminSanPhamController())->detailSanPham(),
 
     // router quản lý đơn hàng
-    'don-hang' => (new AdminDonHangController())->danhSachDonHang(),
-    'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
-    'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
-    'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
-    'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
+    'don-hang' => (new AdminSanPhamController())->danhSachSanPham(),
+    'form-them-don-hang' => (new AdminSanPhamController())->formAddSanPham(),
+    'them-don-hang' => (new AdminSanPhamController())->postAddSanPham(),
+    'form-sua-don-hang' => (new AdminSanPhamController())->formEditSanPham(),
+    'sua-don-hang' => (new AdminSanPhamController())->postEditSanPham(),
+    'sua-album-anh-don-hang' => (new AdminSanPhamController())->postEditAnhSanPham(),
+    'xoa-don-hang' => (new AdminSanPhamController())->deleteSanPham(),
+    'chi-tiet-don-hang' => (new AdminSanPhamController())->detailSanPham(),
 };

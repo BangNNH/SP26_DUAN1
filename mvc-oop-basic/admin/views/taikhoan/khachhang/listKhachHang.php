@@ -52,8 +52,8 @@
                                         <tr>
                                             <td><?= $key + 1 ?></td>
                                             <td><?= $khachHang['ho_ten'] ?></td>
-                                            <img src="<?= BASE_URL . $khachHang['anh_dai_dien'] ?>" style="width:100px" alt=""
-                                                onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
+                                            <td><img src="<?= BASE_URL . $khachHang['anh_dai_dien'] ?>" style="width:100px" alt=""
+                                                onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'"></td>
                                             <td><?= $khachHang['email'] ?></td>
                                             <td><?= $khachHang['so_dien_thoai'] ?></td>
                                             <td><?= $khachHang['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>

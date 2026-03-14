@@ -41,17 +41,25 @@ class AdminTaiKhoan
     public function insertTaiKhoan($ho_ten, $email, $password, $chuc_vu_id)
     {
         try {
-            $sql = "INSERT INTO tai_khoans(ho_ten, email, password, chuc_vu_id) 
-                        VALUES (:ho_ten, :email, :password, :chuc_vu_id)";
+            $sql = "INSERT INTO tai_khoans(ho_ten, anh_dai_dien, ngay_sinh, email, so_dien_thoai, gioi_tinh, dia_chi, mat_khau, chuc_vu_id, trang_thai)
+                        VALUES (:ho_ten, :anh_dai_dien, :ngay_sinh, :email, :so_dien_thoai, :gioi_tinh, :dia_chi, :mat_khau, :chuc_vu_id, :trang_thai)";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
                 ':ho_ten' => $ho_ten,
+                ':anh_dai_dien' => '',
+                ':ngay_sinh' => '2000-01-01',
                 ':email' => $email,
-                ':password' => $password,
-                ':chuc_vu_id' => $chuc_vu_id
+                ':so_dien_thoai' => '',
+                ':gioi_tinh' => 1,
+                ':dia_chi' => '',
+                ':mat_khau' => $password,
+                ':chuc_vu_id' => $chuc_vu_id,
+                ':trang_thai' => 1
             ]);
+            return true;
         } catch (Exception $e) {
-            echo "Lỗi" . $e->getMessage();
+            echo "Lỗi: " . $e->getMessage();
+            return false;
         }
     }
 
@@ -103,7 +111,7 @@ class AdminTaiKhoan
 
             $sql = 'UPDATE tai_khoans
                 SET
-                    mat_khau = :mat_khau,
+                    mat_khau = :mat_khau
                 WHERE id = :id';
 
             $stmt = $this->conn->prepare($sql);

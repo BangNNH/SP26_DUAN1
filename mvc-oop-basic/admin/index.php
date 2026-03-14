@@ -7,14 +7,14 @@ require_once '../commons/function.php'; // Hàm hỗ trợ
 // Require toàn bộ file Controllers
 require_once './controllers/AdminDanhMucController.php';
 require_once './controllers/AdminSanPhamController.php';
+require_once './controllers/AdminDonHangController.php';
 require_once './controllers/AdminBaoCaoThongKeController.php';
 require_once './controllers/AdminTaiKhoanController.php';
-
 // Require toàn bộ file Models
 require_once './models/AdminDanhMuc.php';
 require_once './models/AdminSanPham.php';
+require_once './models/AdminDonHang.php';
 require_once './models/AdminTaiKhoan.php';
-
 // Route
 $act = $_GET['act'] ?? '/';
 
@@ -42,6 +42,13 @@ match ($act) {
     'xoa-san-pham' => (new AdminSanPhamController())->deleteSanPham(),
     'chi-tiet-san-pham' => (new AdminSanPhamController())->detailSanPham(),
 
+    // router quản lý đơn hàng
+    'don-hang' => (new AdminDonHangController())->danhSachDonHang(),
+    // 'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
+    // 'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
+    // 'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
+    // 'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
+
     // router quản lý tài khoản
     // router tài khoản quản trị
     'list-tai-khoan-quan-tri' => (new AdminTaiKhoanController())->danhSachQuanTri(),
@@ -50,8 +57,6 @@ match ($act) {
     'form-sua-quan-tri' => (new AdminTaiKhoanController())->formEditQuanTri(),
     'sua-quan-tri' => (new AdminTaiKhoanController())->postEditQuanTri(),
 
-
-
     'reset-password' => (new AdminTaiKhoanController())->resetPassword(),
 
     'list-tai-khoan-khach-hang' => (new AdminTaiKhoanController())->danhSachKhachHang(),
@@ -59,3 +64,4 @@ match ($act) {
     'sua-khach-hang' => (new AdminTaiKhoanController())->postEditKhachHang(),
     'chi-tiet-khach-hang' => (new AdminTaiKhoanController())->deltailKhachHang(),
 };
+    

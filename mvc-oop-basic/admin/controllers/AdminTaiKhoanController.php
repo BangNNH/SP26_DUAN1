@@ -240,4 +240,4 @@ class AdminTaiKhoanController
 
         require_once './views/taikhoan/khachhang/detailKhachHang.php';
     }
-}
+} 

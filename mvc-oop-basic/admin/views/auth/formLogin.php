@@ -21,10 +21,8 @@
       <a href="../../index2.html" class="h1"><b>BÁN THÚ CƯNG</a>
     </div>
     <div class="card-body">
-    <?php if (!empty($_SESSION['error'])) {
-        $errorText = is_array($_SESSION['error']) ? implode('<br>', $_SESSION['error']) : $_SESSION['error'];
-    ?>
-        <p class="text-danger login-box-msg"><?= htmlspecialchars($errorText) ?></p>
+    <?php if (!empty($_SESSION['error'])) { ?>
+        <p class="text-danger login-box-msg"><?= htmlspecialchars($_SESSION['error']) ?></p>
     <?php } else { ?>
         <p class="login-box-msg">Vui lòng đăng nhập</p>
     <?php } ?>

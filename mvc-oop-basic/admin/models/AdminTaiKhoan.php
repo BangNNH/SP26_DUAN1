@@ -185,8 +185,19 @@ class AdminTaiKhoan
                 return "Bạn nhập sai thông tin mật khẩu hoặc tài khoản";
             }
         } catch (\Exception $e){
-            echo "lỗi" . $e->getMessage();
+           echo "lỗi" . $e->getMessage();
             return false;
+        }
+    }
+    public function getTaiKhoanformEmail($email)
+    {
+        try {
+            $sql = "SELECT * FROM tai_khoans where email = :email";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['email' => $email]);
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
         }
     }
 }

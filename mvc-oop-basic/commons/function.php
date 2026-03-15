@@ -79,3 +79,11 @@ function uploadFileAlbum($file, $folderUpload, $key)
     }
     return null;
 }
+
+function checkLoginAdmin(){
+    if (!isset($_SESSION['user_admin'])){ // Không có session thì redirect về trang login
+    require_once './views/auth/formLogin.php';
+    exit();
+    }
+}
+//Debung

@@ -70,7 +70,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="<?= BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-admin'?>" class="nav-link">
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>Tài khoản cá nhân</p>
                             </a>
@@ -82,6 +82,14 @@
                         <i class=" nav-icon fas fa-file-invoice-dollar"></i>
                         <p>
                             Đơn hàng
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= BASE_URL_ADMIN . '?act=logout-admin' ?>" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>
+                            Đăng xuất
                         </p>
                     </a>
                 </li>

@@ -1,8 +1,8 @@
 <?php
-
 // Require file Common
 require_once '../commons/env.php'; // Khai báo biến môi trường
 require_once '../commons/function.php'; // Hàm hỗ trợ
+
 
 // Require toàn bộ file Controllers
 require_once './controllers/AdminDanhMucController.php';
@@ -18,13 +18,17 @@ require_once './models/AdminTaiKhoan.php';
 // Route
 $act = $_GET['act'] ?? '/';
 
+if ($act !== 'login-admin' && $act !=='check-login-admin' && $act !== 'logout-admin'){
+    checkLoginAdmin();
+}
+
 // Để bảo bảo tính chất chỉ gọi 1 hàm Controller để xử lý request thì mình sử dụng match
 
 match ($act) {
     // router báo cáo thống kê - trang chủ
     '/' => (new AdminBaoCaoThongKeController())->home(),
 
-    // router danh mục
+    // router danh mục 
     'danh-muc' => (new AdminDanhMucController())->danhSachDanhMuc(),
     'form-them-danh-muc' => (new AdminDanhMucController())->formAddDanhMuc(),
     'them-danh-muc' => (new AdminDanhMucController())->postAddDanhMuc(),
@@ -66,5 +70,17 @@ match ($act) {
     'form-sua-khach-hang' => (new AdminTaiKhoanController())->formEditKhachHang(),
     'sua-khach-hang' => (new AdminTaiKhoanController())->postEditKhachHang(),
     'chi-tiet-khach-hang' => (new AdminTaiKhoanController())->deltailKhachHang(),
+    
+    // route quản lý tài khoản cá nhân(Quản trị)
+
+    'form-sua-thong-tin-ca-nhan-admin' => (new AdminTaiKhoanController())->formEditCaNhanQuanTri(),
+    'sua-thong-tin-ca-nhan-admin' => (new AdminTaiKhoanController())->postEditCaNhanQuanTri(),
+    
+    'sua-mat-khau-ca-nhan-admin' => (new AdminTaiKhoanController())->postEditMatKhauCaNhan(),
+
+    //rout auth
+    'login-admin' => (new AdminTaiKhoanController())->formLogin(),
+    'check-login-admin' => (new AdminTaiKhoanController())->login(),
+    'logout-admin' => (new AdminTaiKhoanController())->logout(),
 };
     

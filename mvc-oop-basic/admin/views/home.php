@@ -18,13 +18,18 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Báo cáo thống kê</h1>
+                    <?php 
+                        if(isset($_SESSION['user_admin'])){
+                        var_dump($_SESSION['user_admin']);
+                        }
+                    ?>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
     </section>
 
     <!-- Main content -->
-    
+
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

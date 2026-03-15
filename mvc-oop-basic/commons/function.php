@@ -61,6 +61,8 @@ function deleteSessionError()
     if (isset($_SESSION['flash'])) {
         // Hủy session sau khi đã tải trang
         unset($_SESSION['errors']);
+        unset($_SESSION['error']);
+        unset($_SESSION['success']);
         unset($_SESSION['flash']);
     }
 }
@@ -78,3 +80,11 @@ function uploadFileAlbum($file, $folderUpload, $key)
     }
     return null;
 }
+
+function checkLoginAdmin(){
+    if (!isset($_SESSION['user_admin'])){ // Không có session thì redirect về trang login
+    require_once './views/auth/formLogin.php';
+    exit();
+    }
+}
+//Debung

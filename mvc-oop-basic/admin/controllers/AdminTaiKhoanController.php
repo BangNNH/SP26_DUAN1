@@ -4,11 +4,13 @@ class AdminTaiKhoanController
 {
     public $modelTaiKhoan;
     public $modelDonHang;
+    public $modelSanPham;
 
     public function __construct()
     {
         $this->modelTaiKhoan = new AdminTaiKhoan();
-        // $this->modelDonHang = new AdminDonHang();
+        $this->modelDonHang = new AdminDonHang();
+        $this->modelSanPham = new AdminSanPham();
     }
 
     public function danhSachQuanTri()
@@ -79,7 +81,7 @@ class AdminTaiKhoanController
             // Lấy ra dữ liệu
             $quan_tri_id = $_POST['quan_tri_id'] ?? "";
 
-            $ho_ten = $_POST['ho_ten$ho_ten'] ?? '';
+            $ho_ten = $_POST['ho_ten'] ?? '';
             $email = $_POST['email'] ?? '';
             $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
             $trang_thai = $_POST['trang_thai'] ?? '';
@@ -123,7 +125,7 @@ class AdminTaiKhoanController
                 // Đặt chỉ thị xóa session sau khi hiển thị form
                 $_SESSION['flash'] = true;
 
-                header("Location: " . BASE_URL_ADMIN . '?act=form-sua-tai-khoan&id_quan_tri=' . $quan_tri_id);
+                header("Location: " . BASE_URL_ADMIN . '?act=form-sua-quan-tri&id_quan_tri=' . $quan_tri_id);
                 exit();
             }
         }
@@ -168,9 +170,9 @@ class AdminTaiKhoanController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Lấy ra dữ liệu
-            $khach_hang_id = $_POST['$khach_hang_id'] ?? "";
+            $khach_hang_id = $_POST['khach_hang_id'] ?? "";
 
-            $ho_ten = $_POST['ho_ten$ho_ten'] ?? '';
+            $ho_ten = $_POST['ho_ten'] ?? '';
             $email = $_POST['email'] ?? '';
             $so_dien_thoai = $_POST['so_dien_thoai'] ?? '';
             $ngay_sinh = $_POST['ngay_sinh'] ?? '';
@@ -237,6 +239,8 @@ class AdminTaiKhoanController
         $khachHang = $this->modelTaiKhoan->getDetailTaiKhoan($id_khach_hang);
 
         $listDonHang = $this->modelDonHang->getDonHangFromKhachHang($id_khach_hang);
+
+        $listBinhLuan = $this->modelSanPham->getBinhLuanFromKhachHang($id_khach_hang);
 
         require_once './views/taikhoan/khachhang/detailKhachHang.php';
     }

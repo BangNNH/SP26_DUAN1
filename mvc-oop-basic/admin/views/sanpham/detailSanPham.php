@@ -57,50 +57,55 @@
                     </div>
                 </div>
 
-                <ul class="nav nav-tabs row mt-4" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Bình luận sản phẩm</button>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <table class="table table-stripe table-hover">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Tên người dùng</th>
-                                    <th>Nội dung</th>
-                                    <th>Ngày đăng</th>
-                                    <th>Thao tác</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Hoài Băng</td>
-                                    <td>xinh quá</td>
-                                    <td>10/03/2026</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="#"><button class="btn btn-warning">Ẩn</button></a>
-                                            <a href="#"><button class="btn btn-danger">Xóa</button></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Hoài Băng</td>
-                                    <td>xinh quá</td>
-                                    <td>10/03/2026</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="#"><button class="btn btn-warning">Ẩn</button></a>
-                                            <a href="#"><button class="btn btn-danger">Xóa</button></a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                
+                <div class="col-12">
+                    <hr>
+                    <h2>Bình luận của sản phẩm</h2>
+                    <div>
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Người Bình LuậN</th>
+                                        <th>Nội Dung</th>
+                                        <th>Ngày Bình LuậN</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <?php foreach ($listBinhLuan as $key => $binhLuan) : ?>
+                                        <tr>
+                                            <td><?= $key + 1 ?></td>
+                                            <td>
+                                                <a target="_blank" href="<?= BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $binhLuan['tai_khoan_id'] ?>">
+                                                    <?= $binhLuan['ho_ten'] ?>
+                                                </a>
+                                            </td>
+                                            <td><?= $binhLuan['noi_dung'] ?></td>
+                                            <td><?= $binhLuan['ngay_dang'] ?></td>
+                                            <td><?= $binhLuan['trang_thai'] == 1 ? 'Hiển thị' : 'Bị Ẩn'?></td>
+
+                                            <td>
+                                                <div class="btn-group">
+
+                                                    <form action="<?= BASE_URL_ADMIN . '?act=update-trang-thai-binh-luan' ?>" method="POST">
+                                                        <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
+                                                        <input type="hidden" name="name_view" value="detail_sanpham">
+                                                        <button onclick="return confirm('Bạn có muốn ẩn bình luậN này không?')" class="btn btn-danger">
+                                                            <?= $binhLuan['trang_thai'] == 1 ? 'Ẩn' : 'Bỏ ẩn' ?>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

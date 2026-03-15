@@ -42,6 +42,9 @@ match ($act) {
     'xoa-san-pham' => (new AdminSanPhamController())->deleteSanPham(),
     'chi-tiet-san-pham' => (new AdminSanPhamController())->detailSanPham(),
 
+    // Router bình luậN
+    'update-trang-thai-binh-luan' => (new AdminSanPhamController())->updateTrangThaiBinhLuan(),
+
     // router quản lý đơn hàng
     'don-hang' => (new AdminDonHangController())->danhSachDonHang(),
     // 'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),

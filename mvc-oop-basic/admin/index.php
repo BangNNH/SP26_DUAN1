@@ -18,7 +18,7 @@ require_once './models/AdminTaiKhoan.php';
 // Route
 $act = $_GET['act'] ?? '/';
 
-if ($act !== 'login-admin' && $act !=='check-login-admin' && $act !== 'logout-admin'){
+if ($act !== 'login-admin' && $act !== 'check-login-admin' && $act !== 'logout-admin') {
     checkLoginAdmin();
 }
 
@@ -55,7 +55,9 @@ match ($act) {
     // 'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
     // 'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
     // 'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
-
+    'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
+    'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
+    'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
     // router quản lý tài khoản
     // router tài khoản quản trị
     'list-tai-khoan-quan-tri' => (new AdminTaiKhoanController())->danhSachQuanTri(),
@@ -70,12 +72,12 @@ match ($act) {
     'form-sua-khach-hang' => (new AdminTaiKhoanController())->formEditKhachHang(),
     'sua-khach-hang' => (new AdminTaiKhoanController())->postEditKhachHang(),
     'chi-tiet-khach-hang' => (new AdminTaiKhoanController())->deltailKhachHang(),
-    
+
     // route quản lý tài khoản cá nhân(Quản trị)
 
     'form-sua-thong-tin-ca-nhan-admin' => (new AdminTaiKhoanController())->formEditCaNhanQuanTri(),
     'sua-thong-tin-ca-nhan-admin' => (new AdminTaiKhoanController())->postEditCaNhanQuanTri(),
-    
+
     'sua-mat-khau-ca-nhan-admin' => (new AdminTaiKhoanController())->postEditMatKhauCaNhan(),
 
     //rout auth
@@ -83,4 +85,3 @@ match ($act) {
     'check-login-admin' => (new AdminTaiKhoanController())->login(),
     'logout-admin' => (new AdminTaiKhoanController())->logout(),
 };
-    

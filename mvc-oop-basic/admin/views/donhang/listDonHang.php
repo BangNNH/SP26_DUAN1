@@ -48,37 +48,37 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($listDonHang as $key => $sanPham): ?>
+                                    <?php foreach ($listDonHang as $key => $donHang): ?>
                                         <tr>
                                             <td>
                                                 <?= $key + 1 ?>
                                             </td>
                                             <td>
-                                                <?= $sanPham['ma_don_hang'] ?>
+                                                <?= $donHang['ma_don_hang'] ?>
                                             </td>
                                             <td>
-                                                <?= $sanPham['ten_nguoi_nhan'] ?>
+                                                <?= $donHang['ten_nguoi_nhan'] ?>
                                             </td>
                                             <td>
-                                                <?= $sanPham['sdt_nguoi_nhan'] ?>
+                                                <?= $donHang['sdt_nguoi_nhan'] ?>
                                             </td>
                                             <td>
-                                                <?= $sanPham['ngay_dat'] ?>
+                                                <?= $donHang['ngay_dat'] ?>
                                             </td>
                                             <td>
-                                                <?= $sanPham['tong_tien'] ?>
+                                                <?= $donHang['tong_tien'] ?>
                                             </td>
                                             <td>
-                                                <?= $sanPham['ten_trang_thai'] ?>
+                                                <?= $donHang['ten_trang_thai'] ?>
                                             </td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a
-                                                        href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_san_pham=' . $sanPham['id'] ?>">
+                                                        href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>">
                                                         <button class="btn btn-primary"><i class="fas fa-eye"></i></button>
                                                     </a>
                                                     <a
-                                                        href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_san_pham=' . $sanPham['id'] ?>">
+                                                        href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>">
                                                         <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
                                                     </a>
                                                 </div>

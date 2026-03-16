@@ -63,6 +63,8 @@ class AdminDonHangController
             $ghi_chu = $_POST['ghi_chu'] ?? '';
             $trang_thai_id = $_POST['trang_thai_id'] ?? '';
 
+            var_dump($_POST);
+            die();
             // tạo 1 mảng trống để chứa dữ liệu
             $errors = [];
             if (empty($ten_nguoi_nhan)) {

@@ -62,7 +62,7 @@
                                 <div class="form-group">
                                     <label>Email: </label>
                                     <input type="text" class="form-control" name="email_nguoi_nhan"
-                                        value="<?= $donHang['email_nguoi_nhan'] ?>" placeholder="Nhập Email" required>
+                                        value="<?= $donHang['email_nguoi_nhan'] ?>" placeholder="Nhập Email">
                                     <?php if (isset($errors['email_nguoi_nhan'])) { ?>
                                         <p class="text-danger"><?= $errors['email_nguoi_nhan'] ?></p>
                                         <?php
@@ -72,8 +72,7 @@
                                 <div class="form-group">
                                     <label>Địa Chỉ: </label>
                                     <input type="text" class="form-control" name="dia_chi_nguoi_nhan"
-                                        value="<?= $donHang['dia_chi_nguoi_nhan'] ?>" placeholder="Nhập địa chỉ"
-                                        required>
+                                        value="<?= $donHang['dia_chi_nguoi_nhan'] ?>" placeholder="Nhập địa chỉ">
                                     <?php if (isset($errors['dia_chi_nguoi_nhan'])) { ?>
                                         <p class="text-danger"><?= $errors['dia_chi_nguoi_nhan'] ?></p>
                                         <?php

@@ -106,11 +106,18 @@ class AdminTaiKhoanController
             // Nếu ko có lỗi thì tiến hành sửa
             if (empty($errors)) {
 
+                // Lấy thêm trường ngày sinh / địa chỉ hiện có để không ghi đè bằng giá trị rỗng
+                $user = $this->modelTaiKhoan->getDetailTaiKhoan($quan_tri_id);
+                $ngay_sinh = $user['ngay_sinh'] ?? '';
+                $dia_chi = $user['dia_chi'] ?? '';
+
                 $this->modelTaiKhoan->updateTaiKhoan(
                     $quan_tri_id,
                     $ho_ten,
                     $email,
                     $so_dien_thoai,
+                    $ngay_sinh,
+                    $dia_chi,
                     $trang_thai
                 );
 
@@ -319,25 +326,69 @@ class AdminTaiKhoanController
         deleteSessionError();
     }
 
-    public function postEditMatKhauCaNhan(){
-        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-            $old_pass = $_POST['old_pass'];
-            $new_pass = $_POST['new_pass'];
-            $confirm_pass = $_POST['confirm_pass'];
-            
-            //Lấy thông tin user từ session
-            $user = $this->modelTaiKhoan->getTaiKhoanformEmail($_SESSION['user_admin']);
-
-            $checkPass = password_verify($old_pass, $user['mat_khau']);
+    public function postEditCaNhanQuanTri(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $ho_ten = trim($_POST['ho_ten'] ?? '');
+            $email = trim($_POST['email'] ?? '');
+            $so_dien_thoai = trim($_POST['so_dien_thoai'] ?? '');
+            $ngay_sinh = trim($_POST['ngay_sinh'] ?? '');
+            $dia_chi = trim($_POST['dia_chi'] ?? '');
 
             $errors = [];
-            
-            if (!$checkPass) {
-                $errors['old_pass'] = 'Mật khẩu cũ không đúng';
+            if (empty($ho_ten)) {
+                $errors['ho_ten'] = 'Họ tên không được để trống';
             }
-            if ($new_pass !== $confirm_pass) {
-                $errors['confirm_pass'] = 'Mật khẩu nhập lại không khớp';
+            if (empty($email)) {
+                $errors['email'] = 'Email không được để trống';
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Email không hợp lệ';
             }
+
+            $_SESSION['errors'] = $errors;
+
+            if (empty($errors)) {
+                $user = $this->modelTaiKhoan->getTaiKhoanformEmail($_SESSION['user_admin']);
+                $trang_thai = $user['trang_thai'] ?? 1;
+
+                $status = $this->modelTaiKhoan->updateTaiKhoan(
+                    $user['id'],
+                    $ho_ten,
+                    $email,
+                    $so_dien_thoai,
+                    $ngay_sinh,
+                    $dia_chi,
+                    $trang_thai
+                );
+
+                if ($status) {
+                    // Nếu đổi email, cập nhật session để các trang khác dùng đúng
+                    if ($email !== $_SESSION['user_admin']) {
+                        $_SESSION['user_admin'] = $email;
+                    }
+                    $_SESSION['success'] = 'Cập nhật thông tin cá nhân thành công';
+                } else {
+                    $_SESSION['errors']['general'] = 'Có lỗi xảy ra khi cập nhật thông tin';
+                }
+                $_SESSION['flash'] = true;
+            } else {
+                $_SESSION['flash'] = true;
+            }
+
+            header("Location: " . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-admin');
+            exit();
+        }
+    }
+
+    public function postEditMatKhauCaNhan(){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $old_pass = $_POST['old_pass'] ?? '';
+            $new_pass = $_POST['new_pass'] ?? '';
+            $confirm_pass = $_POST['confirm_pass'] ?? '';
+
+            // Lấy thông tin user từ session
+            $user = $this->modelTaiKhoan->getTaiKhoanformEmail($_SESSION['user_admin']);
+
+            $errors = [];
             if (empty($old_pass)) {
                 $errors['old_pass'] = 'Vui lòng nhập mật khẩu cũ';
             }
@@ -348,29 +399,38 @@ class AdminTaiKhoanController
                 $errors['confirm_pass'] = 'Vui lòng nhập lại mật khẩu mới';
             }
 
+            // Nếu chưa có lỗi cơ bản, kiểm tra mật khẩu cũ và xác nhận
+            if (empty($errors)) {
+                $storedHash = $user['mat_khau'];
+                $isCorrectOldPassword = password_verify($old_pass, $storedHash) || $old_pass === $storedHash;
+
+                if (!$isCorrectOldPassword) {
+                    $errors['old_pass'] = 'Mật khẩu cũ không đúng';
+                } elseif ($new_pass !== $confirm_pass) {
+                    $errors['confirm_pass'] = 'Mật khẩu nhập lại không khớp';
+                }
+            }
+
             $_SESSION['errors'] = $errors;
 
             if (empty($errors)){
-                //Thực hiện đổi mật khẩu
+                // Thực hiện đổi mật khẩu (luôn hash trước khi lưu)
                 $hashPass = password_hash($new_pass, PASSWORD_BCRYPT);
                 $status = $this->modelTaiKhoan->resetPassword($user['id'], $hashPass);
                 if ($status){
                     $_SESSION['success'] = "Đã đổi mật khẩu thành công";
                     $_SESSION['flash'] = true;
-                    header("Location: " . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-admin');
-                    exit;
-                }else{
-                    //Lỗi thì lưu vào session
-                    $_SESSION['errors'] = "Có lỗi xảy ra khi đổi mật khẩu";
+                } else {
+                    $_SESSION['errors']['general'] = "Có lỗi xảy ra khi đổi mật khẩu";
                     $_SESSION['flash'] = true;
-                    header("Location: " . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-admin');
-                    exit;
                 }
             } else {
                 $_SESSION['flash'] = true;
-                header("Location: " . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-admin');
-                exit;
             }
+
+            header("Location: " . BASE_URL_ADMIN . '?act=form-sua-thong-tin-ca-nhan-admin');
+            exit;
         }
     }
-} 
+}
+ 

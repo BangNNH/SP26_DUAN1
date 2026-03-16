@@ -17,7 +17,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Quản lý tài khoản khách hàng</h1>
+                    <h1>Quản lý tài khoản cá nhân</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -47,59 +47,6 @@
                     <hr>
                     <h3>Thông tin cá nhân</h3>
 
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">First name:</label>
-                        <div class="col-lg-12">
-                            <input class="form-control" type="text" value="" name="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Last name:</label>
-                        <div class="col-lg-12">
-                            <input class="form-control" type="text" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Company:</label>
-                        <div class="col-lg-12">
-                            <input class="form-control" type="text" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Email:</label>
-                        <div class="col-lg-12">
-                            <input class="form-control" type="text" value="">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Time Zone:</label>
-                        <div class="col-lg-12">
-                            <div class="ui-select">
-                                <select id="user_time_zone" class="form-control">
-                                    <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                    <option value="Alaska">(GMT-09:00) Alaska</option>
-                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US
-                                        &amp; Canada)</option>
-                                    <option value="Arizona">(GMT-07:00) Arizona</option>
-                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US
-                                        &amp; Canada)</option>
-                                    <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00)
-                                        Central Time (US &amp; Canada)</option>
-                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US
-                                        &amp; Canada)</option>
-                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label"></label>
-                        <div class="col-md-12">
-                            <input type="submit" class="btn btn-primary" value="Save Changes">
-                        </div>
-                    </div>
-
-                    <h3>Đổi mật khẩu</h3>
                     <?php if (!empty($_SESSION['success'])) { ?>
                     <div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -114,6 +61,62 @@
                         <?= htmlspecialchars($_SESSION['errors']['general']) ?>
                     </div>
                     <?php } ?>
+
+                    <form action="<?= BASE_URL_ADMIN . '?act=sua-thong-tin-ca-nhan-admin' ?>" method="post">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Họ tên:</label>
+                            <div class="col-lg-12">
+                                <input class="form-control" type="text" name="ho_ten" value="<?= htmlspecialchars($thongTin['ho_ten'] ?? '') ?>">
+                                <?php if (!empty($_SESSION['errors']['ho_ten'])) { ?>
+                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['ho_ten']) ?></p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Email:</label>
+                            <div class="col-lg-12">
+                                <input class="form-control" type="text" name="email" value="<?= htmlspecialchars($thongTin['email'] ?? '') ?>">
+                                <?php if (!empty($_SESSION['errors']['email'])) { ?>
+                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['email']) ?></p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Số điện thoại:</label>
+                            <div class="col-lg-12">
+                                <input class="form-control" type="text" name="so_dien_thoai" value="<?= htmlspecialchars($thongTin['so_dien_thoai'] ?? '') ?>">
+                                <?php if (!empty($_SESSION['errors']['so_dien_thoai'])) { ?>
+                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['so_dien_thoai']) ?></p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Ngày sinh:</label>
+                            <div class="col-lg-12">
+                                <input class="form-control" type="date" name="ngay_sinh" value="<?= htmlspecialchars($thongTin['ngay_sinh'] ?? '') ?>">
+                                <?php if (!empty($_SESSION['errors']['ngay_sinh'])) { ?>
+                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['ngay_sinh']) ?></p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Địa chỉ:</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" name="dia_chi" rows="3"><?= htmlspecialchars($thongTin['dia_chi'] ?? '') ?></textarea>
+                                <?php if (!empty($_SESSION['errors']['dia_chi'])) { ?>
+                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['dia_chi']) ?></p>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-12">
+                                <input type="submit" class="btn btn-primary" value="Lưu thay đổi">
+                            </div>
+                        </div>
+                    </form>
+
+                    <h3>Đổi mật khẩu</h3>
 
                     <form action="<?= BASE_URL_ADMIN . '?act=sua-mat-khau-ca-nhan-admin' ?>" method="post">
                         <div class="form-group">

@@ -10,13 +10,14 @@ class HomeController
 
     public function home()
     {
-        echo "Đây là home";
+        $listSanPham = $this->modelSanPham->getAllSanPham();
+        require_once './views/home.php';
     }
 
-    public function danhSachSanPham()
-    {
+    // public function danhSachSanPham()
+    // {
 
-        $listProduct = $this->modelSanPham->getAllProduct();
-        require_once './views/listProduct.php';
-    }
+    //     $listProduct = $this->modelSanPham->getAllSanPham();
+    //     require_once './views/listProduct.php';
+    // }
 }

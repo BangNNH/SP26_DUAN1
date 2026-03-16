@@ -93,4 +93,12 @@ function checkLoginAdmin()
         exit();
     }
 }
-//Debung
+
+ function formatPrice($price){
+    if ($price === null || $price === '') {
+        $price = 0;
+    }
+    return number_format((float)$price, 0, ',', '.');
+ }
+
+ //Debung

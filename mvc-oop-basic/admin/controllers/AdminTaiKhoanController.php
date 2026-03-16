@@ -133,20 +133,48 @@ class AdminTaiKhoanController
 
 
     public function resetPassword() {
-        $tai_khoan_id = $_GET['id_quan_tri'];
-        $tai_khoan = $this->modelTaiKhoan->getDetailTaiKhoan($tai_khoan_id);
-        $password = password_hash('123456', PASSWORD_BCRYPT);
-        $status = $this->modelTaiKhoan->resetPassword($tai_khoan_id, $password);
-        if ($status && $tai_khoan['chuc_vu_id'] == 1) {
+        // Hỗ trợ cả id_quan_tri (admin) và id_khach_hang (khách hàng)
+        $tai_khoan_id = $_GET['id_quan_tri'] ?? $_GET['id_khach_hang'] ?? null;
+
+        if (empty($tai_khoan_id)) {
+            $_SESSION['error'] = 'Thiếu thông tin tài khoản cần reset.';
+            $_SESSION['flash'] = true;
             header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
             exit();
-        } elseif ($status && $tai_khoan['chuc_vu_id'] == 2) {
+        }
+
+        $tai_khoan = $this->modelTaiKhoan->getDetailTaiKhoan($tai_khoan_id);
+        if (!$tai_khoan) {
+            $_SESSION['error'] = 'Không tìm thấy tài khoản để reset mật khẩu.';
+            $_SESSION['flash'] = true;
+            header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
+            exit();
+        }
+
+        $password = password_hash('123456', PASSWORD_BCRYPT);
+        $status = $this->modelTaiKhoan->resetPassword($tai_khoan_id, $password);
+
+        if (!$status) {
+            $_SESSION['error'] = 'Reset mật khẩu thất bại, vui lòng thử lại.';
+            $_SESSION['flash'] = true;
+            header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
+            exit();
+        }
+
+        // Điều hướng theo loại tài khoản
+        if ($tai_khoan['chuc_vu_id'] == 1) {
+            header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
+            exit();
+        } elseif ($tai_khoan['chuc_vu_id'] == 2) {
             header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-khach-hang');
             exit();
         }
-         else {
-           var_dump("Lỗi reset password");die;
-        }
+
+        // Trường hợp khác (không xác định)
+        $_SESSION['error'] = 'Loại tài khoản không hợp lệ.';
+        $_SESSION['flash'] = true;
+        header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-quan-tri');
+        exit();
     }
 
     public function danhSachKhachHang()

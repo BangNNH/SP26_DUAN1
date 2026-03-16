@@ -80,11 +80,17 @@ function uploadFileAlbum($file, $folderUpload, $key)
     }
     return null;
 }
+//format date 
+function formatDate($date)
+{
+    return date("d-m-Y", strtotime($date));
+}
 
-function checkLoginAdmin(){
-    if (!isset($_SESSION['user_admin'])){ // Không có session thì redirect về trang login
-    require_once './views/auth/formLogin.php';
-    exit();
+function checkLoginAdmin()
+{
+    if (!isset($_SESSION['user_admin'])) { // Không có session thì redirect về trang login
+        require_once './views/auth/formLogin.php';
+        exit();
     }
 }
 //Debung

@@ -140,21 +140,20 @@ class HomeController
     public function thanhToan()
     {
         if (isset($_SESSION['user_client'])) {
-            $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
 
-            $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
+            $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
             if (!$gioHang) {
-                $gioHangId = $this->modelGioHang->addGioHang($mail['id']);
+                $gioHangId = $this->modelGioHang->addGioHang($user['id']);
                 $gioHang = ['id' => $gioHangId];
                 $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
             } else {
                 $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
             }
-            require_once './views/gioHang.php';
+            require_once './views/thanhToan.php';
         } else {
             var_dump("Chưa đăng nhập");
             die();
         }
-        require_once './views/thanhToan.php';
     }
 }

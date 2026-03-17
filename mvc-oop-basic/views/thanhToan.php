@@ -55,25 +55,25 @@
                     <div class="checkout-billing-details-wrap">
                         <h5 class="checkout-title">Billing Details</h5>
                         <div class="billing-form-wrap">
-                            <form action="#">
+                            <form action="" method="POST">
                                 <div class="single-input-item">
                                     <label for="ten_nguoi_nhan" class="required">Tên người nhận</label>
-                                    <input type="text" id="ten_nguoi_nhan" placeholder="Tên người nhận" required />
+                                    <input type="text" id="ten_nguoi_nhan" name="ten_nguoi_nhan" value="<?= $user['ho_ten'] ?>" placeholder="Tên người nhận" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="email_nguoi_nhan" class="required">Email</label>
-                                    <input type="email" id="email_nguoi_nhan" placeholder="Địa chỉ Email" required />
+                                    <input type="email" id="email_nguoi_nhan" name="email_nguoi_nhan" value="<?= $user['email'] ?>" placeholder="Địa chỉ Email" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="sdt_nguoi_nhan" class="required">SĐT</label>
-                                    <input type="text" id="sdt_nguoi_nhan" placeholder="SĐT người nhận" required />
+                                    <input type="text" id="sdt_nguoi_nhan" name="sdt_nguoi_nhan" value="<?= $user['so_dien_thoai'] ?>" placeholder="SĐT người nhận" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="dia_chi_nguoi_nhan">Địa chỉ</label>
-                                    <input type="text" id="dia_chi_nguoi_nhan" placeholder="Địa chỉ người nhận" />
+                                    <input type="text" id="dia_chi_nguoi_nhan" name="dia_chi_nguoi_nhan" value="<?= $user['dia_chi'] ?>" placeholder="Địa chỉ người nhận" />
                                 </div>
 
                                 <div class="single-input-item">
@@ -95,56 +95,42 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Products</th>
-                                            <th>Total</th>
+                                            <th>Sản phẩm</th>
+                                            <th>Tổng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td><a href="product-details.html">Suscipit Vestibulum <strong> × 1</strong></a>
-                                            </td>
-                                            <td>$165.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="product-details.html">Ami Vestibulum suscipit <strong> × 4</strong></a>
-                                            </td>
-                                            <td>$165.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="product-details.html">Vestibulum suscipit <strong> × 2</strong></a>
-                                            </td>
-                                            <td>$165.00</td>
-                                        </tr>
+                                        <?php
+                                        $tongGioHang = 0;
+                                        foreach ($chiTietGioHang as $key => $sanPham):
+                                            $tong_tien = 0; ?>
+                                            <tr>
+                                                <td><a href="product-details.html"><?= $sanPham['ten_san_pham'] ?><strong> × <?= $sanPham['so_luong'] ?></strong></a>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    if ($sanPham['gia_khuyen_mai']) {
+                                                        $tong_tien = $sanPham['gia_khuyen_mai'] * $sanPham['so_luong'];
+                                                    } else {
+                                                        $tong_tien = $sanPham['gia_san_pham'] * $sanPham['so_luong'];
+                                                    }
+                                                    $tongGioHang += $tong_tien;
+                                                    echo formatPrice($tong_tien . " VND");
+                                                    ?> VNĐ
+                                                </td>
+                                            </tr>
+                                        <?php endforeach ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td>Sub Total</td>
-                                            <td><strong>$400</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Shipping</td>
+                                            <td>Phí ship</td>
                                             <td class="d-flex justify-content-center">
-                                                <ul class="shipping-type">
-                                                    <li>
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="flatrate" name="shipping" class="custom-control-input" checked />
-                                                            <label class="custom-control-label" for="flatrate">Flat
-                                                                Rate: $70.00</label>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="freeshipping" name="shipping" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="freeshipping">Free
-                                                                Shipping</label>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                                <strong>30.000 VNĐ</strong>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Total Amount</td>
-                                            <td><strong>$470</strong></td>
+                                            <td>Tổng tiền</td>
+                                            <td><strong><?= formatPrice($tongGioHang + 30000) ?> VNĐ</strong></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -155,59 +141,30 @@
                                     <div class="payment-method-name">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="cashon" name="paymentmethod" value="cash" class="custom-control-input" checked />
-                                            <label class="custom-control-label" for="cashon">Cash On Delivery</label>
+                                            <label class="custom-control-label" for="cashon">Thanh toán khi nhận hàng</label>
                                         </div>
                                     </div>
                                     <div class="payment-method-details" data-method="cash">
-                                        <p>Pay with cash upon delivery.</p>
+                                        <p>Thanh toán sau khi nhận hàng thành công (cần xác nhận đơn hàng).</p>
                                     </div>
                                 </div>
                                 <div class="single-payment-method">
                                     <div class="payment-method-name">
                                         <div class="custom-control custom-radio">
                                             <input type="radio" id="directbank" name="paymentmethod" value="bank" class="custom-control-input" />
-                                            <label class="custom-control-label" for="directbank">Direct Bank
-                                                Transfer</label>
+                                            <label class="custom-control-label" for="directbank">Thanh toán online</label>
                                         </div>
                                     </div>
                                     <div class="payment-method-details" data-method="bank">
-                                        <p>Make your payment directly into our bank account. Please use your Order
-                                            ID as the payment reference. Your order will not be shipped until the
-                                            funds have cleared in our account..</p>
-                                    </div>
-                                </div>
-                                <div class="single-payment-method">
-                                    <div class="payment-method-name">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="checkpayment" name="paymentmethod" value="check" class="custom-control-input" />
-                                            <label class="custom-control-label" for="checkpayment">Pay with
-                                                Check</label>
-                                        </div>
-                                    </div>
-                                    <div class="payment-method-details" data-method="check">
-                                        <p>Please send a check to Store Name, Store Street, Store Town, Store State
-                                            / County, Store Postcode.</p>
-                                    </div>
-                                </div>
-                                <div class="single-payment-method">
-                                    <div class="payment-method-name">
-                                        <div class="custom-control custom-radio">
-                                            <input type="radio" id="paypalpayment" name="paymentmethod" value="paypal" class="custom-control-input" />
-                                            <label class="custom-control-label" for="paypalpayment">Paypal <img src="assets/img/paypal-card.jpg" class="img-fluid paypal-card" alt="Paypal" /></label>
-                                        </div>
-                                    </div>
-                                    <div class="payment-method-details" data-method="paypal">
-                                        <p>Pay via PayPal; you can pay with your credit card if you don’t have a
-                                            PayPal account.</p>
+                                        <p>Khách hàng thanh toán online</p>
                                     </div>
                                 </div>
                                 <div class="summary-footer-area">
                                     <div class="custom-control custom-checkbox mb-20">
                                         <input type="checkbox" class="custom-control-input" id="terms" required />
-                                        <label class="custom-control-label" for="terms">I have read and agree to
-                                            the website <a href="index.html">terms and conditions.</a></label>
+                                        <label class="custom-control-label" for="terms">Tôi đồng ý với các <a href="index.html">điều khoản và điều kiện</a> của website</label>
                                     </div>
-                                    <button type="submit" class="btn btn-sqr">Place Order</button>
+                                    <button type="submit" class="btn btn-sqr">Tiến hành đặt hàng</button>
                                 </div>
                             </div>
                         </div>

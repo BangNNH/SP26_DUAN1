@@ -115,27 +115,46 @@ class HomeController
     }
 
 
-    public function gioHang(){
-        if ($_SERVER['REQUEST_METHOD']) {
-            // debug($_POST);
-            if (isset($_SESSION['user_client'])) {
-                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+    public function gioHang()
+    {
+        if (isset($_SESSION['user_client'])) {
+            $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
 
-                $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
-                if (!$gioHang) {
-                    $gioHangId = $this->modelGioHang->addGioHang($mail['id']);
-                    $gioHang = ['id' => $gioHangId];
-                    $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
-                } else {
-                    $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
-                }
-                // var_dump($chiTietGioHang);die();
-
-                require_once './views/gioHang.php';
+            $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
+            if (!$gioHang) {
+                $gioHangId = $this->modelGioHang->addGioHang($mail['id']);
+                $gioHang = ['id' => $gioHangId];
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
             } else {
-                var_dump("Chưa đăng nhập");
-                die();
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
             }
+            // var_dump($chiTietGioHang);die();
+
+            require_once './views/gioHang.php';
+        } else {
+            var_dump("Chưa đăng nhập");
+            die();
         }
+    }
+
+    public function thanhToan()
+    {
+        if (isset($_SESSION['user_client'])) {
+            $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+
+            $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
+            if (!$gioHang) {
+                $gioHangId = $this->modelGioHang->addGioHang($mail['id']);
+                $gioHang = ['id' => $gioHangId];
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            } else {
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            }
+            require_once './views/gioHang.php';
+        } else {
+            var_dump("Chưa đăng nhập");
+            die();
+        }
+        require_once './views/thanhToan.php';
     }
 }

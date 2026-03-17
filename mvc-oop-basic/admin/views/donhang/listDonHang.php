@@ -63,10 +63,10 @@
                                                 <?= $donHang['sdt_nguoi_nhan'] ?>
                                             </td>
                                             <td>
-                                                <?= $donHang['ngay_dat'] ?>
+                                                <?= date('d-m-Y', strtotime($donHang['ngay_dat'])) ?>
                                             </td>
                                             <td>
-                                                <?= $donHang['tong_tien'] ?>
+                                                <?= number_format($donHang['tong_tien'], 0, ',', '.') ?> VNĐ
                                             </td>
                                             <td>
                                                 <?= $donHang['ten_trang_thai'] ?>

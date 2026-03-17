@@ -51,13 +51,10 @@ match ($act) {
 
     // router quản lý đơn hàng
     'don-hang' => (new AdminDonHangController())->danhSachDonHang(),
-    // 'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
-    // 'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
-    // 'xoa-don-hang' => (new AdminDonHangController())->deleteDonHang(),
-    // 'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
     'form-sua-don-hang' => (new AdminDonHangController())->formEditDonHang(),
     'sua-don-hang' => (new AdminDonHangController())->postEditDonHang(),
     'chi-tiet-don-hang' => (new AdminDonHangController())->detailDonHang(),
+
     // router quản lý tài khoản
     // router tài khoản quản trị
     'list-tai-khoan-quan-tri' => (new AdminTaiKhoanController())->danhSachQuanTri(),
@@ -77,7 +74,6 @@ match ($act) {
 
     'form-sua-thong-tin-ca-nhan-admin' => (new AdminTaiKhoanController())->formEditCaNhanQuanTri(),
     'sua-thong-tin-ca-nhan-admin' => (new AdminTaiKhoanController())->postEditCaNhanQuanTri(),
-
     'sua-mat-khau-ca-nhan-admin' => (new AdminTaiKhoanController())->postEditMatKhauCaNhan(),
 
     //rout auth

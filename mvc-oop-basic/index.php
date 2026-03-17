@@ -12,6 +12,7 @@ require_once './controllers/HomeController.php';
 require_once './models/Student.php';
 require_once './models/SanPham.php';
 require_once './models/TaiKhoan.php';
+require_once './models/GioHang.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -21,7 +22,8 @@ match ($act) {
     '/' => (new HomeController)->home(),
     // 'danh-sach-san-pham' => (new HomeController)->danhSachSanPham(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
-
+    'them-gio-hang' => (new HomeController())->addGioHang(),
+    'gio-hang' => (new HomeController())->gioHang(),
 
 
     // Auth

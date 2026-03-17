@@ -145,7 +145,7 @@
                                         <!-- product item start -->
                                         <div class="product-item">
                                             <figure class="product-thumb">
-                                                <a href="product-details.html">
+                                               <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>">
                                                     <img class="pri-img" src="<?= BASE_URL . $sanPham['hinh_anh']?>" alt="product">
                                                     <!-- <img class="sec-img" src="assets/img/product/product-18.jpg" alt="product"> -->
                                                 </a>
@@ -170,13 +170,14 @@
                                                 <?php  } ?>
 
                                                 </div>
-                                                <div class="cart-hover">
-                                                    <button class="btn btn-cart">Xem chi tiết</button>
+                                                <div class="cart-hover" style="display: flex; justify-content: center; align-items: center;">
+                                                     <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>" class="btn btn-cart">Xem chi tiết</a>
+                                                     <!-- <button class="btn btn-cart">Xem chi tiết</button> -->
                                                 </div>
                                             </figure>
                                             <div class="product-caption text-center">
                                                 <h6 class="product-name">
-                                                    <a href="product-details.html"><?= $sanPham['ten_san_pham'] ?></a>
+                                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>"><?= $sanPham['ten_san_pham'] ?></a>
                                                 </h6>
                                                 <div class="price-box">
                                                     <?php
@@ -304,7 +305,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-6.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-13.jpg" alt="product">
                                     </a>
@@ -327,7 +328,7 @@
                                 </figure>
                                 <div class="product-caption text-center">
                                     <div class="product-identity">
-                                        <p class="manufacturer-name"><a href="product-details.html">Gold</a></p>
+                                        <p class="manufacturer-name"><a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">Gold</a></p>
                                     </div>
                                     <ul class="color-categories">
                                         <li>
@@ -344,7 +345,7 @@
                                         </li>
                                     </ul>
                                     <h6 class="product-name">
-                                        <a href="product-details.html">Perfect Diamond Jewelry</a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>">Perfect Diamond Jewelry</a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">$60.00</span>
@@ -357,7 +358,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-7.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-9.jpg" alt="product">
                                     </a>
@@ -380,7 +381,7 @@
                                 </figure>
                                 <div class="product-caption text-center">
                                     <div class="product-identity">
-                                        <p class="manufacturer-name"><a href="product-details.html">mony</a></p>
+                                        <p class="manufacturer-name"><a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">mony</a></p>
                                     </div>
                                     <ul class="color-categories">
                                         <li>
@@ -397,7 +398,7 @@
                                         </li>
                                     </ul>
                                     <h6 class="product-name">
-                                        <a href="product-details.html">Handmade Golden Necklace</a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">Handmade Golden Necklace</a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">$50.00</span>
@@ -410,7 +411,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-8.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-11.jpg" alt="product">
                                     </a>
@@ -430,7 +431,7 @@
                                 </figure>
                                 <div class="product-caption text-center">
                                     <div class="product-identity">
-                                        <p class="manufacturer-name"><a href="product-details.html">Diamond</a></p>
+                                        <p class="manufacturer-name"><a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">Diamond</a></p>
                                     </div>
                                     <ul class="color-categories">
                                         <li>
@@ -447,7 +448,7 @@
                                         </li>
                                     </ul>
                                     <h6 class="product-name">
-                                        <a href="product-details.html">Perfect Diamond Jewelry</a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">Perfect Diamond Jewelry</a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">$99.00</span>
@@ -460,7 +461,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-16.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-10.jpg" alt="product">
                                     </a>
@@ -483,7 +484,7 @@
                                 </figure>
                                 <div class="product-caption text-center">
                                     <div class="product-identity">
-                                        <p class="manufacturer-name"><a href="product-details.html">silver</a></p>
+                                        <p class="manufacturer-name"><a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">silver</a></p>
                                     </div>
                                     <ul class="color-categories">
                                         <li>
@@ -500,7 +501,7 @@
                                         </li>
                                     </ul>
                                     <h6 class="product-name">
-                                        <a href="product-details.html">Diamond Exclusive Ornament</a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>">Diamond Exclusive Ornament</a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">$55.00</span>
@@ -513,7 +514,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-10.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-9.jpg" alt="product">
                                     </a>
@@ -536,7 +537,7 @@
                                 </figure>
                                 <div class="product-caption text-center">
                                     <div class="product-identity">
-                                        <p class="manufacturer-name"><a href="product-details.html">mony</a></p>
+                                        <p class="manufacturer-name"><a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">mony</a></p>
                                     </div>
                                     <ul class="color-categories">
                                         <li>
@@ -553,7 +554,7 @@
                                         </li>
                                     </ul>
                                     <h6 class="product-name">
-                                        <a href="product-details.html">Citygold Exclusive Ring</a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>">Citygold Exclusive Ring</a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">$60.00</span>
@@ -566,7 +567,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-1.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-18.jpg" alt="product">
                                     </a>
@@ -589,7 +590,7 @@
                                 </figure>
                                 <div class="product-caption text-center">
                                     <div class="product-identity">
-                                        <p class="manufacturer-name"><a href="product-details.html">Gold</a></p>
+                                        <p class="manufacturer-name"><a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id']?>">Gold</a></p>
                                     </div>
                                     <ul class="color-categories">
                                         <li>
@@ -606,7 +607,7 @@
                                         </li>
                                     </ul>
                                     <h6 class="product-name">
-                                        <a href="product-details.html">Perfect Diamond Jewelry</a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>">Perfect Diamond Jewelry</a>
                                     </h6>
                                     <div class="price-box">
                                         <span class="price-regular">$60.00</span>
@@ -619,7 +620,7 @@
                             <!-- product item start -->
                             <div class="product-item">
                                 <figure class="product-thumb">
-                                    <a href="product-details.html">
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham='  . $sanPham['id']?>">
                                         <img class="pri-img" src="assets/img/product/product-2.jpg" alt="product">
                                         <img class="sec-img" src="assets/img/product/product-17.jpg" alt="product">
                                     </a>

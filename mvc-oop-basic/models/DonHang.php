@@ -47,4 +47,25 @@ class DonHang
             echo "Lỗi" . $e->getMessage();
         }
     }
+
+    public function addChiTietDonHang($donHangId, $sanPhamId, $donGia, $soLuong, $thanhTien)
+    {
+        try {
+            $sql = "INSERT INTO chi_tiet_don_hangs(don_hang_id, san_pham_id, don_gia, so_luong, thanh_tien)
+            VALUES (:don_hang_id, :san_pham_id, :don_gia, :so_luong, :thanh_tien)";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                ':don_hang_id' => $donHangId,
+                ':san_pham_id' => $sanPhamId,
+                ':don_gia' => $donGia,
+                ':so_luong' => $soLuong,
+                ':thanh_tien' => $thanhTien
+            ]);
+            return true;
+
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+        }
+    }
 }

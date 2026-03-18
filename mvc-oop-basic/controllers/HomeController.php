@@ -127,7 +127,7 @@ class HomeController
 
             require_once './views/gioHang.php';
         } else {
-            header("Location: ", BASE_URL . '?act=login');
+            header("Location: " . BASE_URL . '?act=login');
             exit();
         }
     }
@@ -147,7 +147,7 @@ class HomeController
             }
             require_once './views/thanhToan.php';
         } else {
-            header("Location: ", BASE_URL . '?act =login');
+            header("Location: " . BASE_URL . '?act =login');
         }
     }
 
@@ -170,7 +170,7 @@ class HomeController
             $ma_don_hang = 'DH' . rand(1000, 9999);
 
             // Thêm thông tin vào db
-            $this->modelDonHang->addDonHang(
+            $donHang = $this->modelDonHang->addDonHang(
                 $tai_khoan_id,
                 $ten_nguoi_nhan,
                 $email_nguoi_nhan,
@@ -183,8 +183,42 @@ class HomeController
                 $trang_thai_id,
                 $ma_don_hang
             );
-            var_dump("Tạo đơn hàng thành công");
-            die();
+
+            //lấy thông thông tin đơn hàng từ giỏ hàng
+            $gioHang = $this->modelGioHang->getGioHangFromUser($tai_khoan_id);
+
+            //lưu sản phẩm vào chi tiêt đơn hàng
+            if ($donHang) {
+                //lấy ra toàn bộ sản phẩm trong giỏ hàng
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+
+                //thêm từng sản phẩm từ giỏ hàng vào chi tiết đơn hàng
+                foreach ($chiTietGioHang as $item) {
+                    $donGia = $item['gia_khuyen_mai'] ?? $item['gia_san_pham']; // ưu tiên lấy giá khuyến mãi
+
+                    $this->modelDonHang->addChiTietDonHang(
+                        $donHang, //Id đơn hàng vừa tạo
+                        $item['san_pham_id'], // ID sản phẩm
+                        $donGia, // đơn giá
+                        $item['so_luong'], // số lượng
+                        $donGia * $item['so_luong'], //thành tiền
+                    );
+                }
+                // sau khi thêm xong thì phải xóa sản phẩm trong giỏ hàng
+                // xóa toàn bộ sản phẩm trong chi tiết giỏ hàng
+                $this->modelGioHang->clearDetailGioHang($gioHang['id']);
+
+                // xóa thông tin giỏ hàng người dùng
+                $this->modelGioHang->clearGioHang($tai_khoan_id);
+
+                //chuyển hướng về trang lịch sử mua hàng
+                header("Location: " . BASE_URL . '?act=lich-su-mua-hang');
+                exit;
+            } else {
+                var_dump("Lỗi đặt hàng. Vui lòng thử lại sau");
+                die;
+            }
+
         }
     }
 }

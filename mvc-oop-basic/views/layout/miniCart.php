@@ -1,6 +1,5 @@
-
 <!-- offcanvas mini cart start -->
- 
+
 <div class="offcanvas-minicart-wrapper">
     <div class="minicart-inner">
         <div class="offcanvas-overlay"></div>
@@ -70,8 +69,8 @@
                 </div>
 
                 <div class="minicart-button">
-                    <a href="<?= BASE_URL . '?act=gio-hang'?>"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a>
-                    <a href="cart.html"><i class="fa fa-share"></i> Thanh toán</a>
+                    <a href="<?= BASE_URL . '?act=gio-hang' ?>"><i class="fa fa-shopping-cart"></i> Xem giỏ hàng</a>
+                    <a href="<?= BASE_URL . '?act=thanh-toan' ?>"><i class="fa fa-share"></i> Thanh toán</a>
                 </div>
             </div>
         </div>

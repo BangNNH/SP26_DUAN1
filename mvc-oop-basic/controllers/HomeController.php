@@ -221,4 +221,68 @@ class HomeController
 
         }
     }
+
+    public function lichSuMuaHang()
+    {
+        if (isset(($_SESSION['user_client']))) {
+            // Lấy ra thông tin tài khoản đăng Nhập
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $taiKhoanId = $user['id'];
+
+            //Lấy ra danh sách trạng thái đơn hàng
+            $arTrangThaiDonHang = $this->modelDonHang->getTrangThaiDonHang();
+            $trangThaiDonHang = array_column($arTrangThaiDonHang, 'ten_trang_thai', 'id');
+
+            //Lấy ra danh sách phương thức thanh toán
+            $arPhuongThucThanhToan = $this->modelDonHang->getPhuongThucThanhToan();
+            $phuongThucThanhToan = array_column($arPhuongThucThanhToan, 'ten_phuong_thuc', 'id');
+
+            // Lấy ra danh sách tất cả đơn hàng của tài khoản
+            $donHangs = $this->modelDonHang->getDonHangFromUser($taiKhoanId);
+            require_once "./views/lichSuMuaHang.php";
+
+        } else {
+            var_dump("Vui lòng đăng nhập");
+            die;
+        }
+    }
+
+    public function chiTietMuaHang()
+    {
+
+    }
+    public function huyDonHang()
+    {
+        if (isset(($_SESSION['user_client']))) {
+            // Lấy ra thông tin tài khoản đăng Nhập
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $tai_khoan_Id = $user['id'];
+
+            //lấy id đơn hàng truyền từ BASE_URL
+            $donHangId = $_GET['id'];
+
+            //Kiểm tra đơn hàng
+            $donHang = $this->modelDonHang->getDonHangById($donHangId);
+
+            if ($donHang['tai_khoan_id'] != $tai_khoan_Id) {
+                echo "Bạn không có quyền hủy đơn hàng này";
+                exit;
+            }
+
+            if ($donHang['trang_thai_id'] != 1) {
+                echo "Chỉ đơn hàng chưa xác nhận mới có thể hủy";
+                exit;
+            }
+
+            //hủy đơn hàng
+            $this->modelDonHang->updateTrangThaiDonHang($donHangId, 11);
+            header("Location: " . BASE_URL . '?act=lich-su-mua-hang');
+            exit;
+
+        } else {
+            var_dump("Vui lòng đăng nhập");
+            die;
+        }
+    }
+
 }

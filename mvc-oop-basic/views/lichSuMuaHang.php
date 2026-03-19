@@ -52,6 +52,10 @@
                                             </td>
                                             <td><?= $trangThaiDonHang[$donHang['trang_thai_id']] ?></td>
                                             <td>
+                                                <a href="<?= BASE_URL ?>?act=chi-tiet-mua-hang&id=<?= $donHang['id'] ?>"
+                                                    class="btn btn-sqr">
+                                                    Xem chi tiết
+                                                </a>
                                                 <?php if ($donHang['trang_thai_id'] == 1): ?>
                                                     <a href="<?= BASE_URL ?>?act=huy-don-hang&id=<?= $donHang['id'] ?>"
                                                         class="btn btn-sqr"

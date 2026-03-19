@@ -28,7 +28,7 @@ match ($act) {
     'thanh-toan' => (new HomeController())->thanhToan(),
     'xu-ly-thanh-toan' => (new HomeController())->postThanhToan(),
     'lich-su-mua-hang' => (new HomeController())->lichSuMuaHang(),
-    'chi-tiet-don-hang' => (new HomeController())->chiTietMuaHang(),
+    'chi-tiet-mua-hang' => (new HomeController())->chiTietMuaHang(),
     'huy-don-hang' => (new HomeController())->huyDonHang(),
 
     // Auth

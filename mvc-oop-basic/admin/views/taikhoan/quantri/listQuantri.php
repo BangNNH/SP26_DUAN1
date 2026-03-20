@@ -51,20 +51,24 @@
                                 <tbody>
                                     <?php foreach ($listQuanTri as $key => $quanTri): ?>
                                         <tr>
-                                            <td><?= $key + 1 ?></td>
+                                            <td class="text-center"><?= $key + 1 ?></td>
                                             <td><?= $quanTri['ho_ten'] ?></td>
                                             <td><?= $quanTri['email'] ?></td>
-                                            <td><?= $quanTri['so_dien_thoai'] ?></td>
-                                            <td><?= $quanTri['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
+                                            <td class="text-center"><?= $quanTri['so_dien_thoai'] ?></td>
+                                            <td class="text-center"><?= $quanTri['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
                                             <td>
-                                                <a href="<?= BASE_URL_ADMIN . '?act=form-sua-quan-tri&id_quan_tri=' . $quanTri['id'] ?>">
-                                                    <button class="btn btn-warning">Sửa</button>
-                                                </a>
+                                                <div class="d-flex justify-content-center" style="gap: 6px;">
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-quan-tri&id_quan_tri=' . $quanTri['id'] ?>"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
 
-                                                <a href="<?= BASE_URL_ADMIN . '?act=reset-password&id_quan_tri=' . $quanTri['id']  ?>"
-                                                    onclick="return confirm('Bạn có muốn reset password của tài khoản hay không?')">
-                                                    <button class="btn btn-danger">Reset Password</button>
-                                                </a>
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=reset-password&id_quan_tri=' . $quanTri['id']  ?>"
+                                                        onclick="return confirm('Bạn có muốn reset password của tài khoản hay không?')"
+                                                        class="btn btn-danger btn-sm">
+                                                        Reset Password
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

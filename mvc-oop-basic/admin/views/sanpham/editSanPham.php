@@ -45,7 +45,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                <label for="ten_san_pham">Tên sản phẩm</label>
+                                <label for="ten_san_pham">Tên sản phẩm <span class="text-danger">*</span></label>
                                 <input type="text" name="ten_san_pham" class="form-control" value="<?= $sanPham['ten_san_pham'] ?>">
                                 <?php if (isset($_SESSION['errors']['ten_san_pham'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['ten_san_pham'] ?></p>
@@ -53,7 +53,7 @@
                                 } ?>
                             </div>
                             <div class="form-group">
-                                <label for="gia_san_pham">Giá sản phẩm</label>
+                                <label for="gia_san_pham">Giá sản phẩm <span class="text-danger">*</span></label>
                                 <input type="number" name="gia_san_pham" class="form-control" value="<?= $sanPham['gia_san_pham'] ?>">
                                 <?php if (isset($_SESSION['errors']['gia_san_pham'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['gia_san_pham'] ?></p>
@@ -69,11 +69,11 @@
                                 } ?>
                             </div>
                             <div class="form-group">
-                                <label for="hinh_anh">Hình ảnh</label>
+                                <label for="hinh_anh">Hình ảnh <span class="text-danger">*</span></label>
                                 <input type="file" name="hinh_anh" class="form-control" value="<?= $sanPham['hinh_anh'] ?>">
                             </div>
                             <div class="form-group">
-                                <label for="ten_san_pham">Số lượng</label>
+                                <label for="ten_san_pham">Số lượng <span class="text-danger">*</span></label>
                                 <input type="number" name="so_luong" class="form-control" value="<?= $sanPham['so_luong'] ?>">
                                 <?php if (isset($_SESSION['errors']['so_luong'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></p>
@@ -81,7 +81,7 @@
                                 } ?>
                             </div>
                             <div class="form-group">
-                                <label for="ten_san_pham">Ngày nhập</label>
+                                <label for="ten_san_pham">Ngày nhập <span class="text-danger">*</span></label>
                                 <input type="date" name="ngay_nhap" class="form-control" value="<?= $sanPham['ngay_nhap'] ?>">
                                 <?php if (isset($_SESSION['errors']['ngay_nhap'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['ngay_nhap'] ?></p>
@@ -89,7 +89,7 @@
                                 } ?>
                             </div>
                             <div class="form-group">
-                                <label for="danh_muc_id">Danh mục sản phẩm</label>
+                                <label for="danh_muc_id">Danh mục sản phẩm <span class="text-danger">*</span></label>
                                 <select name="danh_muc_id" class="form-control custom-select">
                                     <?php foreach ($listDanhMuc as $danhMuc): ?>
                                         <option <?= $danhMuc['id'] == $sanPham['danh_muc_id'] ? 'selected' : '' ?> value="<?= $danhMuc['id'] ?>"><?= $danhMuc['ten_danh_muc'] ?></option>
@@ -101,7 +101,7 @@
                                 } ?>
                             </div>
                             <div class="form-group">
-                                <label for="trang_thai">Trạng thái</label>
+                                <label for="trang_thai">Trạng thái <span class="text-danger">*</span></label>
                                 <select name="trang_thai" class="form-control custom-select">
                                     <option value="1" <?= $sanPham['trang_thai'] == 1 ? 'selected' : '' ?>>Còn hàng</option>
                                     <option value="2" <?= $sanPham['trang_thai'] == 2 ? 'selected' : '' ?>>Dừng bán</option>

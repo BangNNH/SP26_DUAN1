@@ -60,9 +60,9 @@
                                                     onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
                                             </td>
                                             <td><?= $sanPham['gia_san_pham'] ?></td>
-                                            <td><?= $sanPham['so_luong'] ?></td>
+                                            <td class="text-center"><?= $sanPham['so_luong'] ?></td>
                                             <td><?= $sanPham['ten_danh_muc'] ?></td>
-                                            <td><?= $sanPham['trang_thai'] == 1 ? 'Còn hàng' : 'Dừng bán' ?></td>
+                                            <td class="text-center"><?= $sanPham['trang_thai'] == 1 ? 'Còn hàng' : 'Dừng bán' ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-center" style="gap: 6px;">
                                                     <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>"

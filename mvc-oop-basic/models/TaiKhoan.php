@@ -51,7 +51,7 @@ class TaiKhoan
             }
 
             return "Bạn nhập sai thông tin mật khẩu hoặc tài khoản";
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo "lỗi" . $e->getMessage();
             return false;
         }

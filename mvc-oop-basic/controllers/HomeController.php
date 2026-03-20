@@ -48,7 +48,7 @@ class HomeController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // lấy email và pass gửi lên từ form
             $email = $_POST['email'];
-            $password = $_POST['password'];
+            $password = trim($_POST['password']);;
 
             // Xử lí kiểm tra thông tin đăng nhập
             $user = $this->modelTaiKhoan->checkLogin($email, $password);
@@ -218,7 +218,6 @@ class HomeController
                 var_dump("Lỗi đặt hàng. Vui lòng thử lại sau");
                 die;
             }
-
         }
     }
 
@@ -240,7 +239,6 @@ class HomeController
             // Lấy ra danh sách tất cả đơn hàng của tài khoản
             $donHangs = $this->modelDonHang->getDonHangFromUser($taiKhoanId);
             require_once "./views/lichSuMuaHang.php";
-
         } else {
             var_dump("Vui lòng đăng nhập");
             die;
@@ -313,11 +311,9 @@ class HomeController
             $this->modelDonHang->updateTrangThaiDonHang($donHangId, 11);
             header("Location: " . BASE_URL . '?act=lich-su-mua-hang');
             exit;
-
         } else {
             var_dump("Vui lòng đăng nhập");
             die;
         }
     }
-
 }

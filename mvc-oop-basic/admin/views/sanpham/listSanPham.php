@@ -55,7 +55,7 @@
                                         <tr>
                                             <td class="text-center"><?= $key + 1 ?></td>
                                             <td><?= $sanPham['ten_san_pham'] ?></td>
-                                            <td>
+                                            <td class="text-center">
                                                 <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" style="width:100px" alt=""
                                                     onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
                                             </td>

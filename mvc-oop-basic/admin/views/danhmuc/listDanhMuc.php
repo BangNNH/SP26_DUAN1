@@ -49,17 +49,21 @@
                                 <tbody>
                                     <?php foreach ($listDanhMuc as $key => $danhMuc): ?>
                                         <tr>
-                                            <td><?= $key + 1 ?></td>
+                                            <td class="text-center"><?= $key + 1 ?></td>
                                             <td><?= $danhMuc['ten_danh_muc'] ?></td>
                                             <td><?= $danhMuc['mo_ta'] ?></td>
                                             <td>
-                                                <a href="<?= BASE_URL_ADMIN . '?act=form-sua-danh-muc&id_danh_muc=' . $danhMuc['id'] ?>">
-                                                    <button class="btn btn-warning">Sửa</button>
-                                                </a>
-                                                <a href="<?= BASE_URL_ADMIN . '?act=xoa-danh-muc&id_danh_muc=' . $danhMuc['id']  ?>"
-                                                    onclick="return confirm('Bạn có đồng ý xóa danh mục?')">
-                                                    <button class="btn btn-danger">Xóa</button>
-                                                </a>
+                                                <div class="d-flex justify-content-center" style="gap: 6px;">
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-danh-muc&id_danh_muc=' . $danhMuc['id'] ?>"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=xoa-danh-muc&id_danh_muc=' . $danhMuc['id']  ?>"
+                                                        onclick="return confirm('Bạn có đồng ý xóa danh mục?')" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </a>
+
+                                                </div>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>

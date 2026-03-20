@@ -25,139 +25,122 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="container">
-            <hr>
-            <div class="row">
-                <!-- left column -->
+        <div class="container-fluid">
+            <div class="card card-primary shadow-sm">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="card card-widget widget-user-2 shadow-sm">
+                                <div class="widget-user-header bg-info">
+                                    <div class="widget-user-image">
+                                        <img class="img-circle elevation-2" src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien'] ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
+                                    </div>
+                                    <h5 class="widget-user-username text-white"><?= htmlspecialchars($thongTin['ho_ten'] ?? 'Admin') ?></h5>
+                                    <span class="widget-user-desc text-white"><?= htmlspecialchars($thongTin['chuc_vu_id'] ?? 'Chức vụ') ?></span>
+                                </div>
+                                <div class="card-footer p-3">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <p class="mb-1"><strong>Email:</strong> <?= htmlspecialchars($thongTin['email'] ?? 'Chưa có') ?></p>
+                                            <p class="mb-1"><strong>SĐT:</strong> <?= htmlspecialchars($thongTin['so_dien_thoai'] ?? 'Chưa có') ?></p>
+                                            <p class="mb-0"><strong>Địa chỉ:</strong> <?= htmlspecialchars($thongTin['dia_chi'] ?? 'Chưa có') ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-box bg-light shadow-sm mt-2">
+                                <span class="info-box-icon bg-primary"><i class="fas fa-user-cog"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Tài khoản hiện tại</span>
+                                    <span class="info-box-number"><?= htmlspecialchars($thongTin['ten_dang_nhap'] ?? 'admin') ?></span>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <img src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien']?>" style="width: 100px;"
-                            class="avatar img-circle" alt="avatar"
-                            onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
-                        </td>
-                        <h6 class="mt-2">Họ tên:<?=$thongTin['ho_ten'] ?></h6>
-                        <h6 class="mt-2">Chức vụ:<?=$thongTin['chuc_vu_id'] ?></h6>
+                        <div class="col-lg-8">
+                            <?php if (!empty($_SESSION['success'])) { ?>
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-check-circle"></i> <?= htmlspecialchars($_SESSION['success']) ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            <?php } ?>
+                            <?php if (!empty($_SESSION['errors']['general'])) { ?>
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-exclamation-triangle"></i> <?= htmlspecialchars($_SESSION['errors']['general']) ?>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                            <?php } ?>
 
+                            <div class="card card-outline card-info shadow-sm mb-3">
+                                <div class="card-header">
+                                    <h5 class="card-title">Thông tin cá nhân</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="<?= BASE_URL_ADMIN . '?act=sua-thong-tin-ca-nhan-admin' ?>" method="post">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Họ tên</label>
+                                                <input class="form-control" type="text" name="ho_ten" value="<?= htmlspecialchars($thongTin['ho_ten'] ?? '') ?>">
+                                                <?php if (!empty($_SESSION['errors']['ho_ten'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['ho_ten']) ?></small><?php } ?>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Email</label>
+                                                <input class="form-control" type="email" name="email" value="<?= htmlspecialchars($thongTin['email'] ?? '') ?>">
+                                                <?php if (!empty($_SESSION['errors']['email'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['email']) ?></small><?php } ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Số điện thoại</label>
+                                                <input class="form-control" type="text" name="so_dien_thoai" value="<?= htmlspecialchars($thongTin['so_dien_thoai'] ?? '') ?>">
+                                                <?php if (!empty($_SESSION['errors']['so_dien_thoai'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['so_dien_thoai']) ?></small><?php } ?>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Ngày sinh</label>
+                                                <input class="form-control" type="date" name="ngay_sinh" value="<?= htmlspecialchars($thongTin['ngay_sinh'] ?? '') ?>">
+                                                <?php if (!empty($_SESSION['errors']['ngay_sinh'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['ngay_sinh']) ?></small><?php } ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Địa chỉ</label>
+                                            <textarea class="form-control" name="dia_chi" rows="3"><?= htmlspecialchars($thongTin['dia_chi'] ?? '') ?></textarea>
+                                            <?php if (!empty($_SESSION['errors']['dia_chi'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['dia_chi']) ?></small><?php } ?>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Lưu thay đổi</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="card card-outline card-warning shadow-sm">
+                                <div class="card-header">
+                                    <h5 class="card-title">Đổi mật khẩu</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form action="<?= BASE_URL_ADMIN . '?act=sua-mat-khau-ca-nhan-admin' ?>" method="post">
+                                        <div class="form-group">
+                                            <label>Mật khẩu cũ</label>
+                                            <input class="form-control" type="password" name="old_pass" value="">
+                                            <?php if (!empty($_SESSION['errors']['old_pass'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['old_pass']) ?></small><?php } ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Mật khẩu mới</label>
+                                            <input class="form-control" type="password" name="new_pass" value="">
+                                            <?php if (!empty($_SESSION['errors']['new_pass'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['new_pass']) ?></small><?php } ?>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Nhập lại mật khẩu</label>
+                                            <input class="form-control" type="password" name="confirm_pass" value="">
+                                            <?php if (!empty($_SESSION['errors']['confirm_pass'])) { ?><small class="text-danger"><?= htmlspecialchars($_SESSION['errors']['confirm_pass']) ?></small><?php } ?>
+                                        </div>
+                                        <button type="submit" class="btn btn-warning"><i class="fas fa-key"></i> Cập nhật mật khẩu</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <!-- edit form column -->
-                <div class="col-md-9 personal-info">
-                    <hr>
-                    <h3>Thông tin cá nhân</h3>
-
-                    <?php if (!empty($_SESSION['success'])) { ?>
-                    <div class="alert alert-success alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="fa fa-check"></i>
-                        <?= htmlspecialchars($_SESSION['success']) ?>
-                    </div>
-                    <?php } ?>
-                    <?php if (!empty($_SESSION['errors']['general'])) { ?>
-                    <div class="alert alert-danger alert-dismissible">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <i class="fa fa-exclamation-triangle"></i>
-                        <?= htmlspecialchars($_SESSION['errors']['general']) ?>
-                    </div>
-                    <?php } ?>
-
-                    <form action="<?= BASE_URL_ADMIN . '?act=sua-thong-tin-ca-nhan-admin' ?>" method="post">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Họ tên:</label>
-                            <div class="col-lg-12">
-                                <input class="form-control" type="text" name="ho_ten" value="<?= htmlspecialchars($thongTin['ho_ten'] ?? '') ?>">
-                                <?php if (!empty($_SESSION['errors']['ho_ten'])) { ?>
-                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['ho_ten']) ?></p>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Email:</label>
-                            <div class="col-lg-12">
-                                <input class="form-control" type="text" name="email" value="<?= htmlspecialchars($thongTin['email'] ?? '') ?>">
-                                <?php if (!empty($_SESSION['errors']['email'])) { ?>
-                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['email']) ?></p>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Số điện thoại:</label>
-                            <div class="col-lg-12">
-                                <input class="form-control" type="text" name="so_dien_thoai" value="<?= htmlspecialchars($thongTin['so_dien_thoai'] ?? '') ?>">
-                                <?php if (!empty($_SESSION['errors']['so_dien_thoai'])) { ?>
-                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['so_dien_thoai']) ?></p>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Ngày sinh:</label>
-                            <div class="col-lg-12">
-                                <input class="form-control" type="date" name="ngay_sinh" value="<?= htmlspecialchars($thongTin['ngay_sinh'] ?? '') ?>">
-                                <?php if (!empty($_SESSION['errors']['ngay_sinh'])) { ?>
-                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['ngay_sinh']) ?></p>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Địa chỉ:</label>
-                            <div class="col-lg-12">
-                                <textarea class="form-control" name="dia_chi" rows="3"><?= htmlspecialchars($thongTin['dia_chi'] ?? '') ?></textarea>
-                                <?php if (!empty($_SESSION['errors']['dia_chi'])) { ?>
-                                    <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['dia_chi']) ?></p>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label"></label>
-                            <div class="col-md-12">
-                                <input type="submit" class="btn btn-primary" value="Lưu thay đổi">
-                            </div>
-                        </div>
-                    </form>
-
-                    <h3>Đổi mật khẩu</h3>
-
-                    <form action="<?= BASE_URL_ADMIN . '?act=sua-mat-khau-ca-nhan-admin' ?>" method="post">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Mật khẩu cũ:</label>
-                            <div class="col-md-12">
-                                <input class="form-control" type="password" name="old_pass" value="">
-                                <?php if (!empty($_SESSION['errors']['old_pass'])) { ?>
-                                        <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['old_pass']) ?></p>
-                                    <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Mật khẩu mới:</label>
-                            <div class="col-md-12">
-                                <input class="form-control" type="password" name="new_pass" value="">
-                                <?php if (!empty($_SESSION['errors']['new_pass'])) { ?>
-                                        <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['new_pass']) ?></p>
-                                    <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Nhập lại mật khẩu:</label>
-                            <div class="col-md-12">
-                                <input class="form-control" type="password" name="confirm_pass" value="">
-                                 <?php if (!empty($_SESSION['errors']['confirm_pass'])) { ?>
-                                        <p class="text-danger"><?= htmlspecialchars($_SESSION['errors']['confirm_pass']) ?></p>
-                                    <?php } ?>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label"></label>
-                            <div class="col-md-12">
-                                <input type="submit" class="btn btn-primary" value="Save Changes">
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
-        <hr>
-        <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
 </div>

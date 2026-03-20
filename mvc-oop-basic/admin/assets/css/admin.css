@@ -1,0 +1,4 @@
+table.table-bordered.dataTable tbody td{
+    vertical-align: middle !important;
+    /* text-align: center; */
+}

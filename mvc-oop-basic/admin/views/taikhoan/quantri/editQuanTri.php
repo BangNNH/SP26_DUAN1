@@ -38,7 +38,7 @@
                             <input type="hidden" name="quan_tri_id" value="<?= $quanTri['id'] ?>">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Họ tên</label>
+                                    <label>Họ tên <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ho_ten" value="<?= $quanTri['ho_ten'] ?>" placeholder="Nhập họ tên">
                                     <?php if (isset($_SESSION['errors']['ho_ten'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['ho_ten'] ?></p>
@@ -47,7 +47,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>Email <span class="text-danger">*</span></label>
                                     <input type="email" class="form-control" name="email" value="<?= $quanTri['email'] ?>" placeholder="Nhập email">
                                     <?php if (isset($_SESSION['errors']['email'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['email'] ?></p>
@@ -56,7 +56,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Số điện thoại</label>
+                                    <label>Số điện thoại <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="so_dien_thoai" value="<?= $quanTri['so_dien_thoai'] ?>" placeholder="Nhập số điện thoại">
                                     <?php if (isset($_SESSION['errors']['so_dien_thoai'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['so_dien_thoai'] ?></p>
@@ -65,7 +65,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="inputStatus">Trạng thái tài khoản</label>
+                                    <label for="inputStatus">Trạng thái tài khoản <span class="text-danger">*</span></label>
                                     <select id="inputStatus" name="trang_thai" class="form-control custom-select">
                                         <option <?= $quanTri['trang_thai'] == 1 ? 'selected' : '' ?> value="1">Active</option>
                                         <option <?= $quanTri['trang_thai'] !== 1 ? 'selected' : '' ?> value="2">Inactive</option>

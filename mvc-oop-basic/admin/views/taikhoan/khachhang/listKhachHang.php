@@ -50,25 +50,28 @@
                                 <tbody>
                                     <?php foreach ($listKhachHang as $key => $khachHang): ?>
                                         <tr>
-                                            <td><?= $key + 1 ?></td>
+                                            <td class="text-center"><?= $key + 1 ?></td>
                                             <td><?= $khachHang['ho_ten'] ?></td>
                                             <td><img src="<?= BASE_URL . $khachHang['anh_dai_dien'] ?>" style="width:100px" alt=""
-                                                onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'"></td>
+                                                    onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'"></td>
                                             <td><?= $khachHang['email'] ?></td>
-                                            <td><?= $khachHang['so_dien_thoai'] ?></td>
-                                            <td><?= $khachHang['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
+                                            <td class="text-center"><?= $khachHang['so_dien_thoai'] ?></td>
+                                            <td class="text-center"><?= $khachHang['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $khachHang['id'] ?>">
-                                                        <button class="btn btn-primary">Chi Tiết</button>
+                                                <div class="d-flex justify-content-center" style="gap: 6px;">
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $khachHang['id'] ?>"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-khach-hang&id_khach_hang=' . $khachHang['id'] ?>">
-                                                        <button class="btn btn-warning">Sửa</button>
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-khach-hang&id_khach_hang=' . $khachHang['id'] ?>"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
                                                     </a>
 
                                                     <a href="<?= BASE_URL_ADMIN . '?act=reset-password&id_khach_hang=' . $khachHang['id']  ?>"
-                                                        onclick="return confirm('Bạn có muốn reset password của tài khoản hay không?')">
-                                                        <button class="btn btn-danger">Reset Password</button>
+                                                        onclick="return confirm('Bạn có muốn reset password của tài khoản hay không?')"
+                                                        class="btn btn-danger btn-sm">
+                                                        Reset Password
                                                     </a>
                                                 </div>
 

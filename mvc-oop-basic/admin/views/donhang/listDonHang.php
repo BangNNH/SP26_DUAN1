@@ -50,7 +50,7 @@
                                 <tbody>
                                     <?php foreach ($listDonHang as $key => $donHang): ?>
                                         <tr>
-                                            <td>
+                                            <td class="text-center">
                                                 <?= $key + 1 ?>
                                             </td>
                                             <td>
@@ -72,14 +72,18 @@
                                                 <?= $donHang['ten_trang_thai'] ?>
                                             </td>
                                             <td>
-                                                <div class="btn-group">
+                                                <div class="d-flex justify-content-center" style="gap: 6px;">
                                                     <a
-                                                        href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>">
-                                                        <button class="btn btn-primary"><i class="fas fa-eye"></i></button>
+                                                        href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-eye"></i>
+
                                                     </a>
                                                     <a
-                                                        href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>">
-                                                        <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
+                                                        href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
+
                                                     </a>
                                                 </div>
                                             </td>
@@ -120,7 +124,7 @@
 
 <!-- Page specific script -->
 <script>
-    $(function () {
+    $(function() {
         $("#example1").DataTable({
             "responsive": true,
             "lengthChange": false,

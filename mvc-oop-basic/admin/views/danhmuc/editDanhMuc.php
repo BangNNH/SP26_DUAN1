@@ -38,7 +38,7 @@
                             <input type="text" value="<?= $danhMuc['id'] ?>" name="id" hidden>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Tên danh mục</label>
+                                    <label>Tên danh mục <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ten_danh_muc" value="<?= $danhMuc['ten_danh_muc'] ?>" placeholder="Nhập tên danh mục">
                                     <?php if (isset($errors['ten_danh_muc'])) { ?>
                                         <p class="text-danger"><?= $errors['ten_danh_muc'] ?></p>

@@ -36,7 +36,7 @@
                         <form action="<?= BASE_URL_ADMIN . '?act=them-san-pham' ?>" method="POST" enctype="multipart/form-data">
                             <div class="card-body row">
                                 <div class="form-group col-12">
-                                    <label>Tên sản phẩm</label>
+                                    <label>Tên sản phẩm <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ten_san_pham" placeholder="Nhập tên sản phẩm">
                                     <?php if (isset($_SESSION['errors']['ten_san_pham'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['ten_san_pham'] ?></p>
@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label>Giá sản phẩm</label>
+                                    <label>Giá sản phẩm <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="gia_san_pham" placeholder="Nhập giá sản phẩm">
                                     <?php if (isset($_SESSION['errors']['gia_san_pham'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['gia_san_pham'] ?></p>
@@ -63,7 +63,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label>Hình ảnh</label>
+                                    <label>Hình ảnh <span class="text-danger">*</span></label>
                                     <input type="file" class="form-control" name="hinh_anh">
                                     <?php if (isset($_SESSION['errors']['hinh_anh'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['hinh_anh'] ?></p>
@@ -77,7 +77,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label>Số lượng</label>
+                                    <label>Số lượng <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="so_luong" placeholder="Nhập số lượng">
                                     <?php if (isset($_SESSION['errors']['so_luong'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></p>
@@ -86,7 +86,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label>Ngày nhập</label>
+                                    <label>Ngày nhập <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control" name="ngay_nhap" placeholder="Ngày nhập">
                                     <?php if (isset($_SESSION['errors']['ngay_nhap'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['ngay_nhap'] ?></p>
@@ -95,7 +95,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label>Danh mục</label>
+                                    <label>Danh mục <span class="text-danger">*</span></label>
                                     <select class="form-control" name="danh_muc_id" id="exampleFormControlSelect1">
                                         <option value="" selected>Chọn danh mục sản phẩm</option>
                                         <?php foreach ($listDanhMuc as $danhMuc): ?>
@@ -109,7 +109,7 @@
                                 </div>
 
                                 <div class="form-group col-6">
-                                    <label>Trạng thái</label>
+                                    <label>Trạng thái <span class="text-danger">*</span></label>
                                     <select class="form-control" name="trang_thai" id="exampleFormControlSelect1">
                                         <option value="" selected>Chọn trạng thái sản phẩm</option>
                                         <option value="1">Còn hàng</option>

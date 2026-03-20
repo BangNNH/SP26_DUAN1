@@ -38,45 +38,45 @@
                             <input type="text" value="<?= $donHang['id'] ?>" name="don_hang_id" hidden>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Tên người nhận: </label>
+                                    <label>Tên người nhận <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ten_nguoi_nhan"
                                         value="<?= $donHang['ten_nguoi_nhan'] ?>" placeholder="Nhập tên người nhận"
                                         required>
                                     <?php if (isset($errors['ten_nguoi_nhan'])) { ?>
                                         <p class="text-danger"><?= $errors['ten_nguoi_nhan'] ?></p>
-                                        <?php
+                                    <?php
                                     } ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Số điện thoại: </label>
+                                    <label>Số điện thoại <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="sdt_nguoi_nhan"
                                         value="<?= $donHang['sdt_nguoi_nhan'] ?>" placeholder="Nhập số điện thoại"
                                         required>
                                     <?php if (isset($errors['sdt_nguoi_nhan'])) { ?>
                                         <p class="text-danger"><?= $errors['sdt_nguoi_nhan'] ?></p>
-                                        <?php
+                                    <?php
                                     } ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Email: </label>
+                                    <label>Email <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="email_nguoi_nhan"
                                         value="<?= $donHang['email_nguoi_nhan'] ?>" placeholder="Nhập Email" required>
                                     <?php if (isset($errors['email_nguoi_nhan'])) { ?>
                                         <p class="text-danger"><?= $errors['email_nguoi_nhan'] ?></p>
-                                        <?php
+                                    <?php
                                     } ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Địa Chỉ: </label>
+                                    <label>Địa Chỉ <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="dia_chi_nguoi_nhan"
                                         value="<?= $donHang['dia_chi_nguoi_nhan'] ?>" placeholder="Nhập địa chỉ"
                                         required>
                                     <?php if (isset($errors['dia_chi_nguoi_nhan'])) { ?>
                                         <p class="text-danger"><?= $errors['dia_chi_nguoi_nhan'] ?></p>
-                                        <?php
+                                    <?php
                                     } ?>
                                 </div>
 
@@ -92,16 +92,15 @@
                                         <!-- /.chọn disabled để chọn trạng thái cho sản phẩm, Nếu trạng thái của đơn hàng đã qua thì không cho phép chọn lại trạng thái cũ nữa -->
                                         <?php foreach ($listTrangThaiDonHang as $trangThai): ?>
                                             <option <?php
-                                            if (
-                                                $donHang['trang_thai_id'] > $trangThai['id']
-                                                || $donHang['trang_thai_id'] == 9
-                                                || $donHang['trang_thai_id'] == 10
-                                                || $donHang['trang_thai_id'] == 11
-                                            ) {
-                                                echo 'disabled';
-
-                                            }
-                                            ?>
+                                                    if (
+                                                        $donHang['trang_thai_id'] > $trangThai['id']
+                                                        || $donHang['trang_thai_id'] == 9
+                                                        || $donHang['trang_thai_id'] == 10
+                                                        || $donHang['trang_thai_id'] == 11
+                                                    ) {
+                                                        echo 'disabled';
+                                                    }
+                                                    ?>
                                                 <?= $trangThai['id'] == $donHang['trang_thai_id'] ? 'selected' : '' ?>
                                                 value="<?= $trangThai['id'] ?>">
                                                 <?= $trangThai['ten_trang_thai'] ?>
@@ -110,7 +109,7 @@
                                     </select>
                                     <?php if (isset($_SESSION['errors']['trang_thai_id'])) { ?>
                                         <p class="text-danger"><?= $_SESSION['errors']['trang_thai_id'] ?></p>
-                                        <?php
+                                    <?php
                                     } ?>
                                 </div>
                             </div>

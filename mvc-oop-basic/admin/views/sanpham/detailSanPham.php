@@ -51,13 +51,22 @@
                         <h4 class="mt-3">Lượt xem: <small><?= $sanPham['luot_xem'] ?></small></h4>
                         <h4 class="mt-3">Ngày nhập: <small><?= $sanPham['ngay_nhap'] ?></small></h4>
                         <h4 class="mt-3">Danh mục: <small><?= $sanPham['ten_danh_muc'] ?></small></h4>
-                        <h4 class="mt-3">Trạng thái: <small><?= $sanPham['trang_thai'] == 1 ? "Còn hàng" : "Ngừng bán" ?></small></h4>
+                        <h4 class="mt-3">Trạng thái: <small><?= $sanPham['trang_thai'] == 1 ? "Còn hàng" : "Hết hàng" ?></small></h4>
+                        <h4 class="mt-3">Mã code: <small><?= $sanPham['code'] ?></small></h4>
+                        <h4 class="mt-3">Sản phẩm mới: <small><?= $sanPham['is_new'] == 1 ? 'Có' : 'Không' ?></small></h4>
+                        <h4 class="mt-3">Sản phẩm hot: <small><?= $sanPham['is_hot'] == 1 ? 'Có' : 'Không' ?></h4>
+                        <h4 class="mt-3">Giới tính: <small><?= $sanPham['gioi_tinh'] ?></small></h4>
+                        <h4 class="mt-3">Loại máy: <small><?= $sanPham['loai_may'] ?></small></h4>
+                        <h4 class="mt-3">Xuất xứ: <small><?= $sanPham['xuat_xu'] ?></small></h4>
+                        <h4 class="mt-3">Kích thước: <small><?= $sanPham['kich_thuoc'] ?></small></h4>
+                        <h4 class="mt-3">Chất liệu dây: <small><?= $sanPham['chat_lieu_day'] ?></small></h4>
+                        <h4 class="mt-3">Chống nước: <small><?= $sanPham['chong_nuoc'] ?></small></h4>
                         <h4 class="mt-3">Mô tả: <small><?= $sanPham['mo_ta'] ?></small></h4>
 
                     </div>
                 </div>
 
-                
+
                 <div class="col-12">
                     <hr>
                     <h2>Bình luận của sản phẩm</h2>
@@ -86,7 +95,7 @@
                                             </td>
                                             <td><?= $binhLuan['noi_dung'] ?></td>
                                             <td><?= $binhLuan['ngay_dang'] ?></td>
-                                            <td><?= $binhLuan['trang_thai'] == 1 ? 'Hiển thị' : 'Bị Ẩn'?></td>
+                                            <td><?= $binhLuan['trang_thai'] == 1 ? 'Hiển thị' : 'Bị Ẩn' ?></td>
 
                                             <td>
                                                 <div class="btn-group">

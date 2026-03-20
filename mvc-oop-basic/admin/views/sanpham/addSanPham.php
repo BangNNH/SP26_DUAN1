@@ -32,43 +32,46 @@
                         <div class="card-header">
                             <h3 class="card-title">Thêm sản phẩm</h3>
                         </div>
+                        <?php if (!empty($_SESSION['success'])): ?>
+                            <div class="alert alert-success" role="alert"><?= $_SESSION['success'] ?></div>
+                        <?php endif; ?>
+                        <?php if (!empty($_SESSION['error'])): ?>
+                            <div class="alert alert-danger" role="alert"><?= $_SESSION['error'] ?></div>
+                        <?php endif; ?>
+                        <?php if (!empty($_SESSION['errors']) && is_array($_SESSION['errors'])): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <ul class="mb-0">
+                                    <?php foreach ($_SESSION['errors'] as $err): ?>
+                                        <li><?= $err ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                         <!-- form start -->
                         <form action="<?= BASE_URL_ADMIN . '?act=them-san-pham' ?>" method="POST" enctype="multipart/form-data">
                             <div class="card-body row">
+
+                                <!-- Tên -->
                                 <div class="form-group col-12">
-                                    <label>Tên sản phẩm <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="ten_san_pham" placeholder="Nhập tên sản phẩm">
-                                    <?php if (isset($_SESSION['errors']['ten_san_pham'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['ten_san_pham'] ?></p>
-                                    <?php
-                                    } ?>
+                                    <label>Tên sản phẩm *</label>
+                                    <input type="text" class="form-control" name="ten_san_pham">
                                 </div>
 
+                                <!-- Giá -->
                                 <div class="form-group col-6">
-                                    <label>Giá sản phẩm <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="gia_san_pham" placeholder="Nhập giá sản phẩm">
-                                    <?php if (isset($_SESSION['errors']['gia_san_pham'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['gia_san_pham'] ?></p>
-                                    <?php
-                                    } ?>
+                                    <label>Giá sản phẩm *</label>
+                                    <input type="number" class="form-control" name="gia_san_pham">
                                 </div>
 
                                 <div class="form-group col-6">
                                     <label>Giá khuyến mãi</label>
-                                    <input type="number" class="form-control" name="gia_khuyen_mai" placeholder="Nhập giá khuyến mãi">
-                                    <?php if (isset($_SESSION['errors']['gia_khuyen_mai'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['gia_khuyen_mai'] ?></p>
-                                    <?php
-                                    } ?>
+                                    <input type="number" class="form-control" name="gia_khuyen_mai">
                                 </div>
 
+                                <!-- Ảnh -->
                                 <div class="form-group col-6">
-                                    <label>Hình ảnh <span class="text-danger">*</span></label>
+                                    <label>Hình ảnh *</label>
                                     <input type="file" class="form-control" name="hinh_anh">
-                                    <?php if (isset($_SESSION['errors']['hinh_anh'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['hinh_anh'] ?></p>
-                                    <?php
-                                    } ?>
                                 </div>
 
                                 <div class="form-group col-6">
@@ -76,61 +79,113 @@
                                     <input type="file" class="form-control" name="img_array[]" multiple>
                                 </div>
 
+                                <!-- Số lượng -->
                                 <div class="form-group col-6">
-                                    <label>Số lượng <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="so_luong" placeholder="Nhập số lượng">
-                                    <?php if (isset($_SESSION['errors']['so_luong'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></p>
-                                    <?php
-                                    } ?>
+                                    <label>Số lượng *</label>
+                                    <input type="number" class="form-control" name="so_luong">
                                 </div>
 
+                                <!-- Ngày nhập -->
                                 <div class="form-group col-6">
-                                    <label>Ngày nhập <span class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" name="ngay_nhap" placeholder="Ngày nhập">
-                                    <?php if (isset($_SESSION['errors']['ngay_nhap'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['ngay_nhap'] ?></p>
-                                    <?php
-                                    } ?>
+                                    <label>Ngày nhập *</label>
+                                    <input type="date" class="form-control" name="ngay_nhap">
                                 </div>
 
+                                <!-- Danh mục -->
                                 <div class="form-group col-6">
-                                    <label>Danh mục <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="danh_muc_id" id="exampleFormControlSelect1">
-                                        <option value="" selected>Chọn danh mục sản phẩm</option>
+                                    <label>Danh mục *</label>
+                                    <select class="form-control" name="danh_muc_id">
+                                        <option value="">Chọn danh mục</option>
                                         <?php foreach ($listDanhMuc as $danhMuc): ?>
                                             <option value="<?= $danhMuc['id'] ?>"><?= $danhMuc['ten_danh_muc'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
-                                    <?php if (isset($_SESSION['errors']['danh_muc_id'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['danh_muc_id'] ?></p>
-                                    <?php
-                                    } ?>
                                 </div>
 
+                                <!-- Trạng thái -->
                                 <div class="form-group col-6">
-                                    <label>Trạng thái <span class="text-danger">*</span></label>
-                                    <select class="form-control" name="trang_thai" id="exampleFormControlSelect1">
-                                        <option value="" selected>Chọn trạng thái sản phẩm</option>
+                                    <label>Trạng thái *</label>
+                                    <select class="form-control" name="trang_thai">
+                                        <option value="">Chọn trạng thái</option>
                                         <option value="1">Còn hàng</option>
                                         <option value="2">Dừng bán</option>
                                     </select>
-                                    <?php if (isset($_SESSION['errors']['trang_thai'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['trang_thai'] ?></p>
-                                    <?php
-                                    } ?>
                                 </div>
 
+                                <!-- Code -->
+                                <div class="form-group col-6">
+                                    <label>Mã code</label>
+                                    <input type="text" class="form-control" name="code">
+                                </div>
+
+                                <!-- Sản phẩm mới -->
+                                <div class="form-group col-3">
+                                    <label>Sản phẩm mới</label>
+                                    <select class="form-control" name="is_new">
+                                        <option value="1">Có</option>
+                                        <option value="0">Không</option>
+                                    </select>
+                                </div>
+
+                                <!-- Sản phẩm hot -->
+                                <div class="form-group col-3">
+                                    <label>Sản phẩm hot</label>
+                                    <select class="form-control" name="is_hot">
+                                        <option value="1">Có</option>
+                                        <option value="0">Không</option>
+                                    </select>
+                                </div>
+
+                                <!-- Giới tính -->
+                                <div class="form-group col-4">
+                                    <label>Giới tính</label>
+                                    <select class="form-control" name="gioi_tinh">
+                                        <option value="Nam">Nam</option>
+                                        <option value="Nữ">Nữ</option>
+                                        <option value="Unisex">Unisex</option>
+                                    </select>
+                                </div>
+
+                                <!-- Loại máy -->
+                                <div class="form-group col-4">
+                                    <label>Loại máy</label>
+                                    <input type="text" class="form-control" name="loai_may">
+                                </div>
+
+                                <!-- Xuất xứ -->
+                                <div class="form-group col-4">
+                                    <label>Xuất xứ</label>
+                                    <input type="text" class="form-control" name="xuat_xu">
+                                </div>
+
+                                <!-- Kích thước -->
+                                <div class="form-group col-4">
+                                    <label>Kích thước</label>
+                                    <input type="text" class="form-control" name="kich_thuoc">
+                                </div>
+
+                                <!-- Chất liệu dây -->
+                                <div class="form-group col-4">
+                                    <label>Chất liệu dây</label>
+                                    <input type="text" class="form-control" name="chat_lieu_day">
+                                </div>
+
+                                <!-- Chống nước -->
+                                <div class="form-group col-4">
+                                    <label>Chống nước</label>
+                                    <input type="text" class="form-control" name="chong_nuoc">
+                                </div>
+
+                                <!-- Mô tả -->
                                 <div class="form-group col-12">
                                     <label>Mô tả</label>
-                                    <textarea name="mo_ta" id="" class="form-control" placeholder="Nhập mô tả"></textarea>
+                                    <textarea name="mo_ta" class="form-control"></textarea>
                                 </div>
 
                             </div>
-                            <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
                             </div>
                         </form>
                     </div>

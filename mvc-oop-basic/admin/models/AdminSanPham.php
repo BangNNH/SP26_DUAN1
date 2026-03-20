@@ -53,36 +53,74 @@
         }
 
         // Thêm sản phẩm mới
-        public function insertSanPham(
-            $ten_san_pham,
-            $gia_san_pham,
-            $gia_khuyen_mai,
-            $so_luong,
-            $ngay_nhap,
-            $danh_muc_id,
-            $trang_thai,
-            $mo_ta,
-            $hinh_anh
-        ) {
+        public function insertSanPham($data)
+        {
+            // debug($data);
             try {
-                $sql = "INSERT INTO san_phams(ten_san_pham, gia_san_pham, gia_khuyen_mai, so_luong, ngay_nhap, danh_muc_id, trang_thai, mo_ta, hinh_anh) 
-                        VALUES (:ten_san_pham, :gia_san_pham, :gia_khuyen_mai, :so_luong, :ngay_nhap, :danh_muc_id, :trang_thai, :mo_ta, :hinh_anh)";
+                $sql = "INSERT INTO san_phams (
+            ten_san_pham,
+            gia_san_pham,
+            gia_khuyen_mai,
+            so_luong,
+            ngay_nhap,
+            danh_muc_id,
+            trang_thai,
+            mo_ta,
+            hinh_anh,
+            code,
+            is_new,
+            is_hot,
+            gioi_tinh,
+            loai_may,
+            xuat_xu,
+            kich_thuoc,
+            chat_lieu_day,
+            chong_nuoc
+        ) VALUES (
+            :ten_san_pham,
+            :gia_san_pham,
+            :gia_khuyen_mai,
+            :so_luong,
+            :ngay_nhap,
+            :danh_muc_id,
+            :trang_thai,
+            :mo_ta,
+            :hinh_anh,
+            :code,
+            :is_new,
+            :is_hot,
+            :gioi_tinh,
+            :loai_may,
+            :xuat_xu,
+            :kich_thuoc,
+            :chat_lieu_day,
+            :chong_nuoc
+        )";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute([
-                    ':ten_san_pham' => $ten_san_pham,
-                    ':gia_san_pham' => $gia_san_pham,
-                    ':gia_khuyen_mai' => $gia_khuyen_mai,
-                    ':so_luong' => $so_luong,
-                    ':ngay_nhap' => $ngay_nhap,
-                    ':danh_muc_id' => $danh_muc_id,
-                    ':trang_thai' => $trang_thai,
-                    ':mo_ta' => $mo_ta,
-                    ':hinh_anh' => $hinh_anh,
+                    ':ten_san_pham'   => $data['ten_san_pham'],
+                    ':gia_san_pham'   => $data['gia_san_pham'],
+                    ':gia_khuyen_mai' => $data['gia_khuyen_mai'],
+                    ':so_luong'       => $data['so_luong'],
+                    ':ngay_nhap'      => $data['ngay_nhap'],
+                    ':danh_muc_id'    => $data['danh_muc_id'],
+                    ':trang_thai'     => $data['trang_thai'],
+                    ':mo_ta'          => $data['mo_ta'],
+                    ':hinh_anh'       => $data['hinh_anh'],
+                    ':code'           => $data['code'],
+                    ':is_new'         => $data['is_new'],
+                    ':is_hot'         => $data['is_hot'],
+                    ':gioi_tinh'      => $data['gioi_tinh'],
+                    ':loai_may'       => $data['loai_may'],
+                    ':xuat_xu'        => $data['xuat_xu'],
+                    ':kich_thuoc'     => $data['kich_thuoc'],
+                    ':chat_lieu_day'  => $data['chat_lieu_day'],
+                    ':chong_nuoc'     => $data['chong_nuoc'],
                 ]);
-                //Lấy id sản phẩm vừa thêm
+
                 return $this->conn->lastInsertId();
             } catch (Exception $e) {
-                echo "Lỗi" . $e->getMessage();
+                echo "Lỗi: " . $e->getMessage();
             }
         }
 
@@ -197,37 +235,37 @@
         // Bình luận
 
         public function getBinhLuanFromKhachHang($id)
-    {
-        try {
-            $sql = "SELECT binh_luans.*, san_phams.ten_san_pham
+        {
+            try {
+                $sql = "SELECT binh_luans.*, san_phams.ten_san_pham
                 FROM binh_luans
                 INNER JOIN san_phams ON binh_luans.san_pham_id = san_phams.id
                 WHERE binh_luans.tai_khoan_id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':id'=>$id]);
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            echo "Lỗi" . $e->getMessage();
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([':id' => $id]);
+                return $stmt->fetchAll();
+            } catch (Exception $e) {
+                echo "Lỗi" . $e->getMessage();
+            }
         }
-    }
 
-    public function getBinhLuanFromSanPham($id)
-    {
-        try {
-            $sql = "SELECT binh_luans.*, tai_khoans.ho_ten
+        public function getBinhLuanFromSanPham($id)
+        {
+            try {
+                $sql = "SELECT binh_luans.*, tai_khoans.ho_ten
                 FROM binh_luans
                 INNER JOIN tai_khoans ON binh_luans.tai_khoan_id = tai_khoans.id
                 WHERE binh_luans.san_pham_id = :id";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':id'=>$id]);
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            echo "Lỗi" . $e->getMessage();
+                $stmt = $this->conn->prepare($sql);
+                $stmt->execute([':id' => $id]);
+                return $stmt->fetchAll();
+            } catch (Exception $e) {
+                echo "Lỗi" . $e->getMessage();
+            }
         }
-    }
 
 
-    public function getDetailBinhLuan($id)
+        public function getDetailBinhLuan($id)
         {
             try {
                 $sql = "SELECT * FROM binh_luans where id = :id";
@@ -239,7 +277,7 @@
             }
         }
 
-    public function updateTrangThaiBinhLuan($id, $trang_thai)
+        public function updateTrangThaiBinhLuan($id, $trang_thai)
         {
             try {
                 $sql = "UPDATE binh_luans SET trang_thai=:trang_thai WHERE id = :id";
@@ -254,4 +292,4 @@
                 echo "Lỗi" . $e->getMessage();
             }
         }
-}
+    }

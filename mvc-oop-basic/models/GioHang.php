@@ -95,6 +95,36 @@ class GioHang
         }
     }
 
+    public function clearDetailGioHang($gioHangId)
+    {
+        try {
+            $sql = "DELETE FROM chi_tiet_gio_hangs WHERE gio_hang_id = :gio_hang_id";
+            $stmt = $this->conn->prepare($sql);
 
+            $stmt->execute([
+                ':gio_hang_id' => $gioHangId,
+            ]);
+
+            return true;
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+        }
+    }
+
+    public function clearGioHang($taiKhoanId)
+    {
+        try {
+            $sql = "DELETE FROM gio_hangs WHERE tai_khoan_id = :tai_khoan_id";
+            $stmt = $this->conn->prepare($sql);
+
+            $stmt->execute([
+                ':tai_khoan_id' => $taiKhoanId,
+            ]);
+
+            return true;
+        } catch (Exception $e) {
+            echo "Lỗi" . $e->getMessage();
+        }
+    }
 
 }

@@ -30,7 +30,8 @@
 
                                         </li>
 
-                                        <li><a href="blog-left-sidebar.html">Sản phẩm <i class="fa fa-angle-down"></i></a>
+                                        <li><a href="blog-left-sidebar.html">Sản phẩm <i
+                                                    class="fa fa-angle-down"></i></a>
                                             <ul class="dropdown">
                                                 <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
                                             </ul>
@@ -47,9 +48,11 @@
 
                     <!-- mini cart area start -->
                     <div class="col-lg-4">
-                        <div class="header-right d-flex align-items-center justify-content-xl-between justify-content-lg-end">
+                        <div
+                            class="header-right d-flex align-items-center justify-content-xl-between justify-content-lg-end">
                             <div class="header-search-container">
-                                <button class="search-trigger d-xl-none d-lg-block"><i class="pe-7s-search"></i></button>
+                                <button class="search-trigger d-xl-none d-lg-block"><i
+                                        class="pe-7s-search"></i></button>
                                 <form class="header-search-box d-lg-none d-xl-block">
                                     <input type="text" placeholder="Nhập tên sản phẩm" class="header-search-field">
                                     <button class="header-search-btn"><i class="pe-7s-search"></i></button>
@@ -73,8 +76,9 @@
                                             if (!isset($_SESSION['user_client'])) { ?>
                                                 <li><a href="<?= BASE_URL . '?act=login' ?>">Đăng nhập</a></li>
                                             <?php } else {
-                                            ?>
+                                                ?>
                                                 <li><a href="my-account.html">Tài khoản</a></li>
+                                                <li><a href="<?= BASE_URL . '?act=lich-su-mua-hang' ?>">Đơn hàng</a></li>
                                             <?php } ?>
                                         </ul>
                                     </li>

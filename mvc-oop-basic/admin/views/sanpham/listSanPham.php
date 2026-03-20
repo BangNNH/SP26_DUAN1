@@ -35,6 +35,12 @@
                                 <button class="btn btn-success">Thêm sản phẩm</button>
                             </a>
                         </div>
+                        <?php if (!empty($_SESSION['success'])): ?>
+                            <div class="alert alert-success m-3"><?= $_SESSION['success'] ?></div>
+                        <?php endif; ?>
+                        <?php if (!empty($_SESSION['error'])): ?>
+                            <div class="alert alert-danger m-3"><?= $_SESSION['error'] ?></div>
+                        <?php endif; ?>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">

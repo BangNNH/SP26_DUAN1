@@ -69,24 +69,69 @@
                                 } ?>
                             </div>
                             <div class="form-group">
-                                <label for="hinh_anh">Hình ảnh <span class="text-danger">*</span></label>
-                                <input type="file" name="hinh_anh" class="form-control" value="<?= $sanPham['hinh_anh'] ?>">
+                                <label for="hinh_anh">Hình ảnh (đổi nếu cần)</label>
+                                <input type="file" name="hinh_anh" class="form-control">
+                                <small>Ảnh hiện tại: <a href="<?= BASE_URL . $sanPham['hinh_anh'] ?>" target="_blank">Xem</a></small>
                             </div>
                             <div class="form-group">
-                                <label for="ten_san_pham">Số lượng <span class="text-danger">*</span></label>
+                                <label for="code">Mã code</label>
+                                <input type="text" name="code" class="form-control" value="<?= $sanPham['code'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="is_new">Sản phẩm mới</label>
+                                <select name="is_new" class="form-control custom-select">
+                                    <option value="1" <?= $sanPham['is_new'] == 1 ? 'selected' : '' ?>>Có</option>
+                                    <option value="0" <?= $sanPham['is_new'] == 0 ? 'selected' : '' ?>>Không</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="is_hot">Sản phẩm hot</label>
+                                <select name="is_hot" class="form-control custom-select">
+                                    <option value="1" <?= $sanPham['is_hot'] == 1 ? 'selected' : '' ?>>Có</option>
+                                    <option value="0" <?= $sanPham['is_hot'] == 0 ? 'selected' : '' ?>>Không</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gioi_tinh">Giới tính</label>
+                                <select name="gioi_tinh" class="form-control custom-select">
+                                    <option value="1" <?= $sanPham['gioi_tinh'] == 1 ? 'selected' : '' ?>>Nam</option>
+                                    <option value="2" <?= $sanPham['gioi_tinh'] == 2 ? 'selected' : '' ?>>Nữ</option>
+                                    <option value="3" <?= $sanPham['gioi_tinh'] == 3 ? 'selected' : '' ?>>Unisex</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="loai_may">Loại máy</label>
+                                <input type="text" name="loai_may" class="form-control" value="<?= $sanPham['loai_may'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="xuat_xu">Xuất xứ</label>
+                                <input type="text" name="xuat_xu" class="form-control" value="<?= $sanPham['xuat_xu'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="kich_thuoc">Kích thước</label>
+                                <input type="text" name="kich_thuoc" class="form-control" value="<?= $sanPham['kich_thuoc'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="chat_lieu_day">Chất liệu dây</label>
+                                <input type="text" name="chat_lieu_day" class="form-control" value="<?= $sanPham['chat_lieu_day'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="chong_nuoc">Chống nước</label>
+                                <input type="text" name="chong_nuoc" class="form-control" value="<?= $sanPham['chong_nuoc'] ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="so_luong">Số lượng <span class="text-danger">*</span></label>
                                 <input type="number" name="so_luong" class="form-control" value="<?= $sanPham['so_luong'] ?>">
                                 <?php if (isset($_SESSION['errors']['so_luong'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></p>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </div>
                             <div class="form-group">
-                                <label for="ten_san_pham">Ngày nhập <span class="text-danger">*</span></label>
+                                <label for="ngay_nhap">Ngày nhập <span class="text-danger">*</span></label>
                                 <input type="date" name="ngay_nhap" class="form-control" value="<?= $sanPham['ngay_nhap'] ?>">
                                 <?php if (isset($_SESSION['errors']['ngay_nhap'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['ngay_nhap'] ?></p>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="danh_muc_id">Danh mục sản phẩm <span class="text-danger">*</span></label>
@@ -97,8 +142,7 @@
                                 </select>
                                 <?php if (isset($_SESSION['errors']['danh_muc_id'])) { ?>
                                     <p class="text-danger"><?= $_SESSION['errors']['danh_muc_id'] ?></p>
-                                <?php
-                                } ?>
+                                <?php } ?>
                             </div>
                             <div class="form-group">
                                 <label for="trang_thai">Trạng thái <span class="text-danger">*</span></label>

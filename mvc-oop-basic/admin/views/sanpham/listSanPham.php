@@ -53,7 +53,7 @@
                                 <tbody>
                                     <?php foreach ($listSanPham as $key => $sanPham): ?>
                                         <tr>
-                                            <td><?= $key + 1 ?></td>
+                                            <td class="text-center"><?= $key + 1 ?></td>
                                             <td><?= $sanPham['ten_san_pham'] ?></td>
                                             <td>
                                                 <img src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" style="width:100px" alt=""
@@ -64,16 +64,21 @@
                                             <td><?= $sanPham['ten_danh_muc'] ?></td>
                                             <td><?= $sanPham['trang_thai'] == 1 ? 'Còn hàng' : 'Dừng bán' ?></td>
                                             <td>
-                                                <div class="btn-group">
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>">
-                                                        <button class="btn btn-primary"><i class="fas fa-eye"></i></button>
+                                                <div class="d-flex justify-content-center" style="gap: 6px;">
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="fas fa-eye"></i>
                                                     </a>
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $sanPham['id'] ?>">
-                                                        <button class="btn btn-warning"><i class="fas fa-edit"></i></button>
+
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $sanPham['id'] ?>"
+                                                        class="btn btn-warning btn-sm">
+                                                        <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=xoa-san-pham&id_san_pham=' . $sanPham['id']  ?>"
+
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=xoa-san-pham&id_san_pham=' . $sanPham['id'] ?>"
+                                                        class="btn btn-danger btn-sm"
                                                         onclick="return confirm('Bạn có đồng ý xóa sản phẩm?')">
-                                                        <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                        <i class="fas fa-trash-alt"></i>
                                                     </a>
                                                 </div>
                                             </td>

@@ -32,35 +32,28 @@
                         <div class="card-header">
                             <h3 class="card-title">Thêm sản phẩm</h3>
                         </div>
-                        <?php if (!empty($_SESSION['success'])): ?>
-                            <div class="alert alert-success" role="alert"><?= $_SESSION['success'] ?></div>
-                        <?php endif; ?>
-                        <?php if (!empty($_SESSION['error'])): ?>
-                            <div class="alert alert-danger" role="alert"><?= $_SESSION['error'] ?></div>
-                        <?php endif; ?>
-                        <?php if (!empty($_SESSION['errors']) && is_array($_SESSION['errors'])): ?>
-                            <div class="alert alert-danger" role="alert">
-                                <ul class="mb-0">
-                                    <?php foreach ($_SESSION['errors'] as $err): ?>
-                                        <li><?= $err ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                        <?php endif; ?>
                         <!-- form start -->
                         <form action="<?= BASE_URL_ADMIN . '?act=them-san-pham' ?>" method="POST" enctype="multipart/form-data">
                             <div class="card-body row">
 
                                 <!-- Tên -->
                                 <div class="form-group col-12">
-                                    <label>Tên sản phẩm *</label>
+                                    <label>Tên sản phẩm <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="ten_san_pham">
+                                    <?php if (isset($_SESSION['errors']['ten_san_pham'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['ten_san_pham'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Giá -->
                                 <div class="form-group col-6">
-                                    <label>Giá sản phẩm *</label>
+                                    <label>Giá sản phẩm <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="gia_san_pham">
+                                    <?php if (isset($_SESSION['errors']['gia_san_pham'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['gia_san_pham'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <div class="form-group col-6">
@@ -70,8 +63,12 @@
 
                                 <!-- Ảnh -->
                                 <div class="form-group col-6">
-                                    <label>Hình ảnh *</label>
+                                    <label>Hình ảnh <span class="text-danger">*</span></label>
                                     <input type="file" class="form-control" name="hinh_anh">
+                                    <?php if (isset($_SESSION['errors']['hinh_anh'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['hinh_anh'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <div class="form-group col-6">
@@ -81,41 +78,61 @@
 
                                 <!-- Số lượng -->
                                 <div class="form-group col-6">
-                                    <label>Số lượng *</label>
+                                    <label>Số lượng <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="so_luong">
+                                    <?php if (isset($_SESSION['errors']['so_luong'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Ngày nhập -->
                                 <div class="form-group col-6">
-                                    <label>Ngày nhập *</label>
+                                    <label>Ngày nhập <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control" name="ngay_nhap">
+                                    <?php if (isset($_SESSION['errors']['ngay_nhap'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['ngay_nhap'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Danh mục -->
                                 <div class="form-group col-6">
-                                    <label>Danh mục *</label>
+                                    <label>Danh mục <span class="text-danger">*</span></label>
                                     <select class="form-control" name="danh_muc_id">
                                         <option value="">Chọn danh mục</option>
                                         <?php foreach ($listDanhMuc as $danhMuc): ?>
                                             <option value="<?= $danhMuc['id'] ?>"><?= $danhMuc['ten_danh_muc'] ?></option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <?php if (isset($_SESSION['errors']['danh_muc_id'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['danh_muc_id'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Trạng thái -->
                                 <div class="form-group col-6">
-                                    <label>Trạng thái *</label>
+                                    <label>Trạng thái <span class="text-danger">*</span></label>
                                     <select class="form-control" name="trang_thai">
                                         <option value="">Chọn trạng thái</option>
                                         <option value="1">Còn hàng</option>
                                         <option value="2">Dừng bán</option>
                                     </select>
+                                    <?php if (isset($_SESSION['errors']['trang_thai'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['trang_thai'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Code -->
                                 <div class="form-group col-6">
-                                    <label>Mã code</label>
+                                    <label>Mã code <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="code">
+                                    <?php if (isset($_SESSION['errors']['code'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['code'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Sản phẩm mới -->
@@ -140,9 +157,9 @@
                                 <div class="form-group col-4">
                                     <label>Giới tính</label>
                                     <select class="form-control" name="gioi_tinh">
-                                        <option value="Nam">Nam</option>
-                                        <option value="Nữ">Nữ</option>
-                                        <option value="Unisex">Unisex</option>
+                                        <option value="1">Nam</option>
+                                        <option value="2">Nữ</option>
+                                        <option value="3">Unisex</option>
                                     </select>
                                 </div>
 

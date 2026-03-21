@@ -14,7 +14,7 @@
             try {
                 $sql = "SELECT san_phams.*, danh_mucs.ten_danh_muc
                 FROM san_phams
-                INNER JOIN danh_mucs ON san_phams.danh_muc_id = danh_mucs.id";
+                INNER JOIN danh_mucs ON san_phams.danh_muc_id = danh_mucs.id ORDER BY san_phams.id DESC";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute();
                 return $stmt->fetchAll();
@@ -150,12 +150,23 @@
             $danh_muc_id,
             $trang_thai,
             $mo_ta,
-            $new_file
+            $hinh_anh,
+            $code,
+            $is_new,
+            $is_hot,
+            $gioi_tinh,
+            $loai_may,
+            $xuat_xu,
+            $kich_thuoc,
+            $chat_lieu_day,
+            $chong_nuoc
         ) {
             try {
-                $sql = "UPDATE san_phams SET ten_san_pham=:ten_san_pham, gia_san_pham=:gia_san_pham, 
-                                            gia_khuyen_mai=:gia_khuyen_mai, so_luong=:so_luong, ngay_nhap=:ngay_nhap, 
-                                            danh_muc_id=:danh_muc_id, trang_thai=:trang_thai, mo_ta=:mo_ta, hinh_anh=:hinh_anh
+                $sql = "UPDATE san_phams SET ten_san_pham=:ten_san_pham, gia_san_pham=:gia_san_pham,
+                                            gia_khuyen_mai=:gia_khuyen_mai, so_luong=:so_luong, ngay_nhap=:ngay_nhap,
+                                            danh_muc_id=:danh_muc_id, trang_thai=:trang_thai, mo_ta=:mo_ta, hinh_anh=:hinh_anh,
+                                            code=:code, is_new=:is_new, is_hot=:is_hot, gioi_tinh=:gioi_tinh, loai_may=:loai_may,
+                                            xuat_xu=:xuat_xu, kich_thuoc=:kich_thuoc, chat_lieu_day=:chat_lieu_day, chong_nuoc=:chong_nuoc
                                             WHERE id = :id";
                 $stmt = $this->conn->prepare($sql);
                 $stmt->execute([
@@ -168,9 +179,17 @@
                     ':danh_muc_id' => $danh_muc_id,
                     ':trang_thai' => $trang_thai,
                     ':mo_ta' => $mo_ta,
-                    ':hinh_anh' => $new_file,
+                    ':hinh_anh' => $hinh_anh,
+                    ':code' => $code,
+                    ':is_new' => $is_new,
+                    ':is_hot' => $is_hot,
+                    ':gioi_tinh' => $gioi_tinh,
+                    ':loai_may' => $loai_may,
+                    ':xuat_xu' => $xuat_xu,
+                    ':kich_thuoc' => $kich_thuoc,
+                    ':chat_lieu_day' => $chat_lieu_day,
+                    ':chong_nuoc' => $chong_nuoc,
                 ]);
-                //Lấy id sản phẩm vừa thêm
                 return true;
             } catch (Exception $e) {
                 echo "Lỗi" . $e->getMessage();

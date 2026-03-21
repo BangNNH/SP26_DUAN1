@@ -35,8 +35,10 @@
                                     <div class="widget-user-image">
                                         <img class="img-circle elevation-2" src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien'] ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
                                     </div>
-                                    <h5 class="widget-user-username text-white"><?= htmlspecialchars($thongTin['ho_ten'] ?? 'Admin') ?></h5>
-                                    <span class="widget-user-desc text-white"><?= htmlspecialchars($thongTin['chuc_vu_id'] ?? 'Chức vụ') ?></span>
+                                    <div>
+                                        <h5 class="widget-user-username text-white"><?= htmlspecialchars($thongTin['ho_ten'] ?? 'Admin') ?></h5>
+                                    </div>
+                                    <!-- <span class="widget-user-desc text-white"><strong>Chức vụ: </strong><?= htmlspecialchars($thongTin['chuc_vu_id'] == 1 ? 'Admin' : '') ?></span> -->
                                 </div>
                                 <div class="card-footer p-3">
                                     <div class="row">

@@ -34,6 +34,21 @@
                             <a href="<?= BASE_URL_ADMIN . '?act=form-them-quan-tri' ?>">
                                 <button class="btn btn-success">Thêm Tài Khoản</button>
                             </a>
+                            <?php if (!empty($_SESSION['success'])): ?>
+                                <div class="alert alert-dismissible" style="background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <?= $_SESSION['success'] ?>
+                                </div>
+                            <?php
+                                unset($_SESSION['success']);
+                            endif; ?>
+                            <?php if (!empty($_SESSION['error'])): ?>
+                                <div class="alert alert-dismissible" style="background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <?= $_SESSION['error'] ?>
+                                </div>
+                                <?php unset($_SESSION['error']); ?>
+                            <?php endif; ?>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">

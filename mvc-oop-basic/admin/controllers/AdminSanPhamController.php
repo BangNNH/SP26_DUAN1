@@ -30,7 +30,6 @@ class AdminSanPhamController
     public function postAddSanPham()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // debug($_FILES);
             // ===== 1. Gom data =====
             $data = [
                 'ten_san_pham'   => $_POST['ten_san_pham'] ?? '',
@@ -53,6 +52,9 @@ class AdminSanPhamController
             ];
 
             $hinh_anh = $_FILES['hinh_anh'] ?? null;
+            // ===== 4. Upload ảnh =====
+            $data['hinh_anh'] = uploadFile($hinh_anh, './uploads/');
+
             $img_array = $_FILES['img_array'] ?? [];
 
             // ===== 2. Validate =====
@@ -74,6 +76,10 @@ class AdminSanPhamController
                 $errors['so_luong'] = 'Số lượng không được để trống.';
             }
 
+            if (empty($data['code'])) {
+                $errors['code'] = 'Mã code không được để trống.';
+            }
+
             if (empty($data['ngay_nhap'])) {
                 $errors['ngay_nhap'] = 'Ngày nhập không được để trống.';
             }
@@ -92,31 +98,12 @@ class AdminSanPhamController
 
             $_SESSION['errors'] = $errors;
 
-            // ===== 3. Nếu lỗi =====
-            if (!empty($errors)) {
-                $_SESSION['flash'] = true;
-                header("Location: " . BASE_URL_ADMIN . '?act=form-them-san-pham');
-                exit();
-            }
-
-            // ===== 4. Upload ảnh =====
-            $data['hinh_anh'] = uploadFile($hinh_anh, './uploads/');
-            // ===== 5. Insert =====
-
-            $san_pham_id = $this->modelSanPham->insertSanPham($data);
-
-            if (!$san_pham_id) {
-                $_SESSION['error'] = 'Thêm sản phẩm thất bại. Vui lòng thử lại.';
-                $_SESSION['flash'] = true;
-                header("Location: " . BASE_URL_ADMIN . '?act=form-them-san-pham');
-                exit();
-            }
-
-            // ===== 6. Album ảnh =====
-            if (!empty($img_array['name'][0])) {
-                foreach ($img_array['name'] as $key => $value) {
-
-                    if ($img_array['error'][$key] == 0) {
+            if (empty($errors)) {
+                // Nếu không lỗi thì tiến hành thêm sản phẩm
+                $san_pham_id = $this->modelSanPham->insertSanPham($data);
+                // Xử lý thêm album ảnh sản phẩm img_array
+                if (!empty($img_array['name'])) {
+                    foreach ($img_array['name'] as $key => $value) {
                         $file = [
                             'name' => $img_array['name'][$key],
                             'type' => $img_array['type'][$key],
@@ -124,18 +111,20 @@ class AdminSanPhamController
                             'error' => $img_array['error'][$key],
                             'size' => $img_array['size'][$key],
                         ];
-
                         $link_hinh_anh = uploadFile($file, './uploads/');
                         $this->modelSanPham->insertAlbumAnhSanPham($san_pham_id, $link_hinh_anh);
                     }
                 }
+                $_SESSION['success'] = 'Thêm sản phẩm thành công.';
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL_ADMIN . '?act=san-pham');
+                exit();
+            } else {
+                // Trả về form lỗi
+                $_SESSION['flash'] = true;
+                header("Location: " . BASE_URL_ADMIN . '?act=form-them-san-pham');
+                exit();
             }
-
-            // ===== 7. Redirect =====
-            $_SESSION['success'] = 'Thêm sản phẩm thành công.';
-            $_SESSION['flash'] = true;
-            header("Location: " . BASE_URL_ADMIN . '?act=san-pham');
-            exit();
         }
     }
 
@@ -167,39 +156,52 @@ class AdminSanPhamController
             $sanPhamOld = $this->modelSanPham->getDetailSanPham($san_pham_id);
             $old_file = $sanPhamOld['hinh_anh']; //Lấy ảnh cũ để phục vụ cho sửa ảnh
 
-            $ten_san_pham = $_POST['ten_san_pham'] ?? '';
-            $gia_san_pham = $_POST['gia_san_pham'] ?? '';
-            $gia_khuyen_mai = $_POST['gia_khuyen_mai'] ?? '';
-            $so_luong = $_POST['so_luong'] ?? '';
-            $ngay_nhap = $_POST['ngay_nhap'] ?? '';
-            $danh_muc_id = $_POST['danh_muc_id'] ?? '';
-            $trang_thai = $_POST['trang_thai'] ?? '';
-            $mo_ta = $_POST['mo_ta'] ?? '';
+            $data = [
+                'ten_san_pham'   => $_POST['ten_san_pham'] ?? '',
+                'gia_san_pham'   => $_POST['gia_san_pham'] ?? '',
+                'gia_khuyen_mai' => $_POST['gia_khuyen_mai'] ?? '',
+                'so_luong'       => $_POST['so_luong'] ?? '',
+                'ngay_nhap'      => $_POST['ngay_nhap'] ?? '',
+                'danh_muc_id'    => $_POST['danh_muc_id'] ?? '',
+                'trang_thai'     => $_POST['trang_thai'] ?? '',
+                'mo_ta'          => $_POST['mo_ta'] ?? '',
+                'code'           => $_POST['code'] ?? '',
+                'is_new'         => $_POST['is_new'] ?? 0,
+                'is_hot'         => $_POST['is_hot'] ?? 0,
+                'gioi_tinh'      => $_POST['gioi_tinh'] ?? '',
+                'loai_may'       => $_POST['loai_may'] ?? '',
+                'xuat_xu'        => $_POST['xuat_xu'] ?? '',
+                'kich_thuoc'     => $_POST['kich_thuoc'] ?? '',
+                'chat_lieu_day'  => $_POST['chat_lieu_day'] ?? '',
+                'chong_nuoc'     => $_POST['chong_nuoc'] ?? '',
+            ];
 
             $hinh_anh = $_FILES['hinh_anh'] ?? null;
 
-
             // validate
             $errors = [];
-            if (empty($ten_san_pham)) {
+            if (empty($data['ten_san_pham'])) {
                 $errors['ten_san_pham'] = 'Tên sản phẩm không được để trống.';
             }
-            if (empty($gia_san_pham)) {
+            if (empty($data['gia_san_pham'])) {
                 $errors['gia_san_pham'] = 'Giá sản phẩm không được để trống.';
             }
-            if (empty($gia_khuyen_mai)) {
-                $errors['gia_khuyen_mai'] = 'Giá khuyến mãi không được để trống.';
+            if (!empty($data['gia_khuyen_mai']) && $data['gia_khuyen_mai'] > $data['gia_san_pham']) {
+                $errors['gia_khuyen_mai'] = 'Giá khuyến mãi phải nhỏ hơn giá gốc.';
             }
-            if (empty($so_luong)) {
+            if (empty($data['so_luong'])) {
                 $errors['so_luong'] = 'Số lượng không được để trống.';
             }
-            if (empty($ngay_nhap)) {
+            if (empty($data['code'])) {
+                $errors['code'] = 'Mã code không được để trống.';
+            }
+            if (empty($data['ngay_nhap'])) {
                 $errors['ngay_nhap'] = 'Ngày nhập không được để trống.';
             }
-            if (empty($danh_muc_id)) {
+            if (empty($data['danh_muc_id'])) {
                 $errors['danh_muc_id'] = 'Danh mục không được để trống.';
             }
-            if (empty($trang_thai)) {
+            if (empty($data['trang_thai'])) {
                 $errors['trang_thai'] = 'Trạng thái không được để trống.';
             }
 
@@ -220,21 +222,30 @@ class AdminSanPhamController
                 // Nếu không lỗi thì tiến hành update sản phẩm
                 $this->modelSanPham->updateSanPham(
                     $san_pham_id,
-                    $ten_san_pham,
-                    $gia_san_pham,
-                    $gia_khuyen_mai,
-                    $so_luong,
-                    $ngay_nhap,
-                    $danh_muc_id,
-                    $trang_thai,
-                    $mo_ta,
-                    $new_file
+                    $data['ten_san_pham'],
+                    $data['gia_san_pham'],
+                    $data['gia_khuyen_mai'],
+                    $data['so_luong'],
+                    $data['ngay_nhap'],
+                    $data['danh_muc_id'],
+                    $data['trang_thai'],
+                    $data['mo_ta'],
+                    $new_file,
+                    $data['code'],
+                    $data['is_new'],
+                    $data['is_hot'],
+                    $data['gioi_tinh'],
+                    $data['loai_may'],
+                    $data['xuat_xu'],
+                    $data['kich_thuoc'],
+                    $data['chat_lieu_day'],
+                    $data['chong_nuoc']
                 );
+                $_SESSION['success'] = 'Cập nhật sản phẩm thành công.';
                 header("Location: " . BASE_URL_ADMIN . '?act=san-pham');
                 exit();
             } else {
                 // Trả về form lỗi
-                // Đặt chỉ thị xóa session sau khi hiển thị form
                 $_SESSION['flash'] = true;
                 header("Location: " . BASE_URL_ADMIN . '?act=form-sua-san-pham&id_san_pham=' . $san_pham_id);
                 exit();
@@ -324,6 +335,7 @@ class AdminSanPhamController
                 $this->modelSanPham->destroyAnhSanPham($anhSP['id']);
             }
         }
+        $_SESSION['success'] = 'Xóa sản phẩm thành công.';
         header("Location: " . BASE_URL_ADMIN . '?act=san-pham');
         exit();
     }

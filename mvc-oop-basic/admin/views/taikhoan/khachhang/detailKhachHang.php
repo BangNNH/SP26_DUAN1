@@ -104,18 +104,14 @@
                                             <td><?= $donHang['ten_trang_thai'] ?></td>
 
                                             <td>
-                                                <div class="btn-group">
+                                                <div class="d-flex justify-content-center" style="gap: 6px;">
 
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>">
-                                                        <button class="btn btn-primary">
-                                                            <i class="far fa-eye"></i>
-                                                        </button>
+                                                    <a class="btn btn-primary btn-sm" href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>">
+                                                        <i class="far fa-eye"></i>
                                                     </a>
 
-                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>">
-                                                        <button class="btn btn-warning">
-                                                            <i class="fas fa-cogs"></i>
-                                                        </button>
+                                                    <a class="btn btn-warning btn-sm" href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>">
+                                                        <i class="fas fa-cogs"></i>
                                                     </a>
 
                                                 </div>
@@ -158,13 +154,13 @@
                                             <td><?= $binhLuan['ngay_dang'] ?></td>
                                             <td><?= $binhLuan['trang_thai'] == 1 ? 'Hiển thị' : 'Bị Ẩn' ?></td>
 
-                                            <td>
+                                            <td class="text-center">
                                                 <div class="btn-group">
 
                                                     <form action="<?= BASE_URL_ADMIN . '?act=update-trang-thai-binh-luan' ?>" method="POST">
                                                         <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
                                                         <input type="hidden" name="name_view" value="detail_khach">
-                                                        <button onclick="return confirm('Bạn có muốn ẩn bình luận này không?')" class="btn btn-danger">
+                                                        <button onclick="return confirm('Bạn có muốn ẩn bình luận này không?')" class="btn btn-danger btn-sm">
                                                             <?= $binhLuan['trang_thai'] == 1 ? 'Ẩn' : 'Bỏ ẩn' ?>
                                                         </button>
                                                     </form>

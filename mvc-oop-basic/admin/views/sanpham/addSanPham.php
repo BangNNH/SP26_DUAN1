@@ -127,8 +127,12 @@
 
                                 <!-- Code -->
                                 <div class="form-group col-6">
-                                    <label>Mã code</label>
+                                    <label>Mã code <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="code">
+                                    <?php if (isset($_SESSION['errors']['code'])) { ?>
+                                        <p class="text-danger"><?= $_SESSION['errors']['code'] ?></p>
+                                    <?php
+                                    } ?>
                                 </div>
 
                                 <!-- Sản phẩm mới -->

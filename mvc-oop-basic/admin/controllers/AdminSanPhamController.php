@@ -76,6 +76,10 @@ class AdminSanPhamController
                 $errors['so_luong'] = 'Số lượng không được để trống.';
             }
 
+            if (empty($data['code'])) {
+                $errors['code'] = 'Mã code không được để trống.';
+            }
+
             if (empty($data['ngay_nhap'])) {
                 $errors['ngay_nhap'] = 'Ngày nhập không được để trống.';
             }
@@ -187,6 +191,9 @@ class AdminSanPhamController
             }
             if (empty($data['so_luong'])) {
                 $errors['so_luong'] = 'Số lượng không được để trống.';
+            }
+            if (empty($data['code'])) {
+                $errors['code'] = 'Mã code không được để trống.';
             }
             if (empty($data['ngay_nhap'])) {
                 $errors['ngay_nhap'] = 'Ngày nhập không được để trống.';

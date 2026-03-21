@@ -76,9 +76,9 @@
                                 <thead>
                                     <tr>
                                         <th>STT</th>
-                                        <th>Người Bình LuậN</th>
+                                        <th>Người Bình Luận</th>
                                         <th>Nội Dung</th>
-                                        <th>Ngày Bình LuậN</th>
+                                        <th>Ngày Bình Luận</th>
                                         <th>Trạng thái</th>
                                         <th>Thao tác</th>
                                     </tr>
@@ -103,7 +103,7 @@
                                                     <form action="<?= BASE_URL_ADMIN . '?act=update-trang-thai-binh-luan' ?>" method="POST">
                                                         <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
                                                         <input type="hidden" name="name_view" value="detail_sanpham">
-                                                        <button onclick="return confirm('Bạn có muốn ẩn bình luậN này không?')" class="btn btn-danger">
+                                                        <button onclick="return confirm('Bạn có muốn ẩn bình luận này không?')" class="btn btn-danger">
                                                             <?= $binhLuan['trang_thai'] == 1 ? 'Ẩn' : 'Bỏ ẩn' ?>
                                                         </button>
                                                     </form>

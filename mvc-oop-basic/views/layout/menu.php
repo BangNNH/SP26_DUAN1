@@ -22,13 +22,13 @@
                     </div>
                     <div class="header-configure-area">
                         <ul class="nav justify-content-end">
-                            <label for="">
+                            <!-- <label for="">
                                 <?php
                                 if (isset($_SESSION['user_client'])) {
                                     echo $_SESSION['user_client'];
                                 }
                                 ?>
-                            </label>
+                            </label> -->
                             <li class="user-hover">
                                 <a href="#">
                                     <i class="pe-7s-user"></i>
@@ -41,6 +41,7 @@
                                     ?>
                                         <li><a href="my-account.html">Tài khoản</a></li>
                                         <li><a href="<?= BASE_URL . '?act=lich-su-mua-hang' ?>">Đơn hàng</a></li>
+                                        <li><a href="<?= BASE_URL . '?act=logout' ?>">Đăng xuất</a></li>
                                     <?php } ?>
                                 </ul>
                             </li>

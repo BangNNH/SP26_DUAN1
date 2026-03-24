@@ -12,7 +12,7 @@
                         <nav aria-label="breadcrumb">
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i></a></li>
-                                <li class="breadcrumb-item active" aria-current="page">login-Register</li>
+                                <li class="breadcrumb-item active" aria-current="page">Đăng nhập</li>
                             </ul>
                         </nav>
                     </div>
@@ -23,7 +23,7 @@
     <!-- breadcrumb area end -->
 
     <!-- login register wrapper start -->
-    <div class="login-register-wrapper section-padding">
+    <div class="login-register-wrapper section-padding pt-4">
         <div class="container" style="max-width: 40vw">
             <div class="member-area-from-wrap">
                 <div class="row">
@@ -38,10 +38,10 @@
                             <?php } ?>
                             <form action="<?= BASE_URL . '?act=check-login' ?>" method="post">
                                 <div class="single-input-item">
-                                    <input type="email" placeholder="Email or Username" name="email" required />
+                                    <input type="email" placeholder="Email" name="email" required />
                                 </div>
                                 <div class="single-input-item">
-                                    <input type="password" placeholder="Enter your Password" name="password" required />
+                                    <input type="password" placeholder="Mật khẩu" name="password" required />
                                 </div>
                                 <div class="single-input-item">
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
@@ -50,8 +50,14 @@
                                     </div>
                                 </div>
                                 <div class="single-input-item">
-                                    <button class="btn btn-sqr">ĐĂNG NHẬP</button>
+                                    <button class="btn btn-sqr login-btn">ĐĂNG NHẬP</button>
                                 </div>
+                                <div class="split-box" bis_skin_checked="1">
+                                    <div class="split-line" bis_skin_checked="1"></div>
+                                    <span class="split-text">hoặc</span>
+                                    <div class="split-line" bis_skin_checked="1"></div>
+                                </div>
+                                <div class="signUp-suggest" bis_skin_checked="1">Bạn chưa có tài khoản? <a class="suggest-link" href="?action=signup">Đăng ký</a></div>
                             </form>
                         </div>
                     </div>

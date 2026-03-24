@@ -32,4 +32,5 @@ match ($act) {
     // Auth
     'login' => (new HomeController())->formLogin(),
     'check-login' => (new HomeController())->postLogin(),
+    'logout' => (new HomeController())->logout(),
 };

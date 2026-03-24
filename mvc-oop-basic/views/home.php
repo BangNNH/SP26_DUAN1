@@ -1,3 +1,9 @@
+<?php if (isset($_SESSION['login_success'])): ?>
+    <script>
+        alert("<?= $_SESSION['login_success'] ?>");
+    </script>
+    <?php unset($_SESSION['login_success']); ?>
+<?php endif; ?>
 <?php require_once 'layout/header.php' ?>
 
 <?php require_once 'layout/menu.php' ?>

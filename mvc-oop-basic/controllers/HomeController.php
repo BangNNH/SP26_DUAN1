@@ -74,6 +74,7 @@ class HomeController
             if (is_string($user) && filter_var($user, FILTER_VALIDATE_EMAIL)) {
                 // Lưu email vào session để dùng hiển thị
                 $_SESSION['user_client'] = $user;
+                $_SESSION['login_success'] = "Đăng nhập thành công";
                 header("Location: " . BASE_URL);
                 exit();
             } else {
@@ -86,6 +87,13 @@ class HomeController
                 exit();
             }
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        header("Location: " . BASE_URL . '?act=login');
+        exit();
     }
 
 

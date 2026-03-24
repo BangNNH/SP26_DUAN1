@@ -41,32 +41,32 @@
 	});
 
 	// offcanvas mobile menu
-    var $offCanvasNav = $('.mobile-menu'),
-        $offCanvasNavSubMenu = $offCanvasNav.find('.dropdown');
-    
-    /*Add Toggle Button With Off Canvas Sub Menu*/
-    $offCanvasNavSubMenu.parent().prepend('<span class="menu-expand"><i></i></span>');
-    
-    /*Close Off Canvas Sub Menu*/
-    $offCanvasNavSubMenu.slideUp();
-    
-    /*Category Sub Menu Toggle*/
-    $offCanvasNav.on('click', 'li a, li .menu-expand', function(e) {
-        var $this = $(this);
-        if ( ($this.parent().attr('class').match(/\b(menu-item-has-children|has-children|has-sub-menu)\b/)) && ($this.attr('href') === '#' || $this.hasClass('menu-expand')) ) {
-            e.preventDefault();
-            if ($this.siblings('ul:visible').length){
-                $this.parent('li').removeClass('active');
-                $this.siblings('ul').slideUp();
-            } else {
-                $this.parent('li').addClass('active');
-                $this.closest('li').siblings('li').removeClass('active').find('li').removeClass('active');
-                $this.closest('li').siblings('li').find('ul:visible').slideUp();
-                $this.siblings('ul').slideDown();
-            }
-        }
+	var $offCanvasNav = $('.mobile-menu'),
+		$offCanvasNavSubMenu = $offCanvasNav.find('.dropdown');
+
+	/*Add Toggle Button With Off Canvas Sub Menu*/
+	$offCanvasNavSubMenu.parent().prepend('<span class="menu-expand"><i></i></span>');
+
+	/*Close Off Canvas Sub Menu*/
+	$offCanvasNavSubMenu.slideUp();
+
+	/*Category Sub Menu Toggle*/
+	$offCanvasNav.on('click', 'li a, li .menu-expand', function (e) {
+		var $this = $(this);
+		if (($this.parent().attr('class').match(/\b(menu-item-has-children|has-children|has-sub-menu)\b/)) && ($this.attr('href') === '#' || $this.hasClass('menu-expand'))) {
+			e.preventDefault();
+			if ($this.siblings('ul:visible').length) {
+				$this.parent('li').removeClass('active');
+				$this.siblings('ul').slideUp();
+			} else {
+				$this.parent('li').addClass('active');
+				$this.closest('li').siblings('li').removeClass('active').find('li').removeClass('active');
+				$this.closest('li').siblings('li').find('ul:visible').slideUp();
+				$this.siblings('ul').slideDown();
+			}
+		}
 	});
-	
+
 
 	// hero slider active js
 	$('.hero-slider-active').slick({
@@ -86,96 +86,108 @@
 	});
 
 	// Hero main slider active js
-    $('.hero-slider-active-4').slick({
+	$('.hero-slider-active-4').slick({
 		autoplay: true,
 		speed: 1000,
-        arrows: false,
-        slidesToShow: 4,
-        responsive: [{
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 3,
-            }
-        },
-            {
-                breakpoint: 992,
-                settings: {
-                    slidesToShow: 2,
-                }
-            },
-            {
-                breakpoint: 768,
-                settings: {
-					slidesToShow: 1,
-					dots: true
-                }
-            }
-        ]
-    });
-
-
-	// product carousel active js
-	$('.product-carousel-4').slick({
-		speed: 1000,
-		autoplay: true,
+		arrows: false,
 		slidesToShow: 4,
-		adaptiveHeight: true,
-		prevArrow: '<button type="button" class="slick-prev"><i class="pe-7s-angle-left"></i></button>',
-		nextArrow: '<button type="button" class="slick-next"><i class="pe-7s-angle-right"></i></button>',
 		responsive: [{
+			breakpoint: 1200,
+			settings: {
+				slidesToShow: 3,
+			}
+		},
+		{
 			breakpoint: 992,
 			settings: {
-				slidesToShow: 3
+				slidesToShow: 2,
 			}
 		},
 		{
 			breakpoint: 768,
 			settings: {
-				slidesToShow: 2,
-				arrows: false
-			}
-		},
-		{
-			breakpoint: 480,
-			settings: {
 				slidesToShow: 1,
-				arrows: false
+				dots: true
 			}
-		}]
+		}
+		]
+	});
+
+
+	// product carousel active js
+	$('.product-carousel-5').slick({
+		speed: 1000,
+		autoplay: true,
+		slidesToShow: 5,
+		adaptiveHeight: true,
+		prevArrow: '<button type="button" class="slick-prev"><i class="pe-7s-angle-left"></i></button>',
+		nextArrow: '<button type="button" class="slick-next"><i class="pe-7s-angle-right"></i></button>',
+		responsive: [
+			{
+				breakpoint: 1200,
+				settings: {
+					slidesToShow: 4
+				}
+			}, {
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 3
+				}
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+					arrows: false
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+					arrows: false
+				}
+			}]
 	});
 
 
 	// product carousel active
-	$('.product-carousel-4_2').slick({
+	$('.product-carousel-5_2').slick({
 		speed: 1000,
-		slidesToShow: 4,
+		slidesToShow: 5,
 		autoplay: true,
 		rows: 2,
 		adaptiveHeight: true,
 		prevArrow: '<button type="button" class="slick-prev"><i class="pe-7s-angle-left"></i></button>',
 		nextArrow: '<button type="button" class="slick-next"><i class="pe-7s-angle-right"></i></button>',
-		responsive: [{
-			breakpoint: 992,
-			settings: {
-				slidesToShow: 3
-			}
-		},
-		{
-			breakpoint: 768,
-			settings: {
-				slidesToShow: 2,
-				arrows: false,
-				rows: 1
-			}
-		},
-		{
-			breakpoint: 480,
-			settings: {
-				slidesToShow: 1,
-				arrows: false,
-				rows: 1
-			}
-		}]
+		responsive: [
+			{
+				breakpoint: 1200,
+				settings: {
+					slidesToShow: 4
+				}
+			}, {
+				breakpoint: 992,
+				settings: {
+					slidesToShow: 3
+				}
+			},
+			{
+				breakpoint: 768,
+				settings: {
+					slidesToShow: 2,
+					arrows: false,
+					rows: 1
+				}
+			},
+			{
+				breakpoint: 480,
+				settings: {
+					slidesToShow: 1,
+					arrows: false,
+					rows: 1
+				}
+			}]
 	});
 
 
@@ -268,18 +280,18 @@
 
 	// testimonial cariusel active js
 	$('.testimonial-content-carousel').slick({
-        arrows: false,
-        asNavFor: '.testimonial-thumb-carousel'
-    });
+		arrows: false,
+		asNavFor: '.testimonial-thumb-carousel'
+	});
 
 
-    // product details slider nav active
-    $('.testimonial-thumb-carousel').slick({
-        slidesToShow: 3,
-        asNavFor: '.testimonial-content-carousel',
+	// product details slider nav active
+	$('.testimonial-thumb-carousel').slick({
+		slidesToShow: 3,
+		asNavFor: '.testimonial-content-carousel',
 		centerMode: true,
 		arrows: false,
-        centerPadding: 0,
+		centerPadding: 0,
 		focusOnSelect: true
 	});
 
@@ -406,21 +418,21 @@
 	});
 
 	// product details slider active
-    $('.product-large-slider').slick({
-        fade: true,
+	$('.product-large-slider').slick({
+		fade: true,
 		arrows: false,
 		speed: 1000,
-        asNavFor: '.pro-nav'
-    });
+		asNavFor: '.pro-nav'
+	});
 
 
-    // product details slider nav active
-    $('.pro-nav').slick({
-        slidesToShow: 4,
-        asNavFor: '.product-large-slider',
+	// product details slider nav active
+	$('.pro-nav').slick({
+		slidesToShow: 4,
+		asNavFor: '.product-large-slider',
 		centerMode: true,
 		speed: 1000,
-        centerPadding: 0,
+		centerPadding: 0,
 		focusOnSelect: true,
 		prevArrow: '<button type="button" class="slick-prev"><i class="lnr lnr-chevron-left"></i></button>',
 		nextArrow: '<button type="button" class="slick-next"><i class="lnr lnr-chevron-right"></i></button>',
@@ -442,12 +454,12 @@
 
 
 	// offcanvas minicart button js
-	$(".minicart-btn").on('click', function(){
+	$(".minicart-btn").on('click', function () {
 		$("body").addClass('fix');
 		$(".minicart-inner").addClass('show')
 	})
 
-	$(".offcanvas-close, .minicart-close,.offcanvas-overlay").on('click', function(){
+	$(".offcanvas-close, .minicart-close,.offcanvas-overlay").on('click', function () {
 		$("body").removeClass('fix');
 		$(".minicart-inner").removeClass('show')
 	})
@@ -463,36 +475,36 @@
 	});
 
 	// quantity change js
-    $('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
-    $('.pro-qty').append('<span class="inc qtybtn">+</span>');
-    $('.qtybtn').on('click', function () {
-        var $button = $(this);
-        var oldValue = $button.parent().find('input').val();
-        if ($button.hasClass('inc')) {
-            var newVal = parseFloat(oldValue) + 1;
-        } else {
-            // Don't allow decrementing below zero
-            if (oldValue > 0) {
-                var newVal = parseFloat(oldValue) - 1;
-            } else {
-                newVal = 0;
-            }
-        }
-        $button.parent().find('input').val(newVal);
+	$('.pro-qty').prepend('<span class="dec qtybtn">-</span>');
+	$('.pro-qty').append('<span class="inc qtybtn">+</span>');
+	$('.qtybtn').on('click', function () {
+		var $button = $(this);
+		var oldValue = $button.parent().find('input').val();
+		if ($button.hasClass('inc')) {
+			var newVal = parseFloat(oldValue) + 1;
+		} else {
+			// Don't allow decrementing below zero
+			if (oldValue > 0) {
+				var newVal = parseFloat(oldValue) - 1;
+			} else {
+				newVal = 0;
+			}
+		}
+		$button.parent().find('input').val(newVal);
 	});
 
 
 	// product view mode change js
-    $('.product-view-mode a').on('click', function (e) {
-        e.preventDefault();
-        var shopProductWrap = $('.shop-product-wrap');
-        var viewMode = $(this).data('target');
-        $('.product-view-mode a').removeClass('active');
-        $(this).addClass('active');
-        shopProductWrap.removeClass('grid-view list-view').addClass(viewMode);
+	$('.product-view-mode a').on('click', function (e) {
+		e.preventDefault();
+		var shopProductWrap = $('.shop-product-wrap');
+		var viewMode = $(this).data('target');
+		$('.product-view-mode a').removeClass('active');
+		$(this).addClass('active');
+		shopProductWrap.removeClass('grid-view list-view').addClass(viewMode);
 	})
-	
-	
+
+
 	// pricing filter
 	var rangeSlider = $(".price-range"),
 		amount = $("#amount"),
@@ -513,20 +525,20 @@
 
 
 	// Checkout Page accordion
-    $("#create_pwd").on("change", function () {
-        $(".account-create").slideToggle("100");
-    });
-
-    $("#ship_to_different").on("change", function () {
-        $(".ship-to-different").slideToggle("100");
+	$("#create_pwd").on("change", function () {
+		$(".account-create").slideToggle("100");
 	});
-	
 
-    // Payment Method Accordion
-    $('input[name="paymentmethod"]').on('click', function () {
-        var $value = $(this).attr('value');
-        $('.payment-method-details').slideUp();
-        $('[data-method="' + $value + '"]').slideDown();
+	$("#ship_to_different").on("change", function () {
+		$(".ship-to-different").slideToggle("100");
+	});
+
+
+	// Payment Method Accordion
+	$('input[name="paymentmethod"]').on('click', function () {
+		var $value = $(this).attr('value');
+		$('.payment-method-details').slideUp();
+		$('[data-method="' + $value + '"]').slideDown();
 	});
 
 
@@ -543,32 +555,32 @@
 			scrollTop: 0
 		}, 1000);
 	});
-	
+
 
 	// Search trigger js
-	$(".search-trigger").on('click', function(){
+	$(".search-trigger").on('click', function () {
 		$(".header-search-box").toggleClass('search-box-open');
 	})
 
 
 	// Mail-chimp for dynamic newsletter
-    $('#mc-form').ajaxChimp({
-        language: 'en',
-        callback: mailChimpResponse,
-        // ADD YOUR MAILCHIMP URL BELOW HERE!
-        url: 'https://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef'
+	$('#mc-form').ajaxChimp({
+		language: 'en',
+		callback: mailChimpResponse,
+		// ADD YOUR MAILCHIMP URL BELOW HERE!
+		url: 'https://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef'
 
-    });
+	});
 
-    // mail-chimp active js
-    function mailChimpResponse(resp) {
-        if (resp.result === 'success') {
-            $('.mailchimp-success').html('' + resp.msg).fadeIn(900);
-            $('.mailchimp-error').fadeOut(400);
+	// mail-chimp active js
+	function mailChimpResponse(resp) {
+		if (resp.result === 'success') {
+			$('.mailchimp-success').html('' + resp.msg).fadeIn(900);
+			$('.mailchimp-error').fadeOut(400);
 
-        } else if (resp.result === 'error') {
-            $('.mailchimp-error').html('' + resp.msg).fadeIn(900);
-        }
+		} else if (resp.result === 'error') {
+			$('.mailchimp-error').html('' + resp.msg).fadeIn(900);
+		}
 	}
 
 	// Instagram feed carousel active
@@ -580,11 +592,11 @@
 		dots: false,
 		arrows: false,
 		responsive: [{
-				breakpoint: 480,
-				settings: {
-					slidesToShow: 2,
-				}
-			},
+			breakpoint: 480,
+			settings: {
+				slidesToShow: 2,
+			}
+		},
 			{
 				breakpoint: 767,
 				settings: {
@@ -599,6 +611,6 @@
 			}
 		]
 	})
-	
+
 })(jQuery);
 

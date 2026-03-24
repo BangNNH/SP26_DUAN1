@@ -1,0 +1,30 @@
+.split-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.split-line {
+    background-color: #c1bfbf;
+    flex: 1;
+    height: 1px;
+    width: 100%;
+}
+
+.split-text {
+    color: #c1bfbf;
+    text-transform: uppercase;
+}
+
+.login-btn{
+    width: 100%;
+    background-color:#921918 ;
+    color: #fff;
+    border-radius: 30px;
+    transition: all ease-in 0.3s;
+}
+.login-btn:hover{
+    background-color:#9f2b2b ;
+    color: #fcee02;
+}

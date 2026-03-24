@@ -19,8 +19,25 @@ class HomeController
     public function home()
     {
         $listSanPham = $this->modelSanPham->getAllSanPham();
+        function calcDiscountPercent($originalPrice, $salePrice)
+        {
+            if ($originalPrice <= 0 || $salePrice >= $originalPrice) {
+                return 0;
+            }
+
+            return round((($originalPrice - $salePrice) / $originalPrice) * 100);
+        }
+
+        $listSanPhamBanChay = $this->modelSanPham->getSanPhamBanChay();
+        $listSanPhamMoi = $this->modelSanPham->getSanPhamMoi();
+        $listAutomatic =  $this->modelSanPham->getSanPhamByLoai('Automatic');
+        $listQuartz =  $this->modelSanPham->getSanPhamByLoai('Quartz');
+        $listEco =  $this->modelSanPham->getSanPhamByLoai('Eco-Drive');
+        $listSport =  $this->modelSanPham->getSanPhamByLoai('Sport');
+        $listSmart =  $this->modelSanPham->getSanPhamByLoai('Smartwatch');
         require_once './views/home.php';
     }
+
 
     public function chiTietSanPham()
     {
@@ -57,6 +74,7 @@ class HomeController
             if (is_string($user) && filter_var($user, FILTER_VALIDATE_EMAIL)) {
                 // Lưu email vào session để dùng hiển thị
                 $_SESSION['user_client'] = $user;
+                $_SESSION['login_success'] = "Đăng nhập thành công";
                 header("Location: " . BASE_URL);
                 exit();
             } else {
@@ -69,6 +87,13 @@ class HomeController
                 exit();
             }
         }
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        header("Location: " . BASE_URL . '?act=login');
+        exit();
     }
 
 

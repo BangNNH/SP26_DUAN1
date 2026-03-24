@@ -23,12 +23,12 @@
                             <div class="widget-title">
                                 <div class="widget-logo">
                                     <a href="<?= BASE_URL ?>">
-                                        <img src="assets/img/LOGO.png" alt="Brand Logo">
+                                        <img src="<?= BASE_ASSETS_IMG . 'logo/sub-logo1.png' ?>" alt="Brand Logo">
                                     </a>
                                 </div>
                             </div>
                             <div class="widget-body">
-                                <p>Chúng tôi chuyên cung cấp các sản phẩm và phụ kiện chất lượng cao dành cho thú cưng như chó và mèo.</p>
+                                <p>Chúng tôi chuyên cung cấp các sản phẩm đồng hồ chất lượng, giá thành tốt.</p>
                             </div>
                         </div>
                     </div>

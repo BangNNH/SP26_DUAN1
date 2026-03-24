@@ -30,7 +30,7 @@ body {
   font-size: 14px;
   line-height: 1.4285;
   color: #000;
-    font-family: "Montserrat", Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -4012,7 +4012,7 @@ only screen and (max-width: 767.98px) {
 /*----- testimonial area end -----*/
 /*----- breadcrumb style css start -----*/
 .breadcrumb-area {
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 .breadcrumb-wrap {
@@ -4043,7 +4043,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .breadcrumb-wrap .breadcrumb .breadcrumb-item a:hover {
-  color: #c29958;
+  color: #921918;
 }
 
 .breadcrumb-wrap .breadcrumb .breadcrumb-item:before {
@@ -4058,7 +4058,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .breadcrumb-wrap .breadcrumb .breadcrumb-item.active {
-  color: #c29958;
+  color: #921918;
   font-size: 14px;
   font-weight: 400;
   text-transform: capitalize;
@@ -5684,9 +5684,9 @@ only screen and (max-width: 767.98px) {
   line-height: 1;
   text-transform: capitalize;
   padding: 8px 10px;
-  border: 1px solid #c29958;
+  border: 1px solid #921918;
   border-bottom: none;
-  background-color: #c29958;
+  background-color: #921918;
 }
 
 .product-review-info .nav.review-tab li a:hover,
@@ -7409,6 +7409,7 @@ only screen and (max-width: 767.98px) {
   padding: 0px 20px 0px 15px;
   align-items: center;
 }
+
 /* css gạch chân đỏ ở tab category */
 .product-tab-menu a {
   position: relative;

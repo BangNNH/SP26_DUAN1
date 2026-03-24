@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="assets/css/plugins/jqueryui.min.css">
     <!-- main style css -->
     <link rel="stylesheet" href="assets/css/style.css">
+    <!-- product detail css -->
+    <link rel="stylesheet" href="assets/css/product_detail.css">
     <!-- font + icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

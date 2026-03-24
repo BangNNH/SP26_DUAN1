@@ -19,8 +19,20 @@ class HomeController
     public function home()
     {
         $listSanPham = $this->modelSanPham->getAllSanPham();
+        function calcDiscountPercent($originalPrice, $salePrice)
+        {
+            if ($originalPrice <= 0 || $salePrice >= $originalPrice) {
+                return 0;
+            }
+
+            return round((($originalPrice - $salePrice) / $originalPrice) * 100);
+        }
+
+        $listSanPhamBanChay = $this->modelSanPham->getSanPhamBanChay();
+        $listSanPhamMoi = $this->modelSanPham->getSanPhamMoi();
         require_once './views/home.php';
     }
+
 
     public function chiTietSanPham()
     {

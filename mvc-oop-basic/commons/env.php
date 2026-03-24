@@ -15,3 +15,9 @@ define('DB_PASSWORD', '');
 define('DB_NAME', 'watch_hub');  // Tên database
 
 define('PATH_ROOT', __DIR__ . '/../');
+
+define('BASE_ASSETS_IMG',   BASE_URL . 'assets/img/');
+
+// define('BASE_ASSETS_UPLOADS',   BASE_URL . 'uploads/');
+
+define('PATH_ASSETS_IMG',   PATH_ROOT . 'assets/img/');

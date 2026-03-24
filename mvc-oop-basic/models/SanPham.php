@@ -52,6 +52,19 @@ class SanPham
         }
     }
 
+    public function getSanPhamByLoai($type)
+    {
+        try {
+            $sql = "SELECT * FROM san_phams WHERE loai_may = :type";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':type', $type);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log("Query error: " . $e->getMessage());
+        }
+    }
+
     public function getDetailSanPham($id)
     {
         try {

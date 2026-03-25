@@ -94,11 +94,61 @@ function checkLoginAdmin()
     }
 }
 
- function formatPrice($price){
+function formatPrice($price)
+{
     if ($price === null || $price === '') {
         $price = 0;
     }
     return number_format((float)$price, 0, ',', '.');
- }
+}
 
- //Debung
+
+function getCartCount()
+{
+    $count = 0;
+    if (isset($_SESSION['user_client'])) {
+        $count = 5;
+    } else {
+        $cart = getCartFromSession();
+        foreach ($cart as $item) {
+            $count += $item['so_luong'];
+        }
+    }
+    return $count;
+}
+
+function getCartFromSession()
+{
+    $cart = $_SESSION['cart'] ?? [];
+    $result = [];
+
+    foreach ($cart as $id => $item) {
+
+        $sp = getProductById($id);
+
+        if ($sp) {
+            $result[] = [
+                'id' => $id,
+                'ten_san_pham' => $sp['ten_san_pham'],
+                'gia_san_pham' => $sp['gia_san_pham'],
+                'gia_khuyen_mai' => $sp['gia_khuyen_mai'],
+                'so_luong' => $item['so_luong'],
+                'hinh_anh' => $sp['hinh_anh'],
+            ];
+        }
+    }
+
+    return $result;
+}
+
+function getProductById($id)
+{
+    $conn = connectDB();
+
+    $sql = "SELECT * FROM san_phams WHERE id = :id";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(['id' => $id]);
+
+    return $stmt->fetch();
+}

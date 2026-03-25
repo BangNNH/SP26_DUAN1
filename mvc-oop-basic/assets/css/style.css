@@ -2442,7 +2442,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .minicart-pricing-box li span strong {
-  color: #c29958;
+  color: #921918;
   font-weight: 400;
 }
 
@@ -7285,6 +7285,7 @@ only screen and (max-width: 767.98px) {
   color: #fff;
   border-radius: 50px;
   margin-top: 5px;
+  width: 100%;
   opacity: 0;
   transition: all 0.3s ease-in;
 }

@@ -1,3 +1,5 @@
+<?php $cart = getCartFromSession(); ?>
+<?php $soLuongCart = getCartCount(); ?>
 <!doctype html>
 <html class="no-js" lang="en">
 

@@ -133,7 +133,25 @@
 
     <!-- JS
 ============================================ -->
+    <!-- <script>
+        const params = new URLSearchParams(window.location.search);
 
+        if (params.get('openCart') === '1') {
+            document.querySelector('.offcanvas-minicart-wrapper')
+                .classList.add('active');
+        }
+    </script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            <?php if (isset($_SESSION['openCart'])): ?>
+                var btn = document.querySelector('.minicart-btn');
+                if (btn) btn.click();
+            <?php unset($_SESSION['openCart']);
+            endif; ?>
+
+        });
+    </script>
     <!-- Modernizer JS -->
     <script src="assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <!-- jQuery JS -->

@@ -34,22 +34,22 @@
                             <div class="billing-form-wrap">
                                 <div class="single-input-item">
                                     <label for="ten_nguoi_nhan" class="required">Tên người nhận</label>
-                                    <input type="text" id="ten_nguoi_nhan" name="ten_nguoi_nhan" value="<?= $user['ho_ten'] ?>" placeholder="Tên người nhận" required />
+                                    <input type="text" id="ten_nguoi_nhan" name="ten_nguoi_nhan" value="<?= isset($user['ho_ten']) ? $user['ho_ten'] : '' ?>" placeholder="Tên người nhận" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="email_nguoi_nhan" class="required">Email</label>
-                                    <input type="email" id="email_nguoi_nhan" name="email_nguoi_nhan" value="<?= $user['email'] ?>" placeholder="Địa chỉ Email" required />
+                                    <input type="email" id="email_nguoi_nhan" name="email_nguoi_nhan" value="<?= isset($user['email']) ? $user['email'] : '' ?>" placeholder="Địa chỉ Email" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="sdt_nguoi_nhan" class="required">SĐT</label>
-                                    <input type="text" id="sdt_nguoi_nhan" name="sdt_nguoi_nhan" value="<?= $user['so_dien_thoai'] ?>" placeholder="SĐT người nhận" required />
+                                    <input type="text" id="sdt_nguoi_nhan" name="sdt_nguoi_nhan" value="<?= isset($user['so_dien_thoai']) ? $user['so_dien_thoai'] : '' ?>" placeholder="SĐT người nhận" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="dia_chi_nguoi_nhan">Địa chỉ</label>
-                                    <input type="text" id="dia_chi_nguoi_nhan" name="dia_chi_nguoi_nhan" value="<?= $user['dia_chi'] ?>" placeholder="Địa chỉ người nhận" />
+                                    <input type="text" id="dia_chi_nguoi_nhan" name="dia_chi_nguoi_nhan" value="<?= isset($user['dia_chi']) ? $user['dia_chi'] : '' ?>" placeholder="Địa chỉ người nhận" />
                                 </div>
 
                                 <div class="single-input-item">

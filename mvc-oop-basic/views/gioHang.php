@@ -24,7 +24,7 @@
     <!-- breadcrumb area end -->
 
     <!-- cart main wrapper start -->
-    <div class="cart-main-wrapper section-padding">
+    <div class="cart-main-wrapper section-padding pt-4">
         <div class="container">
             <div class="section-bg-color">
                 <div class="row">

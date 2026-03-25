@@ -81,7 +81,7 @@
                                                     <a href="<?= BASE_URL_ADMIN . '?act=reset-password&id_quan_tri=' . $quanTri['id']  ?>"
                                                         onclick="return confirm('Bạn có muốn reset password của tài khoản hay không?')"
                                                         class="btn btn-danger btn-sm">
-                                                        Reset Password
+                                                        <i class="fas fa-undo"></i>
                                                     </a>
                                                 </div>
                                             </td>

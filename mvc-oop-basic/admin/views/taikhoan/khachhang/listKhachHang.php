@@ -83,7 +83,7 @@
                                                     <a href="<?= BASE_URL_ADMIN . '?act=reset-password&id_khach_hang=' . $khachHang['id']  ?>"
                                                         onclick="return confirm('Bạn có muốn reset password của tài khoản hay không?')"
                                                         class="btn btn-danger btn-sm">
-                                                        Reset Password
+                                                        <i class="fas fa-undo"></i>
                                                     </a>
                                                 </div>
 

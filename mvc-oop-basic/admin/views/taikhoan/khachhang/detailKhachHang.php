@@ -26,161 +26,221 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-4">
-                    <img src="<?= BASE_URL . $khachHang['anh_dai_dien'] ?>" style="width: 70%" alt=""
-                        onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
+            <div class="row" style="
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+">
+
+                <!-- AVATAR -->
+                <div class="col-4" style="display:flex; align-items:center; justify-content:center;">
+                    <img src="<?= BASE_URL . $khachHang['anh_dai_dien'] ?>" style="
+                width:220px;
+                height:220px;
+                object-fit:cover;
+                border-radius:12px;
+                box-shadow:0 4px 15px rgba(0,0,0,0.1);
+            " onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
                 </div>
-                <div class="col-6">
-                    <div class="container">
-                        <table class="table table-borderless">
-                            <tbody style="font-size: large;">
-                                <tr>
-                                    <th>Họ tên: </th>
-                                    <td><?= $khachHang['ho_ten'] ?? '' ?></td>
-                                </tr>
 
-                                <tr>
-                                    <th>Ngày sinh: </th>
-                                    <td><?= $khachHang['ngay_sinh'] ?? '' ?></td>
-                                </tr>
+                <!-- INFO -->
+                <div class="col-8">
+                    <div style="
+            background:#fff;
+            padding:25px 30px;
+            border-radius:12px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.05);
+            font-family:'Inter',sans-serif;
+        ">
 
-                                <tr>
-                                    <th>Email: </th>
-                                    <td><?= $khachHang['email'] ?? '' ?></td>
-                                </tr>
+                        <!-- NAME -->
+                        <div style="font-size:22px; font-weight:600; margin-bottom:20px;">
+                            <?= $khachHang['ho_ten'] ?? '' ?>
+                        </div>
 
-                                <tr>
-                                    <th>Số điện thoại: </th>
-                                    <td><?= $khachHang['so_dien_thoai'] ?? '' ?></td>
-                                </tr>
+                        <!-- GRID INFO -->
+                        <div style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:20px 40px;
+            ">
 
-                                <tr>
-                                    <th>Giới tính: </th>
-                                    <td><?= $khachHang['gioi_tinh'] == 1 ? 'Nam' : 'Nữ' ?></td>
-                                </tr>
+                            <!-- ITEM -->
+                            <div>
+                                <div style="font-size:11px; color:#999; text-transform:uppercase;">Ngày sinh</div>
+                                <div style="font-weight:500;"><?= $khachHang['ngay_sinh'] ?? '' ?></div>
+                            </div>
 
-                                <tr>
-                                    <th>Địa chỉ: </th>
-                                    <td><?= $khachHang['dia_chi'] ?? '' ?></td>
-                                </tr>
+                            <div>
+                                <div style="font-size:11px; color:#999; text-transform:uppercase;">Email</div>
+                                <div><?= $khachHang['email'] ?? '' ?></div>
+                            </div>
 
+                            <div>
+                                <div style="font-size:11px; color:#999; text-transform:uppercase;">Số điện thoại</div>
+                                <div><?= $khachHang['so_dien_thoai'] ?? '' ?></div>
+                            </div>
+
+                            <div>
+                                <div style="font-size:11px; color:#999; text-transform:uppercase;">Giới tính</div>
+                                <div><?= $khachHang['gioi_tinh'] == 1 ? 'Nam' : 'Nữ' ?></div>
+                            </div>
+
+                            <div>
+                                <div style="font-size:11px; color:#999; text-transform:uppercase;">Địa chỉ</div>
+                                <div><?= $khachHang['dia_chi'] ?? '' ?></div>
+                            </div>
+
+                            <div>
+                                <div style="font-size:11px; color:#999; text-transform:uppercase;">Trạng thái</div>
+
+                                <?php if($khachHang['trang_thai'] == 1): ?>
+                                <span style="
+                            background:#d4f8e8;
+                            color:#27ae60;
+                            padding:5px 12px;
+                            border-radius:20px;
+                            font-size:13px;
+                            font-weight:500;
+                            display:inline-block;
+                            margin-top:5px;
+                        ">
+                                    ● Active
+                                </span>
+                                <?php else: ?>
+                                <span style="
+                            background:#fdecea;
+                            color:#e74c3c;
+                            padding:5px 12px;
+                            border-radius:20px;
+                            font-size:13px;
+                            font-weight:500;
+                            display:inline-block;
+                            margin-top:5px;
+                        ">
+                                    ● Inactive
+                                </span>
+                                <?php endif; ?>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12">
+                <hr>
+                <h2>Lịch sử mua hàng</h2>
+                <div>
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <th>Trạng thái: </th>
-                                    <td><?= $khachHang['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
+                                    <th>STT</th>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Tên người nhận</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
                                 </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($listDonHang as $key => $donHang) : ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= $donHang['ma_don_hang'] ?></td>
+                                    <td><?= $donHang['ten_nguoi_nhan'] ?></td>
+                                    <td><?= $donHang['sdt_nguoi_nhan'] ?></td>
+                                    <td><?= $donHang['ngay_dat'] ?></td>
+                                    <td><?= $donHang['tong_tien'] ?></td>
+                                    <td><?= $donHang['ten_trang_thai'] ?></td>
+
+                                    <td>
+                                        <div class="d-flex justify-content-center" style="gap: 6px;">
+
+                                            <a class="btn btn-primary btn-sm"
+                                                href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>">
+                                                <i class="far fa-eye"></i>
+                                            </a>
+
+                                            <a class="btn btn-warning btn-sm"
+                                                href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>">
+                                                <i class="fas fa-cogs"></i>
+                                            </a>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endforeach ?>
                             </tbody>
+
                         </table>
                     </div>
                 </div>
-                <div class="col-12">
-                    <hr>
-                    <h2>Lịch sử mua hàng</h2>
-                    <div>
-                        <div class="card-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Mã đơn hàng</th>
-                                        <th>Tên người nhận</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Ngày đặt</th>
-                                        <th>Tổng tiền</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php foreach ($listDonHang as $key => $donHang) : ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $donHang['ma_don_hang'] ?></td>
-                                            <td><?= $donHang['ten_nguoi_nhan'] ?></td>
-                                            <td><?= $donHang['sdt_nguoi_nhan'] ?></td>
-                                            <td><?= $donHang['ngay_dat'] ?></td>
-                                            <td><?= $donHang['tong_tien'] ?></td>
-                                            <td><?= $donHang['ten_trang_thai'] ?></td>
-
-                                            <td>
-                                                <div class="d-flex justify-content-center" style="gap: 6px;">
-
-                                                    <a class="btn btn-primary btn-sm" href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>">
-                                                        <i class="far fa-eye"></i>
-                                                    </a>
-
-                                                    <a class="btn btn-warning btn-sm" href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>">
-                                                        <i class="fas fa-cogs"></i>
-                                                    </a>
-
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <hr>
-                    <h2>Lịch sử bình luận</h2>
-                    <div>
-                        <div class="card-body">
-                            <table id="example2" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>STT</th>
-                                        <th>Sản Phẩm</th>
-                                        <th>Nội Dung</th>
-                                        <th>Ngày Bình Luận</th>
-                                        <th>Trạng thái</th>
-                                        <th>Thao tác</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <?php foreach ($listBinhLuan as $key => $binhLuan) : ?>
-                                        <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td>
-                                                <a target="_blank" href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham' . $binhLuan['san_pham_id'] ?>"><?= $binhLuan['ten_san_pham'] ?>
-                                                </a>
-                                            </td>
-                                            <td><?= $binhLuan['noi_dung'] ?></td>
-                                            <td><?= $binhLuan['ngay_dang'] ?></td>
-                                            <td><?= $binhLuan['trang_thai'] == 1 ? 'Hiển thị' : 'Bị Ẩn' ?></td>
-
-                                            <td class="text-center">
-                                                <div class="btn-group">
-
-                                                    <form action="<?= BASE_URL_ADMIN . '?act=update-trang-thai-binh-luan' ?>" method="POST">
-                                                        <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
-                                                        <input type="hidden" name="name_view" value="detail_khach">
-                                                        <button onclick="return confirm('Bạn có muốn ẩn bình luận này không?')" class="btn btn-danger btn-sm">
-                                                            <?= $binhLuan['trang_thai'] == 1 ? 'Ẩn' : 'Bỏ ẩn' ?>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach ?>
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
+
+            <div class="col-12">
+                <hr>
+                <h2>Lịch sử bình luận</h2>
+                <div>
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Sản Phẩm</th>
+                                    <th>Nội Dung</th>
+                                    <th>Ngày Bình Luận</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <?php foreach ($listBinhLuan as $key => $binhLuan) : ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td>
+                                        <a target="_blank"
+                                            href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham' . $binhLuan['san_pham_id'] ?>"><?= $binhLuan['ten_san_pham'] ?>
+                                        </a>
+                                    </td>
+                                    <td><?= $binhLuan['noi_dung'] ?></td>
+                                    <td><?= $binhLuan['ngay_dang'] ?></td>
+                                    <td><?= $binhLuan['trang_thai'] == 1 ? 'Hiển thị' : 'Bị Ẩn' ?></td>
+
+                                    <td class="text-center">
+                                        <div class="btn-group">
+
+                                            <form action="<?= BASE_URL_ADMIN . '?act=update-trang-thai-binh-luan' ?>"
+                                                method="POST">
+                                                <input type="hidden" name="id_binh_luan" value="<?= $binhLuan['id'] ?>">
+                                                <input type="hidden" name="name_view" value="detail_khach">
+                                                <button onclick="return confirm('Bạn có muốn ẩn bình luận này không?')"
+                                                    class="btn btn-danger btn-sm">
+                                                    <?= $binhLuan['trang_thai'] == 1 ? 'Ẩn' : 'Bỏ ẩn' ?>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php endforeach ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col -->
         </div>
-        <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+        <!-- /.row -->
+</div>
+<!-- /.container-fluid -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
@@ -190,19 +250,19 @@
 
 </body>
 <script>
-    $(function() {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-        $('#example2').DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-        });
+$(function() {
+    $("#example1").DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
     });
+});
 </script>
 
 </html>

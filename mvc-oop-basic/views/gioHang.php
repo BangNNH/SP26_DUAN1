@@ -12,8 +12,8 @@
                         <nav aria-label="breadcrumb">
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="shop.html">shop</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">cart</li>
+                                <li class="breadcrumb-item"><a href="shop.html">Danh sách sản phẩm</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
                             </ul>
                         </nav>
                     </div>
@@ -24,7 +24,7 @@
     <!-- breadcrumb area end -->
 
     <!-- cart main wrapper start -->
-    <div class="cart-main-wrapper section-padding">
+    <div class="cart-main-wrapper section-padding pt-4">
         <div class="container">
             <div class="section-bg-color">
                 <div class="row">
@@ -87,12 +87,12 @@
                         <div class="cart-update-option d-block d-md-flex justify-content-between">
                             <div class="apply-coupon-wrapper">
                                 <form action="#" method="post" class=" d-block d-md-flex">
-                                    <input type="text" placeholder="Enter Your Coupon Code" required />
-                                    <button class="btn btn-sqr">Apply Coupon</button>
+                                    <input type="text" placeholder="Nhập mã giảm giá" required />
+                                    <button class="btn btn-sqr">Áp mã</button>
                                 </form>
                             </div>
                             <div class="cart-update">
-                                <a href="#" class="btn btn-sqr">Update Cart</a>
+                                <a href="#" class="btn btn-sqr">Cập nhật giỏ hàng</a>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <!-- Cart Calculation Area -->
                         <div class="cart-calculator-wrapper">
                             <div class="cart-calculate-items">
-                                <h6>Cart Totals</h6>
+                                <h6>Tổng đơn hàng</h6>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tr>

@@ -1782,13 +1782,13 @@ only screen and (max-width: 767.98px) {
   color: #fff;
   font-size: 15px;
   border-radius: 0;
-  background-color: #c29958;
+  background-color: #921918;
   padding: 12px 25px;
 }
 
 .btn-sqr:hover {
   color: #fff;
-  background-color: #222222;
+    background-color: rgb(178, 23, 23);
 }
 
 /*----- mobile menu start -----*/
@@ -2442,7 +2442,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .minicart-pricing-box li span strong {
-  color: #c29958;
+  color: #921918;
   font-weight: 400;
 }
 
@@ -3230,8 +3230,8 @@ only screen and (max-width: 479.98px) {
 .custom-radio input:checked label:before,
 .custom-radio .custom-control-input:checked~.custom-control-label:before,
 .custom-radio .custom-control-input:checked label:before {
-  background-color: #c29958;
-  border-color: #c29958;
+  background-color: #921918;
+    border-color: #921918;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
@@ -5958,7 +5958,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .checkout-title {
-  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid #921918;
   padding-bottom: 15px;
   margin-bottom: 30px;
 }
@@ -6004,17 +6004,18 @@ only screen and (max-width: 767.98px) {
 
 .order-summary-table .table,
 .order-summary-table table {
-  color: #222222;
+  color: #000;
   margin-bottom: 0;
   font-size: 15px;
   white-space: nowrap;
 }
-
+/* 
 .order-summary-table .table tr td,
 .order-summary-table .table tr th,
 .order-summary-table table tr td,
+*/
 .order-summary-table table tr th {
-  font-weight: 400;
+  font-weight: 700;
   vertical-align: middle;
   padding: 15px 10px;
   border-width: 1px;
@@ -6028,6 +6029,9 @@ only screen and (max-width: 767.98px) {
   font-weight: 400;
 }
 
+.order-summary-table table tr td a:hover {
+  color: #921918;
+}
 .order-summary-table .table tr td strong,
 .order-summary-table .table tr th strong,
 .order-summary-table table tr td strong,
@@ -6178,11 +6182,11 @@ only screen and (max-width: 767.98px) {
 }
 
 .cart-table .table thead {
-  background-color: #c29958;
+  background-color: #921918;
 }
 
 .cart-table .table thead tr th {
-  border-color: #c29958;
+  border-color: #921918;
   border-bottom: 0 solid transparent;
   color: #fff;
   font-size: 14px;
@@ -7281,6 +7285,7 @@ only screen and (max-width: 767.98px) {
   color: #fff;
   border-radius: 50px;
   margin-top: 5px;
+  width: 100%;
   opacity: 0;
   transition: all 0.3s ease-in;
 }

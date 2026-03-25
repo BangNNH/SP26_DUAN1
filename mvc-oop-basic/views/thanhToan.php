@@ -23,32 +23,8 @@
     <!-- breadcrumb area end -->
 
     <!-- checkout main wrapper start -->
-    <div class="checkout-page-wrapper section-padding">
+    <div class="checkout-page-wrapper section-padding pt-4">
         <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <!-- Checkout Login Coupon Accordion Start -->
-                    <div class="checkoutaccordion" id="checkOutAccordion">
-                        <div class="card">
-                            <h6>Thêm mã giảm giá <span data-bs-toggle="collapse" data-bs-target="#couponaccordion">Click
-                                    Nhập mã giảm giá</span></h6>
-                            <div id="couponaccordion" class="collapse" data-parent="#checkOutAccordion">
-                                <div class="card-body">
-                                    <div class="cart-update-option">
-                                        <div class="apply-coupon-wrapper">
-                                            <form action="#" method="post" class=" d-block d-md-flex">
-                                                <input type="text" placeholder="Enter Your Coupon Code" required />
-                                                <button class="btn btn-sqr">Apply Coupon</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Checkout Login Coupon Accordion End -->
-                </div>
-            </div>
             <form action="<?= BASE_URL . '?act=xu-ly-thanh-toan' ?>" method="POST">
                 <div class="row">
                     <!-- Checkout Billing Details -->
@@ -58,22 +34,22 @@
                             <div class="billing-form-wrap">
                                 <div class="single-input-item">
                                     <label for="ten_nguoi_nhan" class="required">Tên người nhận</label>
-                                    <input type="text" id="ten_nguoi_nhan" name="ten_nguoi_nhan" value="<?= $user['ho_ten'] ?>" placeholder="Tên người nhận" required />
+                                    <input type="text" id="ten_nguoi_nhan" name="ten_nguoi_nhan" value="<?= isset($user['ho_ten']) ? $user['ho_ten'] : '' ?>" placeholder="Tên người nhận" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="email_nguoi_nhan" class="required">Email</label>
-                                    <input type="email" id="email_nguoi_nhan" name="email_nguoi_nhan" value="<?= $user['email'] ?>" placeholder="Địa chỉ Email" required />
+                                    <input type="email" id="email_nguoi_nhan" name="email_nguoi_nhan" value="<?= isset($user['email']) ? $user['email'] : '' ?>" placeholder="Địa chỉ Email" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="sdt_nguoi_nhan" class="required">SĐT</label>
-                                    <input type="text" id="sdt_nguoi_nhan" name="sdt_nguoi_nhan" value="<?= $user['so_dien_thoai'] ?>" placeholder="SĐT người nhận" required />
+                                    <input type="text" id="sdt_nguoi_nhan" name="sdt_nguoi_nhan" value="<?= isset($user['so_dien_thoai']) ? $user['so_dien_thoai'] : '' ?>" placeholder="SĐT người nhận" required />
                                 </div>
 
                                 <div class="single-input-item">
                                     <label for="dia_chi_nguoi_nhan">Địa chỉ</label>
-                                    <input type="text" id="dia_chi_nguoi_nhan" name="dia_chi_nguoi_nhan" value="<?= $user['dia_chi'] ?>" placeholder="Địa chỉ người nhận" />
+                                    <input type="text" id="dia_chi_nguoi_nhan" name="dia_chi_nguoi_nhan" value="<?= isset($user['dia_chi']) ? $user['dia_chi'] : '' ?>" placeholder="Địa chỉ người nhận" />
                                 </div>
 
                                 <div class="single-input-item">
@@ -93,7 +69,7 @@
                                 <div class="order-summary-table table-responsive text-center">
                                     <table class="table table-bordered">
                                         <thead>
-                                            <tr>
+                                            <tr class="font-weight: bold">
                                                 <th>Sản phẩm</th>
                                                 <th>Tổng</th>
                                             </tr>
@@ -132,9 +108,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Tổng đơn hàng</td>
+                                                <td style="color:#921918; font-weight: 600;">Tổng đơn hàng</td>
                                                 <input type="hidden" name="tong_tien" value="<?= $tongGioHang + 30000 ?> ">
-                                                <td><strong><?= formatPrice($tongGioHang + 30000) ?> VNĐ</strong></td>
+                                                <td style="color:#921918; font-weight: 600;"><?= formatPrice($tongGioHang + 30000) ?> VNĐ</td>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -147,9 +123,6 @@
                                                 <input type="radio" id="cashon" name="phuong_thuc_thanh_toan_id" value="1" name="phuong_thuc_thanh_toan" class="custom-control-input" checked />
                                                 <label class="custom-control-label" for="cashon">Thanh toán khi nhận hàng</label>
                                             </div>
-                                        </div>
-                                        <div class="payment-method-details" data-method="cash">
-                                            <p>Thanh toán sau khi nhận hàng thành công (cần xác nhận đơn hàng).</p>
                                         </div>
                                     </div>
                                     <div class="single-payment-method">

@@ -155,8 +155,8 @@
                                                     </h6>
                                                     <div class="price-box">
                                                         <?php
-                                                        $gia = $sanPham['gia_san_pham'] ?? $sanPham['gia'] ?? 0;
-                                                        $gia_khuyen_mai = $sanPham['gia_khuyen_mai'] ?? $gia;
+                                                        $gia = $sanPham['gia_san_pham'] ?? '';
+                                                        $gia_khuyen_mai = $sanPham['gia_khuyen_mai'] ?? '';
                                                         ?>
                                                         <?php if ($gia_khuyen_mai > 0 && $gia_khuyen_mai < $gia): ?>
                                                             <span class="price-old"><del><?= formatPrice($gia) ?>đ</del></span>
@@ -598,15 +598,13 @@
                                         </p>
                                     </div>
                                 </div>
-                                <?php if (isset($_SESSION['user']) && $_SESSION['user']) { ?>
-                                    <a href="?act=gio-hang&id=<?= $sanPham['id'] ?>" class="btn-addToCard">
+                                <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                    <input type="hidden" name="so_luong" value="1">
+                                    <button type="submit" class="btn-addToCard">
                                         Thêm vào giỏ
-                                    </a>
-                                <?php } else { ?>
-                                    <a href="?act=login" class="btn-addToCard">
-                                        Thêm vào giỏ
-                                    </a>
-                                <?php } ?>
+                                    </button>
+                                </form>
 
                             </div>
                             <!-- product item end -->
@@ -685,15 +683,13 @@
                                         </p>
                                     </div>
                                 </div>
-                                <?php if (isset($_SESSION['user']) && $_SESSION['user']) { ?>
-                                    <a href="?act=gio-hang&id=<?= $sanPham['id'] ?>" class="btn-addToCard">
+                                <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST" style="display:inline;">
+                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                    <input type="hidden" name="so_luong" value="1">
+                                    <button type="submit" class="btn-addToCard">
                                         Thêm vào giỏ
-                                    </a>
-                                <?php } else { ?>
-                                    <a href="?act=login" class="btn-addToCard">
-                                        Thêm vào giỏ
-                                    </a>
-                                <?php } ?>
+                                    </button>
+                                </form>
 
                             </div>
                             <!-- product item end -->

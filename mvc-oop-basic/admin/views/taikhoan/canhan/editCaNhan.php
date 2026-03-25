@@ -31,12 +31,14 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="card card-widget widget-user-2 shadow-sm">
-                                <div class="widget-user-header bg-info">
+                                <div class="widget-user-header bg-info" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);padding: 20px 30px;border-radius: 12px;background: linear-gradient(135deg, #2aa4b8, #1e7f8f); display: flex; align-items: center; gap: 15px;">
                                     <div class="widget-user-image">
-                                        <img class="img-circle elevation-2" src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien'] ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
+                                        <img class="img-circle elevation-2" style="width: 80px; height: 80px  border-radius: 50%;  border: 3px solid #fff;  object-fit: cover; " 
+                                        src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien'] ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
                                     </div>
-                                    <div>
-                                        <h5 class="widget-user-username text-white"><?= htmlspecialchars($thongTin['ho_ten'] ?? 'Admin') ?></h5>
+                                    <div style="font-size: 20px; font-weight: 550;">
+                                        <h5 class="widget-user-username text-white" style="margin-left: 0px;"><?= htmlspecialchars($thongTin['ho_ten'] ?? 'Admin') ?></h5>
+                                        <span class="info-box-number" style="background: rgba(255,255,255,0.2);padding: 4px 10px;  border-radius: 20px; font-size: 13px;  display: inline-block;">Chức vụ: <?= htmlspecialchars($thongTin['ten_dang_nhap'] ?? 'admin') ?></span>
                                     </div>
                                     <!-- <span class="widget-user-desc text-white"><strong>Chức vụ: </strong><?= htmlspecialchars($thongTin['chuc_vu_id'] == 1 ? 'Admin' : '') ?></span> -->
                                 </div>
@@ -50,13 +52,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="info-box bg-light shadow-sm mt-2">
+                            <!-- <div class="info-box bg-light shadow-sm mt-2">
                                 <span class="info-box-icon bg-primary"><i class="fas fa-user-cog"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Tài khoản hiện tại</span>
                                     <span class="info-box-number"><?= htmlspecialchars($thongTin['ten_dang_nhap'] ?? 'admin') ?></span>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="col-lg-8">

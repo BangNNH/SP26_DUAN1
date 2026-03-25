@@ -155,8 +155,8 @@
                                                     </h6>
                                                     <div class="price-box">
                                                         <?php
-                                                        $gia = $sanPham['gia_san_pham'] ?? $sanPham['gia'] ?? 0;
-                                                        $gia_khuyen_mai = $sanPham['gia_khuyen_mai'] ?? $gia;
+                                            $gia = $sanPham['gia_san_pham'] ?? '';
+                                            $gia_khuyen_mai = $sanPham['gia_khuyen_mai'] ?? '';
                                                         ?>
                                                         <?php if ($gia_khuyen_mai > 0 && $gia_khuyen_mai < $gia): ?>
                                                             <span class="price-old"><del><?= formatPrice($gia) ?>đ</del></span>

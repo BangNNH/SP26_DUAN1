@@ -96,7 +96,7 @@
                                         <form action="#">
                                             <div class="saleprice" bis_skin_checked="1">
                                                 <div class="price-box">
-                                                    <span class="price-old"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
+                                                    <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
                                                     <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
                                                 </div>
                                             </div>

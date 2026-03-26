@@ -127,4 +127,58 @@ class GioHang
         }
     }
 
+    // update so luong
+    public function increaseQuantity($tai_khoan_id, $san_pham_id)
+    {
+        $sql = "UPDATE chi_tiet_gio_hangs ct
+            JOIN gio_hangs gh ON ct.gio_hang_id = gh.id
+            SET ct.so_luong = ct.so_luong + 1
+            WHERE gh.tai_khoan_id = :tai_khoan_id
+            AND ct.san_pham_id = :san_pham_id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'tai_khoan_id' => $tai_khoan_id,
+            'san_pham_id' => $san_pham_id
+        ]);
+    }
+
+    public function decreaseQuantity($userId, $productId, $so_luong_hien_tai)
+    {
+        if ($so_luong_hien_tai <= 1) {
+            $sql = "DELETE ct FROM chi_tiet_gio_hangs ct
+                JOIN gio_hangs gh ON ct.gio_hang_id = gh.id
+                WHERE gh.tai_khoan_id = :userId
+                AND ct.san_pham_id = :productId";
+        } else {
+            $sql = "UPDATE chi_tiet_gio_hangs ct
+                JOIN gio_hangs gh ON ct.gio_hang_id = gh.id
+                SET ct.so_luong = ct.so_luong - 1
+                WHERE gh.tai_khoan_id = :userId
+                AND ct.san_pham_id = :productId";
+        }
+
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([
+            'userId' => $userId,
+            'productId' => $productId
+        ]);
+    }
+
+    // delete item
+    public function deleteItem($tai_khoan_id, $san_pham_id)
+    {
+        $sql = "DELETE ct FROM chi_tiet_gio_hangs ct
+            JOIN gio_hangs gh ON ct.gio_hang_id = gh.id
+            WHERE gh.tai_khoan_id = :tai_khoan_id
+            AND ct.san_pham_id = :san_pham_id";
+
+        $stmt = $this->conn->prepare($sql);
+
+        return $stmt->execute([
+            'tai_khoan_id' => $tai_khoan_id,
+            'san_pham_id' => $san_pham_id
+        ]);
+    }
 }

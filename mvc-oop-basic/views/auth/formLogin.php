@@ -38,10 +38,10 @@
                             <?php } ?>
                             <form action="<?= BASE_URL . '?act=check-login' ?>" method="post">
                                 <div class="single-input-item">
-                                    <input type="email" placeholder="Email" name="email" required />
+                                    <input type="email" placeholder="Email" name="email" />
                                 </div>
                                 <div class="single-input-item">
-                                    <input type="password" placeholder="Mật khẩu" name="password" required />
+                                    <input type="password" placeholder="Mật khẩu" name="password" />
                                 </div>
                                 <div class="single-input-item">
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">

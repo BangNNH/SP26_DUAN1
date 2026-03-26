@@ -1,0 +1,27 @@
+.quantity-control {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.quantity-control button {
+    width: 26px;
+    height: 26px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.quantity-control input {
+    width: 26px;
+    text-align: center;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 26px;
+    background-color: #e0e0e0;
+    padding: 0;
+    margin-bottom: 0;
+}

@@ -21,7 +21,7 @@ class CartController
 
             if (isset($_SESSION['user_client'])) {
                 // LUỒNG DB khi user đã login
-                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+                $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
 
                 $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
 
@@ -78,8 +78,8 @@ class CartController
     {
         if (isset($_SESSION['user_client'])) {
             // LUỒNG DB
-            unset($_SESSION['cart']);
-            $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            // unset($_SESSION['cart']);
+            $mail = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
 
             $gioHang = $this->modelGioHang->getGioHangFromUser($mail['id']);
 
@@ -96,5 +96,38 @@ class CartController
         }
 
         require_once './views/gioHang.php';
+    }
+
+    public function updateCartItem()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $action = $_POST['action'];
+            $san_pham_id = $_POST['san_pham_id'];
+            $so_luong_hien_tai = $_POST['so_luong_hien_tai'];
+            $tai_khoan_id = $_SESSION['user_client']['id'];
+
+            if ($action == 'increase') {
+                $this->modelGioHang->increaseQuantity($tai_khoan_id, $san_pham_id);
+            } elseif ($action == 'decrease') {
+                $this->modelGioHang->decreaseQuantity($tai_khoan_id, $san_pham_id, $so_luong_hien_tai);
+            }
+
+            header("Location: " . BASE_URL . "?act=gio-hang");
+            // exit();
+        }
+    }
+
+    public function deleteCartItem()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $san_pham_id = $_POST['san_pham_id'];
+            $tai_khoan_id = $_SESSION['user_client']['id'];
+
+            $this->modelGioHang->deleteItem($tai_khoan_id, $san_pham_id);
+
+            header("Location: " . BASE_URL . "?act=gio-hang");
+            exit();
+        }
     }
 }

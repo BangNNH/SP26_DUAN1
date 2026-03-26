@@ -40,6 +40,8 @@
     <link rel="stylesheet" href="assets/css/product_detail.css">
     <!-- login css -->
     <link rel="stylesheet" href="assets/css/auth.css">
+    <!-- cart css -->
+    <link rel="stylesheet" href="assets/css/cart.css">
     <!-- font + icon -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

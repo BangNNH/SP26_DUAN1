@@ -2,6 +2,13 @@
 
 <?php require_once 'layout/menu.php' ?>
 
+<?php if (isset($_SESSION['comment_success'])): ?>
+    <script>
+        alert("<?= $_SESSION['comment_success'] ?>");
+    </script>
+    <?php unset($_SESSION['comment_success']); ?>
+<?php endif; ?>
+
 <main>
     <!-- breadcrumb area start -->
     <div class="breadcrumb-area">
@@ -24,7 +31,7 @@
     <!-- breadcrumb area end -->
 
     <!-- page main wrapper start -->
-    <div class="shop-main-wrapper section-padding pb-0 pt-4">
+    <div class="shop-main-wrapper section-padding pb-0 pt-2">
         <div class="container">
             <div class="row">
                 <!-- product details wrapper start -->
@@ -93,22 +100,28 @@
                                         </div>
                                     </div>
                                     <div class="product-base" bis_skin_checked="1">
-                                        <form action="#">
-                                            <div class="saleprice" bis_skin_checked="1">
-                                                <div class="price-box">
-                                                    <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
-                                                    <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
-                                                </div>
+                                        <div class="saleprice" bis_skin_checked="1">
+                                            <div class="price-box">
+                                                <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
+                                                <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
                                             </div>
-                                            <div class="two-btn" bis_skin_checked="1">
-                                                <button class="btn-buy"><a class="btn-link btn-link-buy" href="?action=payment">Mua ngay</a></button>
-                                                <button class="btn-add-to-cart">
-                                                    <a href="?action=cart" class="btn-link btn-link-add-to-cart">
-                                                        Thêm vào giỏ
-                                                    </a>
+                                        </div>
+                                        <div class="two-btn" bis_skin_checked="1">
+                                            <form action="<?= BASE_URL . '?act=thanh-toan' ?>" method="POST">
+                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                <input type="hidden" name="so_luong" value="1">
+                                                <button type="submit" class="btn btn-buy">
+                                                    Mua ngay
                                                 </button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                            <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                <input type="hidden" name="so_luong" value="1">
+                                                <button type="submit" class="btn btn-add-to-cart">
+                                                    Thêm vào giỏ
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                     <div class="promotion" bis_skin_checked="1">
                                         <div class="promotion-title" bis_skin_checked="1">
@@ -307,59 +320,7 @@
     <!-- page main wrapper end -->
 
     <!-- product details reviews start -->
-    <!-- <div class="product-details-reviews section-padding pb-0">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="product-review-info">
-                        <ul class="nav review-tab">
-                            <li>
-                                <a class="active" data-bs-toggle="tab" href="#tab_three">Bình luận
-                                    <?php $countComment = (!empty($listBinhLuan) && is_array($listBinhLuan)) ? count($listBinhLuan) : 0; ?></a>
-                            </li>
-                        </ul>
-                        <div class="tab-content reviews-tab">
-                            <div class="tab-pane fade show active" id="tab_three">
-                                <form action="#" class="review-form">
-                                    <div class="total-reviews">
-                                        <?php if (!empty($listBinhLuan) && is_array($listBinhLuan)): ?>
-                                            <?php foreach ($listBinhLuan as $binhLuan): ?>
-                                                <div class="rev-avatar">
-                                                    <img src="<?= !empty($binhLuan['anh_dai_dien']) ? BASE_URL . $binhLuan['anh_dai_dien'] : 'assets/img/avatar-default.jpg' ?>"
-                                                        alt="avatar">
-                                                </div>
-                                                <div class="review-box">
-                                                    <div class="post-author">
-                                                        <p><span><?= htmlspecialchars($binhLuan['ho_ten']) ?></span> -
-                                                            <?= date('d M, Y', strtotime($binhLuan['ngay_dang'])) ?></p>
-                                                    </div>
-                                                    <p><?= htmlspecialchars($binhLuan['noi_dung']) ?></p>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        <?php else: ?>
-                                            <p>Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col">
-                                            <label class="col-form-label"><span class="text-danger">*</span>
-                                                Nội dung bình luận</label>
-                                            <textarea class="form-control" name="noi_dung" required></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="buttons">
-                                        <button class="btn btn-sqr" type="submit">Bình luận</button>
-                                    </div>
-                                </form> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- product details reviews end -->
-    <div class="product-details-reviews section-padding pb-0 container">
+    <div class="product-details-reviews section-padding pb-0 container mb-4">
         <div class="row">
             <div class="col-lg-12">
                 <div class="product-review-info">
@@ -411,46 +372,102 @@
                             </table>
                         </div>
                         <div class="tab-pane fade active show" id="tab_three">
-                            <form action="#" class="review-form">
-                                <h5> <?php echo (!empty($listBinhLuan) && is_array($listBinhLuan)) ? count($listBinhLuan) : 0; ?> bình luận cho sản phẩm <span> <?= $sanPham['ten_san_pham'] ?></span></h5>
-                                <div class="total-reviews  dflex flex-column">
-                                    <?php if (!empty($listBinhLuan) && is_array($listBinhLuan)): ?>
-                                        <?php foreach ($listBinhLuan as $binhLuan): ?>
-                                            <div class="comment-detail" style="display: flex; align-items: center;">
-                                                <div class="rev-avatar">
-                                                    <img src="<?= !empty($binhLuan['anh_dai_dien']) ? BASE_URL . $binhLuan['anh_dai_dien'] : 'assets/img/avatar-default.jpg' ?>"
-                                                        alt="avatar">
-                                                </div>
-                                                <div class="review-box">
-                                                    <div class="post-author">
-                                                        <p><span><?= htmlspecialchars($binhLuan['ho_ten']) ?></span> -
-                                                            <?= date('d M, Y', strtotime($binhLuan['ngay_dang'])) ?></p>
-                                                    </div>
-                                                    <p><?= htmlspecialchars($binhLuan['noi_dung']) ?></p>
-                                                </div>
+                            <!-- <form method="POSt" action="<?= BASE_URL . '?act=chi-tiet-san-pham&id=' . $sanPham['id'] ?>" class="review-form"> -->
+                            <h5> <?php echo (!empty($listBinhLuan) && is_array($listBinhLuan)) ? count($listBinhLuan) : 0; ?> bình luận cho sản phẩm <span> <?= $sanPham['ten_san_pham'] ?></span></h5>
+                            <div class="total-reviews  dflex flex-column mt-4">
+                                <?php if (!empty($listBinhLuan) && is_array($listBinhLuan)): ?>
+                                    <?php foreach ($listBinhLuan as $binhLuan): ?>
+                                        <div class="comment-detail" style="display: flex; align-items: center;">
+                                            <div class="rev-avatar">
+                                                <img src="<?= !empty($binhLuan['anh_dai_dien']) ? BASE_URL . $binhLuan['anh_dai_dien'] :  BASE_ASSETS_IMG . 'avatar_default.jpg' ?>"
+                                                    alt="avatar">
                                             </div>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <p>Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
-                                    <?php endif; ?>
+                                            <div class="review-box">
+                                                <div class="post-author">
+                                                    <p><span><strong><?= htmlspecialchars($binhLuan['ho_ten']) ?></strong></span> -
+                                                        <?= date('d M, Y', strtotime($binhLuan['ngay_dang'])) ?></p>
+                                                </div>
+                                                <p><?= htmlspecialchars($binhLuan['noi_dung']) ?></p>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p>Chưa có bình luận nào. Hãy là người đầu tiên bình luận!</p>
+                                <?php endif; ?>
+                            </div>
+                            <div class="review-buttons">
+                                <?php if (isset($_SESSION['user_client']) && $_SESSION['user_client']) { ?>
+                                    <button class="btn_pd btn-write " data-bs-toggle="modal" data-bs-target="#loggedIn" style="width: 200px;">
+                                        Viết bình luận
+                                    </button>
+                                <?php } else { ?>
+                                    <button class="btn_pd btn-write " data-bs-toggle="modal" data-bs-target="#NologIn" style="width: 200px;">
+                                        Viết bình luận
+                                    </button>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <!--  modal goi ý dang nhap -->
+                        <div class="modal fade" id="NologIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="max-width: 800px">
+                                <div class="modal-content" style="padding: 20px;">
+
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn chưa đăng nhập</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body text-center">
+
+                                        <p style="font-size: 16px; margin-bottom: 10px;">
+                                            Bạn cần đăng nhập để đánh giá sản phẩm.
+                                        </p>
+
+                                        <p style="font-size: 14px; color: #666;">
+                                            Vui lòng đăng nhập để tiếp tục trải nghiệm đầy đủ tính năng.
+                                        </p>
+
+                                    </div>
+
+                                    <div class="modal-footer" style="justify-content: center;">
+                                        <a href="?act=login" style="text-decoration:none" class="btn_pd btn_pd_submit">Đăng nhập</a>
+                                        <button type="button" class="btn_pd btn_pd_close" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col">
-                                        <label class="col-form-label">
-                                            Bình luận của bạn</label>
-                                        <textarea class="form-control" required=""></textarea>
+                            </div>
+                        </div>
+
+                        <!-- modal binh luan khi da dang nhap -->
+                        <div class="modal fade" id="loggedIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Đánh giá sản phẩm </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" action="?act=comment-submit">
+                                            <div class="mb-3">
+                                                <label class="col-form-label">Nội dung đánh giá:</label>
+                                                <textarea class="form-control" name="noi_dung"></textarea>
+                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn_pd" data-bs-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn_pd btn_pd_submit">Gửi</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="buttons">
-                                    <button class="btn btn-sqr btn-buy" type="submit">Gửi</button>
-                                </div>
-                            </form> <!-- end of review-form -->
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- product details reviews end -->
 
     <?php require_once 'layout/miniCart.php' ?>
 

@@ -24,7 +24,7 @@
     <!-- breadcrumb area end -->
 
     <!-- cart main wrapper start -->
-    <div class="cart-main-wrapper section-padding pt-4">
+    <div class="cart-main-wrapper section-padding pt-2">
         <div class="container">
             <div class="section-bg-color">
                 <div class="row">
@@ -46,22 +46,31 @@
                                     <?php
                                     $tongGioHang = 0;
                                     foreach ($chiTietGioHang as $key => $sanPham):
-
                                     ?>
                                         <tr>
                                             <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="Product" /></a></td>
                                             <td class="pro-title"><a href="#"><?= $sanPham['ten_san_pham'] ?></a></td>
                                             <td class="pro-price">
-                                                <span>
-                                                    <?php if ($sanPham['gia_khuyen_mai']): ?>
-                                                        <?= formatPrice($sanPham['gia_khuyen_mai'] . " VND") ?>
-                                                    <?php else: ?>
-                                                        <?= formatPrice($sanPham['gia_san_pham'] . " VND") ?>
-                                                    <?php endif; ?>
-                                                </span>
+                                                <?php
+                                                $gia = $sanPham['gia_san_pham'] ?? 0;
+                                                $gia_khuyen_mai = $sanPham['gia_khuyen_mai'] ?? $gia;
+                                                ?>
+                                                <?php if ($gia_khuyen_mai > 0 && $gia_khuyen_mai < $gia): ?>
+                                                    <span class="price-old"><del><?= formatPrice($gia) ?>đ</del></span>
+                                                    <span class="price-regular"><?= formatPrice($gia_khuyen_mai) ?>đ</span>
+                                                <?php else: ?>
+                                                    <span class="price-regular"><?= formatPrice($gia) ?>đ</span>
+                                                <?php endif; ?>
                                             </td>
                                             <td class="pro-quantity">
-                                                <div class="pro-qty"><input type="text" value="<?= $sanPham['so_luong'] ?>"></div>
+                                                <form action="?act=cap-nhat-gio-hang" method="POST" class="quantity-form">
+                                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['san_pham_id'] ?>">
+                                                    <div class="quantity-control">
+                                                        <button id="btn-subtract" type="submit" name="action" value="decrease">−</button>
+                                                        <input type="text" name="so_luong_hien_tai" value="<?= $sanPham['so_luong'] ?>">
+                                                        <button id="btn-plus" type="submit" name="action" value="increase">+</button>
+                                                    </div>
+                                                </form>
                                             </td>
                                             <td class="pro-subtotal">
                                                 <span>
@@ -73,54 +82,46 @@
                                                         $tong_tien = $sanPham['gia_san_pham'] * $sanPham['so_luong'];
                                                     }
                                                     $tongGioHang += $tong_tien;
-                                                    echo formatPrice($tong_tien . " VND");
+                                                    echo formatPrice($tong_tien) . "đ";
                                                     ?>
                                                 </span>
                                             </td>
-                                            <td class="pro-remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
+                                            <td class="pro-remove">
+                                                <form action="?act=xoa-item-gio-hang" method="POST">
+                                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['san_pham_id'] ?>">
+                                                    <button id="btn-plus" type="submit" name="submit_delete" value="increase"><i class="fa fa-trash-o"></i></button>
+                                                </form>
+                                            </td>
                                         </tr>
                                     <?php endforeach ?>
                                 </tbody>
                             </table>
                         </div>
                         <!-- Cart Update Option -->
-                        <div class="cart-update-option d-block d-md-flex justify-content-between">
-                            <div class="apply-coupon-wrapper">
-                                <form action="#" method="post" class=" d-block d-md-flex">
-                                    <input type="text" placeholder="Nhập mã giảm giá" required />
-                                    <button class="btn btn-sqr">Áp mã</button>
-                                </form>
-                            </div>
-                            <div class="cart-update">
-                                <a href="#" class="btn btn-sqr">Cập nhật giỏ hàng</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-5 ml-auto">
-                        <!-- Cart Calculation Area -->
-                        <div class="cart-calculator-wrapper">
-                            <div class="cart-calculate-items">
-                                <h6>Tổng đơn hàng</h6>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tr>
-                                            <td>Tổng tiền sản phẩm</td>
-                                            <td><?= formatPrice($tongGioHang . " VND") ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vận chuyển</td>
-                                            <td>30.000 VND</td>
-                                        </tr>
-                                        <tr class="total">
-                                            <td>Tổng thanh toán</td>
-                                            <td class="total-amount"><?= formatPrice(($tongGioHang + 30000) . " VND") ?></td>
-                                        </tr>
-                                    </table>
+                        <div class="col-lg-5 ml-auto" style="float: right;">
+                            <!-- Cart Calculation Area -->
+                            <div class="cart-calculator-wrapper">
+                                <div class="cart-calculate-items">
+                                    <h6>Tổng đơn hàng</h6>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <td>Tổng tiền sản phẩm</td>
+                                                <td><?= formatPrice($tongGioHang) . "đ" ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vận chuyển</td>
+                                                <td>30.000đ</td>
+                                            </tr>
+                                            <tr class="total">
+                                                <td>Tổng thanh toán</td>
+                                                <td class="total-amount"><?= formatPrice($tongGioHang + 30000) . "đ" ?></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
+                                <a href="<?= BASE_URL . '?act=thanh-toan' ?>" class="btn btn-sqr d-block">Đặt Hàng</a>
                             </div>
-                            <a href="<?= BASE_URL . '?act=thanh-toan' ?>" class="btn btn-sqr d-block">Đặt Hàng</a>
                         </div>
                     </div>
                 </div>

@@ -31,25 +31,25 @@
         </div>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/DUANMAU/assets/img/sliders/banner0.png.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner0.png.webp' ?>" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="/DUANMAU/assets/img/sliders/banner1.jpg.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner1.jpg.webp' ?>" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="/DUANMAU/assets/img/sliders/banner2.jpg.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner2.jpg.webp' ?>" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="/DUANMAU/assets/img/sliders/banner3.jpg.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner3.jpg.webp' ?>" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="/DUANMAU/assets/img/sliders/banner4.jpg.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner4.jpg.webp' ?>" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="/DUANMAU/assets/img/sliders/banner5.jpg.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner5.jpg.webp' ?>" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="/DUANMAU/assets/img/sliders/banner6.jpg.webp" class="d-block w-100" alt="...">
+                <img src="<?= BASE_ASSETS_IMG . 'slider/' . 'banner6.jpg.webp' ?>" class="d-block w-100" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

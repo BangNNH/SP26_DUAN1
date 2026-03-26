@@ -64,7 +64,6 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4>
-                                    <i class="fas fa-cat"> Shop Thú Cưng - Làng Xì Chăm</i>
                                     <small class="float-right">Ngày Đặt: <?= formatDate($donHang['ngay_dat']) ?></small>
                                 </h4>
                             </div>
@@ -75,12 +74,12 @@
                             <div class="col-sm-4 invoice-col">
                                 Thông tin người đặt
                                 <div>
-                                    <p><strong><?= $donHang['ho_ten'] ?? "" ?></strong><br>
+                                    <p> <strong><?= $donHang['ho_ten_nguoi_dat'] ?? "" ?></strong><br>
                                     <p>Số điện thoại:
-                                        <?= $donHang['so_dien_thoai'] ?? "" ?>
+                                        <?= $donHang['email_nguoi_dat'] ?? "" ?>
                                     </p>
                                     <p></p>Email:
-                                    <?= $donHang['email'] ?? "" ?>
+                                    <?= $donHang['sđt_nguoi_dat'] ?? "" ?>
                                     </p>
                                 </div>
                             </div>
@@ -88,10 +87,10 @@
                             <div class="col-sm-4 invoice-col">
                                 Người nhận:
                                 <div>
-                                    <p><strong><?= $donHang['ten_nguoi_nhan'] ?? "" ?></strong></p>
-                                    <p></p>Email người nhận: <?= $donHang['email_nguoi_nhan'] ?? "" ?></p>
-                                    <p>Số điện thoại người nhận: <?= $donHang['sdt_nguoi_nhan'] ?? "" ?></p>
-                                    <p>Địa chỉ: <?= $donHang['dia_chi_nguoi_nhan'] ?? "" ?></p>
+                                    <p><strong>Họ tên: </strong><?= $donHang['ten_nguoi_nhan'] ?? "" ?></p>
+                                    <p><strong>Email người nhận: </strong> <?= $donHang['email_nguoi_nhan'] ?? "" ?></p>
+                                    <p><strong>Số điện thoại người nhận: </strong> <?= $donHang['sdt_nguoi_nhan'] ?? "" ?></p>
+                                    <p><strong>Địa chỉ: </strong> <?= $donHang['dia_chi_nguoi_nhan'] ?? "" ?></p>
                                 </div>
                             </div>
                             <!-- Chi tiết đơn hàng -->
@@ -99,9 +98,9 @@
                                 Thông tin đơn hàng
                                 <div>
                                     <p><strong>Mã đơn hàng:<?= $donHang['ma_don_hang'] ?? "" ?></strong></p>
-                                    <p></p>Tổng tiền: <?= number_format($donHang['tong_tien'] ?? 0, 0, ',', '.') ?>đ</p>
-                                    <p>Ghi chú: <?= $donHang['ghi_chu'] ?? "" ?></p>
-                                    <p>Phương thức thanh toán: <?= $donHang['ten_phuong_thuc'] ?? "" ?></p>
+                                    <p><strong>Tổng tiền: </strong> <?= number_format($donHang['tong_tien'] ?? 0, 0, ',', '.') ?>đ</p>
+                                    <p><strong>Ghi chú: </strong> <?= $donHang['ghi_chu'] ?? "" ?></p>
+                                    <p><strong>Phương thức thanh toán: </strong> <?= $donHang['ten_phuong_thuc'] ?? "" ?></p>
                                 </div>
                             </div>
                             <!-- /.col -->
@@ -209,7 +208,7 @@
 
 <!-- Page specific script -->
 <script>
-    $(function () {
+    $(function() {
         $("#example1").DataTable({
             "responsive": true,
             "lengthChange": false,

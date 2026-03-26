@@ -7,6 +7,8 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
 require_once './controllers/HomeController.php';
+require_once './controllers/CartController.php';
+require_once './controllers/OrderController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -21,13 +23,13 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     '/' => (new HomeController)->home(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
-    'them-gio-hang' => (new HomeController())->addGioHang(),
-    'gio-hang' => (new HomeController())->gioHang(),
-    'thanh-toan' => (new HomeController())->thanhToan(),
-    'xu-ly-thanh-toan' => (new HomeController())->postThanhToan(),
-    'lich-su-mua-hang' => (new HomeController())->lichSuMuaHang(),
-    'chi-tiet-mua-hang' => (new HomeController())->chiTietMuaHang(),
-    'huy-don-hang' => (new HomeController())->huyDonHang(),
+    'them-gio-hang' => (new CartController())->addGioHang(),
+    'gio-hang' => (new CartController())->gioHang(),
+    'thanh-toan' => (new OrderController())->thanhToan(),
+    'xu-ly-thanh-toan' => (new OrderController())->postThanhToan(),
+    'lich-su-mua-hang' => (new OrderController())->lichSuMuaHang(),
+    'chi-tiet-mua-hang' => (new OrderController())->chiTietMuaHang(),
+    'huy-don-hang' => (new OrderController())->huyDonHang(),
 
     // Auth
     'login' => (new HomeController())->formLogin(),

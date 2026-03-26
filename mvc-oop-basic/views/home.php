@@ -4,6 +4,14 @@
     </script>
     <?php unset($_SESSION['login_success']); ?>
 <?php endif; ?>
+
+<?php if (isset($_SESSION['order_success'])): ?>
+    <script>
+        alert("<?= $_SESSION['order_success'] ?>");
+    </script>
+    <?php unset($_SESSION['order_success']); ?>
+<?php endif; ?>
+
 <?php require_once 'layout/header.php' ?>
 
 <?php require_once 'layout/menu.php' ?>

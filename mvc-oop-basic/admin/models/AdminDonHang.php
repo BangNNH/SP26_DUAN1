@@ -39,28 +39,54 @@ class AdminDonHang
         }
     }
     //
+    // public function getDetailDonHang($id)
+    // {
+    //     try {
+    //         $sql = "SELECT don_hangs.*, 
+    //                 trang_thai_don_hangs.ten_trang_thai, 
+    //                 tai_khoans.ho_ten, 
+    //                 tai_khoans.email, 
+    //                 tai_khoans.so_dien_thoai,
+    //                 phuong_thuc_thanh_toans.ten_phuong_thuc
+    //             FROM don_hangs
+    //             INNER JOIN trang_thai_don_hangs ON don_hangs.trang_thai_id = trang_thai_don_hangs.id
+    //             INNER JOIN tai_khoans ON don_hangs.tai_khoan_id = tai_khoans.id
+    //             INNER JOIN phuong_thuc_thanh_toans ON don_hangs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id
+    //             WHERE don_hangs.id = :id";
+
+    //         $stmt = $this->conn->prepare($sql);
+
+    //         $stmt->execute([':id' => $id]);
+
+    //         return $stmt->fetch();
+    //     } catch (Exception $e) {
+    //         echo "Lỗi" . $e->getMessage();
+    //     }
+    // }
     public function getDetailDonHang($id)
     {
         try {
-            $sql = "SELECT don_hangs.*, 
-                    trang_thai_don_hangs.ten_trang_thai, 
-                    tai_khoans.ho_ten, 
-                    tai_khoans.email, 
-                    tai_khoans.so_dien_thoai,
-                    phuong_thuc_thanh_toans.ten_phuong_thuc
-                FROM don_hangs
-                INNER JOIN trang_thai_don_hangs ON don_hangs.trang_thai_id = trang_thai_don_hangs.id
-                INNER JOIN tai_khoans ON don_hangs.tai_khoan_id = tai_khoans.id
-                INNER JOIN phuong_thuc_thanh_toans ON don_hangs.phuong_thuc_thanh_toan_id = phuong_thuc_thanh_toans.id
-                WHERE don_hangs.id = :id";
+            $sql = "SELECT dh.*,
+                       ttdh.ten_trang_thai,
+                       pttt.ten_phuong_thuc,
+                       tk.ho_ten AS ho_ten_nguoi_dat,
+                       tk.email AS email_nguoi_dat,
+                       tk.so_dien_thoai AS sđt_nguoi_dat
+                FROM don_hangs AS dh
+                INNER JOIN trang_thai_don_hangs AS ttdh 
+                    ON dh.trang_thai_id = ttdh.id
+                INNER JOIN phuong_thuc_thanh_toans AS pttt
+                    ON dh.phuong_thuc_thanh_toan_id = pttt.id
+                LEFT JOIN tai_khoans AS tk
+                    ON dh.tai_khoan_id = tk.id
+                WHERE dh.id = :id";
 
             $stmt = $this->conn->prepare($sql);
-
             $stmt->execute([':id' => $id]);
 
             return $stmt->fetch();
         } catch (Exception $e) {
-            echo "Lỗi" . $e->getMessage();
+            echo "Lỗi: " . $e->getMessage();
         }
     }
 
@@ -270,7 +296,7 @@ class AdminDonHang
                 INNER JOIN trang_thai_don_hangs ON don_hangs.trang_thai_id = trang_thai_don_hangs.id
                 WHERE don_hangs.tai_khoan_id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':id'=>$id]);
+            $stmt->execute([':id' => $id]);
             return $stmt->fetchAll();
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();

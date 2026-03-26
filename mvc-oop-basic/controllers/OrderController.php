@@ -19,7 +19,7 @@ class OrderController
     {
         if (isset($_SESSION['user_client'])) {
             // LUỒNG USER LOGIN (DB)
-            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
 
             $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
 
@@ -56,7 +56,7 @@ class OrderController
             // PHÂN LUỒNG
             if (isset($_SESSION['user_client'])) {
                 // USER LOGIN
-                $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+                $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
                 $tai_khoan_id = $user['id'];
 
                 $gioHang = $this->modelGioHang->getGioHangFromUser($tai_khoan_id);

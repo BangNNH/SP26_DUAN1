@@ -6267,7 +6267,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .cart-update-option {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   margin-top: 15px;
   padding: 15px 20px;
   -webkit-box-align: center;
@@ -6972,7 +6972,7 @@ only screen and (max-width: 767.98px) {
   list-style: none;
   display: flex;
   justify-content: space-around;
-  padding: 10px;
+  padding: 2px;
 }
 
 .nav-main-menu li {

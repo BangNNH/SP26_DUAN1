@@ -199,7 +199,8 @@ button span {
 
 .two-btn {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
+    flex-wrap: wrap;
 }
 
 .btn-link {
@@ -233,20 +234,22 @@ button span {
 .btn-buy {
   background: #921817;
   padding: 10px 30px 10px 30px;
+  color: #fff;
 }
 
 .btn-buy:hover {
-  background-color: #662d91;
+  background-color: #9b3737;
+    color: #fff;
 }
 
 .btn-add-to-cart {
   background-color: #fff;
-  border: 1px solid #662d91;
+  border: 1px solid #921817;
 }
 
 .btn-add-to-cart:hover {
-  color: #fff;
-  background-color: #662d91;
+  color: #fed100;
+    background-color: #9b3737;
 }
 
 .promotion-title {
@@ -655,16 +658,17 @@ tr.tr-1 .content_charactestic {
   background-color: #fff;
   border: 1px solid #921817;
 }
+
 .btn_pd_submit {
   background-color: #921817;
   color: #fff;
   font-weight: 500;
   width: 106px;
-  }
-  
-  .btn_pd_submit:hover {
-    background-color: #9c2323;
-    color: #fff;
+}
+
+.btn_pd_submit:hover {
+  background-color: #9c2323;
+  color: #fff;
 }
 
 .btn-write {

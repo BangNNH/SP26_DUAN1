@@ -27,6 +27,8 @@ match ($act) {
     'comment-submit' => (new HomeController())->postComment(),
     'them-gio-hang' => (new CartController())->addGioHang(),
     'gio-hang' => (new CartController())->gioHang(),
+    'cap-nhat-gio-hang' => (new CartController())->updateCartItem(),
+    'xoa-item-gio-hang' => (new CartController())->deleteCartItem(),
     'thanh-toan' => (new OrderController())->thanhToan(),
     'xu-ly-thanh-toan' => (new OrderController())->postThanhToan(),
     'lich-su-mua-hang' => (new OrderController())->lichSuMuaHang(),

@@ -31,7 +31,7 @@
     <!-- breadcrumb area end -->
 
     <!-- page main wrapper start -->
-    <div class="shop-main-wrapper section-padding pb-0 pt-4">
+    <div class="shop-main-wrapper section-padding pb-0 pt-2">
         <div class="container">
             <div class="row">
                 <!-- product details wrapper start -->
@@ -100,22 +100,28 @@
                                         </div>
                                     </div>
                                     <div class="product-base" bis_skin_checked="1">
-                                        <form action="#">
-                                            <div class="saleprice" bis_skin_checked="1">
-                                                <div class="price-box">
-                                                    <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
-                                                    <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
-                                                </div>
+                                        <div class="saleprice" bis_skin_checked="1">
+                                            <div class="price-box">
+                                                <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
+                                                <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
                                             </div>
-                                            <div class="two-btn" bis_skin_checked="1">
-                                                <button class="btn-buy"><a class="btn-link btn-link-buy" href="?action=payment">Mua ngay</a></button>
-                                                <button class="btn-add-to-cart">
-                                                    <a href="?action=cart" class="btn-link btn-link-add-to-cart">
-                                                        Thêm vào giỏ
-                                                    </a>
+                                        </div>
+                                        <div class="two-btn" bis_skin_checked="1">
+                                            <form action="<?= BASE_URL . '?act=thanh-toan' ?>" method="POST">
+                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                <input type="hidden" name="so_luong" value="1">
+                                                <button type="submit" class="btn btn-buy">
+                                                    Mua ngay
                                                 </button>
-                                            </div>
-                                        </form>
+                                            </form>
+                                            <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                <input type="hidden" name="so_luong" value="1">
+                                                <button type="submit" class="btn btn-add-to-cart">
+                                                    Thêm vào giỏ
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                     <div class="promotion" bis_skin_checked="1">
                                         <div class="promotion-title" bis_skin_checked="1">

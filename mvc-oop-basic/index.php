@@ -15,6 +15,7 @@ require_once './models/SanPham.php';
 require_once './models/TaiKhoan.php';
 require_once './models/GioHang.php';
 require_once './models/DonHang.php';
+require_once './models/BinhLuan.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -23,6 +24,7 @@ $act = $_GET['act'] ?? '/';
 match ($act) {
     '/' => (new HomeController)->home(),
     'chi-tiet-san-pham' => (new HomeController())->chiTietSanPham(),
+    'comment-submit' => (new HomeController())->postComment(),
     'them-gio-hang' => (new CartController())->addGioHang(),
     'gio-hang' => (new CartController())->gioHang(),
     'thanh-toan' => (new OrderController())->thanhToan(),
@@ -30,6 +32,7 @@ match ($act) {
     'lich-su-mua-hang' => (new OrderController())->lichSuMuaHang(),
     'chi-tiet-mua-hang' => (new OrderController())->chiTietMuaHang(),
     'huy-don-hang' => (new OrderController())->huyDonHang(),
+
 
     // Auth
     'login' => (new HomeController())->formLogin(),

@@ -33,8 +33,6 @@ class OrderController
             // LUỒNG KHÁCH (SESSION)
             $chiTietGioHang = getCartFromSession();
         }
-
-        // 👉 dùng chung view
         require_once './views/thanhToan.php';
     }
 

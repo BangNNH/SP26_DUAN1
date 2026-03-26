@@ -2,6 +2,13 @@
 
 <?php require_once 'layout/menu.php' ?>
 
+<?php if (isset($_SESSION['comment_success'])): ?>
+    <script>
+        alert("<?= $_SESSION['comment_success'] ?>");
+    </script>
+    <?php unset($_SESSION['comment_success']); ?>
+<?php endif; ?>
+
 <main>
     <!-- breadcrumb area start -->
     <div class="breadcrumb-area">
@@ -307,7 +314,7 @@
     <!-- page main wrapper end -->
 
     <!-- product details reviews start -->
-    <div class="product-details-reviews section-padding pb-0 container">
+    <div class="product-details-reviews section-padding pb-0 container mb-4">
         <div class="row">
             <div class="col-lg-12">
                 <div class="product-review-info">
@@ -361,7 +368,7 @@
                         <div class="tab-pane fade active show" id="tab_three">
                             <!-- <form method="POSt" action="<?= BASE_URL . '?act=chi-tiet-san-pham&id=' . $sanPham['id'] ?>" class="review-form"> -->
                             <h5> <?php echo (!empty($listBinhLuan) && is_array($listBinhLuan)) ? count($listBinhLuan) : 0; ?> bình luận cho sản phẩm <span> <?= $sanPham['ten_san_pham'] ?></span></h5>
-                            <div class="total-reviews  dflex flex-column">
+                            <div class="total-reviews  dflex flex-column mt-4">
                                 <?php if (!empty($listBinhLuan) && is_array($listBinhLuan)): ?>
                                     <?php foreach ($listBinhLuan as $binhLuan): ?>
                                         <div class="comment-detail" style="display: flex; align-items: center;">
@@ -385,19 +392,19 @@
                             <div class="review-buttons">
                                 <?php if (isset($_SESSION['user_client']) && $_SESSION['user_client']) { ?>
                                     <button class="btn_pd btn-write " data-bs-toggle="modal" data-bs-target="#loggedIn" style="width: 200px;">
-                                        Viết đánh giá
+                                        Viết bình luận
                                     </button>
                                 <?php } else { ?>
                                     <button class="btn_pd btn-write " data-bs-toggle="modal" data-bs-target="#NologIn" style="width: 200px;">
-                                        Viết đánh giá
+                                        Viết bình luận
                                     </button>
                                 <?php } ?>
                             </div>
                         </div>
                         <!--  modal goi ý dang nhap -->
                         <div class="modal fade" id="NologIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+                            <div class="modal-dialog" style="max-width: 800px">
+                                <div class="modal-content" style="padding: 20px;">
 
                                     <div class="modal-header">
                                         <h1 class="modal-title fs-5" id="exampleModalLabel">Bạn chưa đăng nhập</h1>
@@ -418,7 +425,7 @@
 
                                     <div class="modal-footer" style="justify-content: center;">
                                         <a href="?act=login" style="text-decoration:none" class="btn_pd btn_pd_submit">Đăng nhập</a>
-                                        <button type="button" class="btn_pd" data-bs-dismiss="modal">Đóng</button>
+                                        <button type="button" class="btn_pd btn_pd_close" data-bs-dismiss="modal">Đóng</button>
                                     </div>
 
                                 </div>

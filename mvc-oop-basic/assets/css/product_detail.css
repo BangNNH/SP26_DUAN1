@@ -651,10 +651,20 @@ tr.tr-1 .content_charactestic {
   padding: 6px 12px;
 }
 
+.btn_pd_close {
+  background-color: #fff;
+  border: 1px solid #921817;
+}
 .btn_pd_submit {
   background-color: #921817;
   color: #fff;
   font-weight: 500;
+  width: 106px;
+  }
+  
+  .btn_pd_submit:hover {
+    background-color: #9c2323;
+    color: #fff;
 }
 
 .btn-write {

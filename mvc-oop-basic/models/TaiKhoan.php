@@ -19,7 +19,7 @@ class TaiKhoan
             $user = $stmt->fetch();
 
             if (!$user) {
-                return "Email không tồn tại";
+                return "Email hoặc mật khẩu không hợp lệ";
             }
 
             // Nếu mật khẩu đã được hash, dùng password_verify
@@ -31,7 +31,10 @@ class TaiKhoan
                 if ($user['trang_thai'] != 1) {
                     return "Tài khoản bị cấm";
                 }
-                return $user['email'];
+                return [
+                    'id' => $user['id'],
+                    'email' => $user['email']
+                ];
             }
 
             // Nếu mật khẩu chưa được hash (lưu plain text), thì cho phép đăng nhập và chuyển sang hash
@@ -47,7 +50,10 @@ class TaiKhoan
                 if ($user['trang_thai'] != 1) {
                     return "Tài khoản bị cấm";
                 }
-                return $user['email'];
+                return [
+                    'id' => $user['id'],
+                    'email' => $user['email']
+                ];
             }
 
             return "Bạn nhập sai thông tin mật khẩu hoặc tài khoản";

@@ -10,18 +10,18 @@ class BinhLuan
         $this->conn = connectDB();
     }
 
-    public function insertComment($san_pham_id, $tai_khoan_id, $noi_dung, $ngay_dat, $trang_thai)
+    public function insertComment($san_pham_id, $tai_khoan_id, $noi_dung, $ngay_dang, $trang_thai)
     {
         $sql = "INSERT INTO binh_luans 
-                (san_pham_id, tai_khoan_id, noi_dung, ngay_dat, trang_thai)
+                (san_pham_id, tai_khoan_id, noi_dung, ngay_dang, trang_thai)
                 VALUES 
-                (:san_pham_id, :tai_khoan_id, :noi_dung, :ngay_dat, :trang_thai)";
+                (:san_pham_id, :tai_khoan_id, :noi_dung, :ngay_dang, :trang_thai)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([
             ':san_pham_id' => $san_pham_id,
             ':tai_khoan_id' => $tai_khoan_id,
             ':noi_dung' => $noi_dung,
-            ':ngay_dat' => $ngay_dat,
+            ':ngay_dang' => $ngay_dang,
             ':trang_thai' => $trang_thai
         ]);
     }

@@ -13,7 +13,7 @@ class AdminBaoCaoThongKeController
 
     public function home()
     {
-        // 👉 lấy doanh số theo ngày
+        //lấy doanh số theo ngày
 
         $data = $this->modelBaoCaoThongKe->getDoanhThuHomNayVaHomQua();
         $homNay = 0;
@@ -56,7 +56,7 @@ class AdminBaoCaoThongKeController
             $phanTramTuan = (($tuanNay - $tuanTruoc) / $tuanTruoc) * 100;
         }
 
-        // 👉 lấy đơn hàng mới theo ngày
+        // lấy đơn hàng mới theo ngày
         $dataDonMoi = $this->modelBaoCaoThongKe->getDonMoiHomNayVaHomQua();
 
         $homNayDon = 0;
@@ -104,8 +104,8 @@ class AdminBaoCaoThongKeController
         $topProducts = $this->modelBaoCaoThongKe->getTopSanPham();
 
         // tìm max để scale %
-        $maxQuantity = max(array_column($topProducts, 'total_quantity'));
-        $maxRevenue = max(array_column($topProducts, 'total_revenue'));
+        $maxQuantity = max(array_column($topProducts, 'total_quantity') ?: [0]);
+        $maxRevenue = max(array_column($topProducts, 'total_revenue') ?: [0]);
 
         //controller truyền dữ liệu sang js
         $data7Ngay = $this->modelBaoCaoThongKe->getDoanhThuTuan();

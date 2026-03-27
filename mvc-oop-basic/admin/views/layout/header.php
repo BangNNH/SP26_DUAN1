@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ALF For Youth</title>
+    <title>Watch Hub</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -24,8 +24,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="<?= BASE_ASSETS_ADMIN ?>dist/css/adminlte.css">
-    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="<?= BASE_ASSETS_ADMIN . 'dist/css/adminlte.css' ?>">
+    <link rel="stylesheet" href="<?= BASE_ASSETS_ADMIN . 'css/dashboard.css' ?>">
 </head>
 
 <body class="hold-transition sidebar-mini">

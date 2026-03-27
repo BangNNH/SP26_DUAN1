@@ -7,7 +7,8 @@
     <title>ALF For Youth</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="./assets/plugins/fontawesome-free/css/all.min.css">
     <!-- DataTables -->
@@ -17,6 +18,14 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="./assets/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="./assets/css/admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="<?= BASE_ASSETS_ADMIN ?>dist/css/adminlte.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/assets/dashboard.css">
 </head>
 
 <body class="hold-transition sidebar-mini">

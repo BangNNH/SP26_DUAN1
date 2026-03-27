@@ -2,7 +2,8 @@
     <div class="float-right d-none d-sm-block">
         By <b>Lang Xi Cham</b>
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">ALF For Youth</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io" class="admin-link">ALF For Youth</a>.</strong> All
+    rights reserved.
 </footer>
 
 <!-- Control Sidebar -->
@@ -34,3 +35,5 @@
 <script src="./assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="./assets/dist/js/demo.js"></script>
+<!-- Page specific script -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

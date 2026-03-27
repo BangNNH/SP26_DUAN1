@@ -211,7 +211,7 @@
                             <div class="position-absolute text-center">
                                 <h3 class="fw-black mb-0"><?= round($percentFulfilled) ?>%</h3>
                                 <p class="text-uppercase text-muted fw-bold mb-0" style="font-size: 10px">
-                                    Fulfilled
+                                    Tỉ lệ nhận hàng
                                 </p>
                             </div>
                         </div>

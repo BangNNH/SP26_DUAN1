@@ -12,7 +12,7 @@
                         <nav aria-label="breadcrumb">
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i></a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Đăng nhập</li>
+                                <li class="breadcrumb-item active" aria-current="page">Đăng ký tài khoản</li>
                             </ul>
                         </nav>
                     </div>
@@ -30,34 +30,32 @@
                     <!-- Login Content Start -->
                     <div class="col-lg-12">
                         <div class="login-reg-form-wrap">
-                            <h5 class="text-center">ĐĂNG NHẬP</h5>
+                            <h5 class="text-center">ĐĂNG KÝ TÀI KHOẢN</h5>
                             <?php if (!empty($_SESSION['error'])) { ?>
                                 <p class="text-danger login-box-msg text-center"><?= htmlspecialchars($_SESSION['error']) ?></p>
                             <?php } else { ?>
-                                <p class="login-box-msg text-center">Vui lòng đăng nhập</p>
+                                <p class="login-box-msg text-center">Vui lòng đăng ký tài khoản</p>
                             <?php } ?>
-                            <form action="<?= BASE_URL . '?act=check-login' ?>" method="post">
+                            <form action="<?= BASE_URL . '?act=check-register' ?>" method="post">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>" />
                                 <div class="single-input-item">
-                                    <input type="email" placeholder="Email" name="email" />
+                                    <input type="email" placeholder="Email" name="email" value="<?= htmlspecialchars($_SESSION['old_email'] ?? '') ?>" required />
                                 </div>
                                 <div class="single-input-item">
-                                    <input type="password" placeholder="Mật khẩu" name="password" />
+                                    <input type="password" placeholder="Mật khẩu" name="password" required />
                                 </div>
                                 <div class="single-input-item">
-                                    <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
-
-                                        <a href="#" class="forget-pwd">Quên mật khẩu?</a>
-                                    </div>
+                                    <input type="password" placeholder="Nhập lại Mật khẩu" name="password_confirmation" required />
                                 </div>
                                 <div class="single-input-item">
-                                    <button class="btn btn-sqr login-btn">ĐĂNG NHẬP</button>
+                                    <button class="btn btn-sqr login-btn">ĐĂNG KÝ</button>
                                 </div>
                                 <div class="split-box" bis_skin_checked="1">
                                     <div class="split-line" bis_skin_checked="1"></div>
                                     <span class="split-text">hoặc</span>
                                     <div class="split-line" bis_skin_checked="1"></div>
                                 </div>
-                                <div class="signUp-suggest" bis_skin_checked="1">Bạn chưa có tài khoản? <a class="suggest-link" href="?act=signup">Đăng ký</a></div>
+                                <div class="signUp-suggest" bis_skin_checked="1">Bạn đã có tài khoản? <a class="suggest-link" href="?act=login">Đăng nhập</a></div>
                             </form>
                         </div>
                     </div>

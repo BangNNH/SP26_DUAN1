@@ -150,7 +150,7 @@ class OrderController
     {
         if (isset(($_SESSION['user_client']))) {
             // Lấy ra thông tin tài khoản đăng Nhập
-            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
             $tai_khoan_Id = $user['id'];
 
             //lấy id đơn hàng truyền từ BASE_URL

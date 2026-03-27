@@ -220,7 +220,7 @@
     .filter-form .form-select {
         border: 2px solid #d6b9aa;
         border-radius: 12px;
-        padding: 10px 14px;
+        /* padding: 10px 14px; */
         font-size: 0.92rem;
         transition: all 0.25s ease;
         background-color: #fffdfa;
@@ -328,6 +328,13 @@
         object-fit: cover;
         transition: transform 0.35s ease, filter 0.35s ease;
     }
+
+    .product-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+}
 
     .product-item:hover .product-thumb .pri-img {
         transform: scale(1.04);

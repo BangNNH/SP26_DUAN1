@@ -56,9 +56,10 @@ class CartController
                 exit();
             } else {
                 // LUỒNG SESSION khi user chưa login
-                $_SESSION['openCart'] = true;
-                $this->addToCartSession($san_pham_id, $so_luong);
-                header("Location: " . ($_SERVER['HTTP_REFERER'] ?? BASE_URL));
+                // $_SESSION['openCart'] = true;
+                // $this->addToCartSession($san_pham_id, $so_luong);
+                // header("Location: " . ($_SERVER['HTTP_REFERER'] ?? BASE_URL));
+                header("Location: " . BASE_URL . '?act=login');
                 exit();
             }
         }

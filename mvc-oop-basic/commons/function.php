@@ -58,13 +58,11 @@ function debug($data)
 // Xóa session sau khi load trang
 function deleteSessionError()
 {
-    if (isset($_SESSION['flash'])) {
-        // Hủy session sau khi đã tải trang
-        unset($_SESSION['errors']);
-        unset($_SESSION['error']);
-        unset($_SESSION['success']);
-        unset($_SESSION['flash']);
-    }
+    // Hủy session lỗi/success sau khi đã tải trang
+    unset($_SESSION['errors']);
+    unset($_SESSION['error']);
+    unset($_SESSION['success']);
+    unset($_SESSION['flash']);
 }
 
 // upload - update album ảnh 
@@ -128,6 +126,7 @@ function getCartFromSession()
 
         if ($sp) {
             $result[] = [
+                'san_pham_id' => $id,
                 'id' => $id,
                 'ten_san_pham' => $sp['ten_san_pham'],
                 'gia_san_pham' => $sp['gia_san_pham'],

@@ -83,6 +83,9 @@ class HomeController
 
     public function formLogin()
     {
+        if (isset($_SESSION['error']) && $_SESSION['error'] === 'Yêu cầu không hợp lệ') {
+            unset($_SESSION['error']);
+        }
         require_once __DIR__ . '/../views/auth/formLogin.php';
         deleteSessionError();
     }
@@ -123,5 +126,63 @@ class HomeController
         unset($_SESSION['user_client']);
         header("Location: " . BASE_URL . '?act=/');
         exit();
+    }
+
+    public function registerLogin()
+    {
+        require_once __DIR__ . '/../views/auth/registerLogin.php';
+        deleteSessionError();
+    }
+
+    public function postRegister()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . BASE_URL);
+            exit();
+        }
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $password_confirmation = trim($_POST['password_confirmation'] ?? '');
+
+        $_SESSION['old_email'] = $email;
+
+        if (strlen($password) < 6) {
+            $_SESSION['error'] = "Mật khẩu phải >= 6 ký tự";
+            header("Location: " . BASE_URL . '?act=signup');
+            exit();
+        }
+
+        if ($password !== $password_confirmation) {
+            $_SESSION['error'] = "Mật khẩu nhập lại không khớp";
+            header("Location: " . BASE_URL . '?act=signup');
+            exit();
+        }
+
+        try {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            $userId = $this->modelTaiKhoan->register($email, $hashedPassword);
+
+            if (!$userId) {
+                throw new Exception("Không thể lưu tài khoản");
+            }
+
+            session_regenerate_id(true);
+
+            $_SESSION['user_client'] = [
+                'id' => $userId,
+                'email' => $email
+            ];
+
+            unset($_SESSION['old_email'], $_SESSION['csrf_token']);
+            $_SESSION['success'] = "Đăng ký thành công!";
+
+            header("Location: " . BASE_URL);
+            exit();
+        } catch (Exception $e) {
+            $_SESSION['error'] = "Email đã tồn tại hoặc lỗi hệ thống";
+            header("Location: " . BASE_URL . '?act=signup');
+            exit();
+        }
     }
 }

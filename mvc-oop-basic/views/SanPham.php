@@ -2,25 +2,20 @@
 <?php require_once 'layout/menu.php' ?>
 
 <main>
-    <!-- Product Listing Section Start -->
     <div class="product-listing-section">
         <div class="container">
-            <!-- Page Title -->
             <div class="page-title-section">
                 <h1 class="page-title">Danh Sách Sản Phẩm</h1>
                 <p class="page-subtitle">Khám phá bộ sưu tập đồng hồ cao cấp của chúng tôi</p>
             </div>
 
-            <!-- Main Layout: Sidebar + Product List -->
             <div class="main-layout">
-                <!-- Sidebar: Filters -->
                 <aside class="sidebar">
                     <div class="sidebar-content">
                         <h3 class="sidebar-title">Bộ lọc sản phẩm</h3>
                         <form method="GET" id="filterForm" class="filter-form">
                             <input type="hidden" name="act" value="san-pham">
 
-                            <!-- Search Input -->
                             <div class="filter-group">
                                 <label for="searchInput" class="filter-label">Tìm kiếm sản phẩm</label>
                                 <input type="text" class="filter-input" id="searchInput"
@@ -28,7 +23,6 @@
                                        value="<?= htmlspecialchars($searchKeyword) ?>">
                             </div>
 
-                            <!-- Price Range -->
                             <div class="filter-group">
                                 <label class="filter-label">Khoảng giá (VNĐ)</label>
                                 <div class="price-range">
@@ -40,7 +34,6 @@
                                 </div>
                             </div>
 
-                            <!-- Product Type Filter -->
                             <div class="filter-group">
                                 <label for="typeFilter" class="filter-label">Loại đồng hồ</label>
                                 <select class="filter-select" id="typeFilter" name="type">
@@ -56,14 +49,12 @@
                                 </select>
                             </div>
 
-                            <!-- Submit Button -->
                             <div class="filter-group">
                                 <button type="submit" class="filter-submit-btn">
                                     <i class="fa fa-search"></i> Tìm kiếm
                                 </button>
                             </div>
 
-                            <!-- Reset Link -->
                             <div class="filter-group">
                                 <a href="?act=san-pham" class="filter-reset-link">
                                     <i class="fa fa-redo"></i> Đặt lại bộ lọc
@@ -73,9 +64,7 @@
                     </div>
                 </aside>
 
-                <!-- Main Content: Product List -->
                 <section class="main-content">
-                    <!-- Results Info -->
                     <div class="results-info">
                         <p>
                             <strong>Tìm thấy <?= count($listSanPham) ?> sản phẩm</strong>
@@ -88,7 +77,6 @@
                         </p>
                     </div>
 
-                    <!-- Products Grid -->
                     <?php if (!empty($listSanPham)): ?>
                         <div class="product-list">
                             <?php foreach ($listSanPham as $sanPham): ?>
@@ -97,7 +85,7 @@
                                         <a class="product-thumb-link" href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>">
                                             <img class="product-image" src="<?= htmlspecialchars($sanPham['hinh_anh'] ? BASE_URL . $sanPham['hinh_anh'] : BASE_URL . 'assets/img/avatar_default.jpg') ?>"
                                                  alt="<?= htmlspecialchars($sanPham['ten_san_pham']) ?>"
-                                                 onerror="this.src='<?= BASE_URL . 'assets/img/avatar_default.jpg' ?>">
+                                                 onerror="this.src='<?= BASE_URL . 'assets/img/avatar_default.jpg' ?>'">
                                             <div class="product-badge">
                                                 <?php if ($sanPham['is_new'] == 1): ?>
                                                     <div class="badge badge-new">New</div>
@@ -139,7 +127,6 @@
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>
-                        <!-- No Products Found -->
                         <div class="no-products">
                             <i class="fa fa-inbox no-products-icon"></i>
                             <h4 class="no-products-title">Không tìm thấy sản phẩm</h4>
@@ -208,7 +195,6 @@ body {
 }
 
 /* ===== MAIN LAYOUT: SIDEBAR + MAIN CONTENT ===== */
-/* Sử dụng Flexbox cho layout chính */
 .main-layout {
     display: flex;
     gap: 30px;
@@ -216,26 +202,23 @@ body {
 }
 
 /* ===== SIDEBAR ===== */
-/* ===== SIDEBAR FIXED BEAUTIFUL ===== */
 .sidebar {
     flex: 0 0 26%;
 }
 
-/* Card sidebar */
 .sidebar-content {
     background: #fff;
     border-radius: 14px;
     padding: 24px;
     box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
     border: 1px solid #eee;
-
     position: sticky;
     top: 20px;
     max-height: calc(100vh - 40px);
     overflow-y: auto;
+    overflow-x: visible;
 }
 
-/* Title */
 .sidebar-title {
     font-size: 1.4rem;
     font-weight: 700;
@@ -259,94 +242,20 @@ body {
 .filter-form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-}
-
-/* Group */
-.filter-group {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Label */
-.filter-label {
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 6px;
-    color: #444;
-}
-
-/* Input + Select */
-.filter-input,
-.filter-select {
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1.5px solid #ddd;
-    font-size: 0.9rem;
-    transition: all 0.25s ease;
-}
-
-/* Focus */
-.filter-input:focus,
-.filter-select:focus {
-    outline: none;
-    border-color: #921817;
-    box-shadow: 0 0 0 2px rgba(146, 24, 23, 0.15);
-}
-
-/* Price range */
-.price-range {
-    display: flex;
-    gap: 8px;
-}
-
-.price-input {
-    flex: 1;
-}
-
-/* ===== BUTTON ===== */
-.filter-submit-btn {
-    background: #921817;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.25s;
-}
-
-.filter-submit-btn:hover {
-    opacity: 0.85;
-}
-
-/* Reset */
-.filter-reset-link {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #777;
-    text-decoration: none;
-    padding: 8px;
-    border-radius: 8px;
-    transition: 0.25s;
-}
-
-.filter-reset-link:hover {
-    color: #921817;
-    background: rgba(146, 24, 23, 0.08);
-}
-/* ===== FILTER FORM ===== */
-.filter-form {
-    display: flex;
-    flex-direction: column;
     gap: 24px;
 }
 
 .filter-group {
+    background: #fafafa;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    transition: 0.25s;
     display: flex;
     flex-direction: column;
     position: relative;
     z-index: 1;
+    animation: slideInLeft 0.5s ease-out forwards;
 }
 
 .filter-group::before {
@@ -362,7 +271,7 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: -1;
-    pointer-events: none; /* QUAN TRỌNG */
+    pointer-events: none;
 }
 
 .filter-group:hover::before {
@@ -391,6 +300,7 @@ body {
 
 .filter-input,
 .filter-select {
+    width: 100%;
     padding: 14px 18px;
     border: 2px solid #e1e8ed;
     border-radius: 12px;
@@ -401,8 +311,24 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     position: relative;
     z-index: 2;
-    overflow: hidden;
 }
+
+.filter-input {
+    overflow: hidden; 
+}
+.filter-select {
+    overflow: visible; 
+    appearance: none;
+    /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e"); */
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    
+    height: 52px;
+    line-height: 48px; 
+    padding: 0 40px 0 18px; 
+}
+
 
 .filter-input::placeholder,
 .filter-select option {
@@ -423,16 +349,6 @@ body {
     color: #cbd5e0;
 }
 
-/* Custom dropdown arrow */
-.filter-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 12px center;
-    background-repeat: no-repeat;
-    background-size: 16px;
-    padding-right: 40px;
-}
-
 .price-range {
     display: flex;
     align-items: stretch;
@@ -450,7 +366,6 @@ body {
     position: relative;
 }
 
-/* Ẩn spin control của input number để không bị chồng */
 .price-input[type="number"]::-webkit-outer-spin-button,
 .price-input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -461,7 +376,6 @@ body {
     -moz-appearance: textfield;
 }
 
-/* Loại bỏ mũi tên và khung nhỏ */
 .price-input:first-child {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -505,6 +419,7 @@ body {
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(52, 152, 219, 0.3);
+    width: 100%;
 }
 
 .filter-submit-btn::before {
@@ -549,6 +464,7 @@ body {
     backdrop-filter: blur(5px);
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .filter-reset-link::before {
@@ -575,36 +491,6 @@ body {
     opacity: 1;
 }
 
-/* ===== HIDE ADD TO CART DEFAULT ===== */
-.add-to-cart-form {
-    opacity: 0;
-    transform: translateY(15px);
-    transition: all 0.3s ease;
-}
-
-/* ===== SHOW BUTTON WHEN HOVER PRODUCT ===== */
-.product-item:hover .add-to-cart-form {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ===== BUTTON STYLE ===== */
-.add-to-cart-btn {
-    background: #921817;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-/* ===== HOVER BUTTON ===== */
-.add-to-cart-btn:hover {
-    opacity: 0.75;
-}
-
 /* ===== ANIMATIONS ===== */
 @keyframes slideInLeft {
     from {
@@ -617,70 +503,18 @@ body {
     }
 }
 
-.filter-group {
-    animation: slideInLeft 0.5s ease-out forwards;
-}
+/* Thêm z-index giảm dần để các thẻ select khi mở ra không bị các nút bên dưới đè lên */
+.filter-group:nth-child(1) { animation-delay: 0.1s; z-index: 5; }
+.filter-group:nth-child(2) { animation-delay: 0.2s; z-index: 4; }
+.filter-group:nth-child(3) { animation-delay: 0.3s; z-index: 3; } /* Nhóm chứa Select loại đồng hồ */
+.filter-group:nth-child(4) { animation-delay: 0.4s; z-index: 2; } /* Nhóm chứa nút Tìm kiếm */
+.filter-group:nth-child(5) { animation-delay: 0.5s; z-index: 1; } /* Nhóm chứa nút Reset */
 
-.filter-group:nth-child(1) { animation-delay: 0.1s; }
-.filter-group:nth-child(2) { animation-delay: 0.2s; }
-.filter-group:nth-child(3) { animation-delay: 0.3s; }
-.filter-group:nth-child(4) { animation-delay: 0.4s; }
-.filter-group:nth-child(5) { animation-delay: 0.5s; }
-
-/* ===== RESPONSIVE FILTER ===== */
-@media (max-width: 768px) {
-    .sidebar-content {
-        padding: 20px;
-        border-radius: 12px;
-    }
-
-    .sidebar-title {
-        font-size: 1.3rem;
-        margin-bottom: 20px;
-        border-bottom: 3px solid #3498db;
-    }
-
-    .filter-form {
-        gap: 28px;
-    }
-
-    .filter-input,
-    .filter-select {
-        padding: 12px 16px;
-        font-size: 0.9rem;
-    }
-
-    .price-range {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .price-input:first-child {
-        border-radius: 12px;
-        border-right: 2px solid #e1e8ed;
-    }
-
-    .price-input:last-child {
-        border-radius: 12px;
-        border-left: 2px solid #e1e8ed;
-    }
-
-    .price-separator {
-        display: none;
-    }
-
-    .filter-submit-btn {
-        padding: 14px 20px;
-        font-size: 0.95rem;
-    }
-}
-
-/* ===== MAIN CONTENT ===== */
+/* ===== MAIN CONTENT & RESULTS INFO ===== */
 .main-content {
-    flex: 1; /* Chiếm phần còn lại */
+    flex: 1; 
 }
 
-/* ===== RESULTS INFO ===== */
 .results-info {
     margin-bottom: 25px;
     padding: 15px 0;
@@ -697,15 +531,13 @@ body {
     color: #2c3e50;
 }
 
-/* ===== PRODUCT LIST ===== */
-/* Sử dụng CSS Grid cho danh sách sản phẩm */
+/* ===== PRODUCT LIST & ITEM ===== */
 .product-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 25px; /* Khoảng cách đều giữa các item */
+    gap: 25px; 
 }
 
-/* ===== PRODUCT ITEM ===== */
 .product-item {
     background: #fff;
     border-radius: 12px;
@@ -744,7 +576,7 @@ body {
     transform: scale(1.05);
 }
 
-/* ===== PRODUCT BADGE ===== */
+/* ===== PRODUCT BADGE & WISHLIST ===== */
 .product-badge {
     position: absolute;
     top: 10px;
@@ -772,7 +604,6 @@ body {
     color: white;
 }
 
-/* ===== PRODUCT WISHLIST ===== */
 .product-wishlist {
     position: absolute;
     top: 10px;
@@ -845,7 +676,6 @@ body {
     border-radius: 4px;
 }
 
-/* ===== PRODUCT PRICE ===== */
 .product-price {
     margin-bottom: 15px;
 }
@@ -874,13 +704,21 @@ body {
 
 /* ===== ADD TO CART BUTTON ===== */
 .add-to-cart-form {
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.3s ease;
     margin-top: 15px;
+}
+
+.product-item:hover .add-to-cart-form {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .add-to-cart-btn {
     width: 100%;
-    /* background: linear-gradient(135deg, #27ae60, #229954); */
-    color: white;
+    background: #921817;
+    color: #fff;
     border: none;
     padding: 12px;
     border-radius: 8px;
@@ -889,11 +727,9 @@ body {
     transition: all 0.3s ease;
 }
 
-/* .add-to-cart-btn:hover {
-    background: linear-gradient(135deg, #229954, #1e8449);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
-} */
+.add-to-cart-btn:hover {
+    opacity: 0.75;
+}
 
 /* ===== NO PRODUCTS ===== */
 .no-products {
@@ -938,89 +774,96 @@ body {
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
-
-/* Tablet: 2-3 cột */
 @media (max-width: 992px) {
     .main-layout {
         flex-direction: column;
         gap: 20px;
     }
-
     .sidebar {
         flex: none;
         max-width: none;
     }
-
     .sidebar-content {
         position: static;
         max-height: none;
     }
-
     .product-list {
-        grid-template-columns: repeat(3, 1fr); /* 3 cột trên tablet */
+        grid-template-columns: repeat(3, 1fr); 
         gap: 20px;
     }
-
     .page-title {
         font-size: 2rem;
     }
 }
 
-/* Mobile: 1 cột */
 @media (max-width: 768px) {
     .container {
         padding: 0 15px;
     }
-
     .main-layout {
         gap: 15px;
     }
-
     .sidebar-content {
         padding: 20px;
+        border-radius: 12px;
     }
-
-    .product-list {
-        grid-template-columns: 1fr; /* 1 cột trên mobile */
-        gap: 15px;
+    .sidebar-title {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #3498db;
     }
-
-    .product-thumb {
-        height: 200px;
+    .filter-form {
+        gap: 28px;
     }
-
-    .product-info {
-        padding: 15px;
+    .filter-input,
+    .filter-select {
+        padding: 12px 16px;
+        font-size: 0.9rem;
     }
-
-    .page-title {
-        font-size: 1.8rem;
-    }
-
     .price-range {
         flex-direction: column;
         gap: 8px;
     }
-
+    .price-input:first-child {
+        border-radius: 12px;
+        border-right: 2px solid #e1e8ed;
+    }
+    .price-input:last-child {
+        border-radius: 12px;
+        border-left: 2px solid #e1e8ed;
+    }
     .price-separator {
         display: none;
     }
+    .filter-submit-btn {
+        padding: 14px 20px;
+        font-size: 0.95rem;
+    }
+    .product-list {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    .product-thumb {
+        height: 200px;
+    }
+    .product-info {
+        padding: 15px;
+    }
+    .page-title {
+        font-size: 1.8rem;
+    }
 }
 
-/* Small mobile */
 @media (max-width: 480px) {
     .product-list {
         gap: 10px;
     }
-
     .product-item {
         border-radius: 8px;
     }
-
     .product-info {
         padding: 12px;
     }
-
     .filter-input,
     .filter-select {
         padding: 10px 12px;

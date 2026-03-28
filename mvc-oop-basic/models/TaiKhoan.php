@@ -19,7 +19,7 @@ class TaiKhoan
             $user = $stmt->fetch();
 
             if (!$user) {
-                return "Email hoặc mật khẩu không hợp lệ";
+                return "Tài khoản hoặc mật khẩu không hợp lệ";
             }
 
             $isValidPassword = false;

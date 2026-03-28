@@ -83,6 +83,9 @@ class HomeController
 
     public function formLogin()
     {
+        if (isset($_SESSION['error']) && $_SESSION['error'] === 'Yêu cầu không hợp lệ') {
+            unset($_SESSION['error']);
+        }
         require_once __DIR__ . '/../views/auth/formLogin.php';
         deleteSessionError();
     }
@@ -142,12 +145,6 @@ class HomeController
         $password_confirmation = trim($_POST['password_confirmation'] ?? '');
 
         $_SESSION['old_email'] = $email;
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $_SESSION['error'] = "Email không hợp lệ";
-            header("Location: " . BASE_URL . '?act=signup');
-            exit();
-        }
 
         if (strlen($password) < 6) {
             $_SESSION['error'] = "Mật khẩu phải >= 6 ký tự";

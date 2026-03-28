@@ -39,7 +39,7 @@
                             <form action="<?= BASE_URL . '?act=check-register' ?>" method="post">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>" />
                                 <div class="single-input-item">
-                                    <input type="email" placeholder="Email" name="email" value="<?= htmlspecialchars($_SESSION['old_email'] ?? '') ?>" required />
+                                    <input type="text" placeholder="Tên đăng nhập / Email" name="email" value="<?= htmlspecialchars($_SESSION['old_email'] ?? '') ?>" required />
                                 </div>
                                 <div class="single-input-item">
                                     <input type="password" placeholder="Mật khẩu" name="password" required />

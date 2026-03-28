@@ -298,8 +298,8 @@ class AdminTaiKhoanController
             // Xử lí kiểm tra thông tin đăng nhập
             $user = $this->modelTaiKhoan->checkLogin($email, $password);
 
-            // Nếu trả về email (dạng string hợp lệ) là đăng nhập thành công
-            if (is_string($user) && filter_var($user, FILTER_VALIDATE_EMAIL)) {
+            // Nếu trả về dữ liệu (dạng string) là đăng nhập thành công
+            if (is_string($user)) {
                 // Lưu email vào session để dùng hiển thị
                 $_SESSION['user_admin'] = $user;
                 header("Location: " . BASE_URL_ADMIN);
@@ -345,9 +345,7 @@ class AdminTaiKhoanController
                 $errors['ho_ten'] = 'Họ tên không được để trống';
             }
             if (empty($email)) {
-                $errors['email'] = 'Email không được để trống';
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $errors['email'] = 'Email không hợp lệ';
+                $errors['email'] = 'Tên đăng nhập / Email không được để trống';
             }
 
             $_SESSION['errors'] = $errors;

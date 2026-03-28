@@ -228,10 +228,13 @@ body {
     padding: 30px;
     position: sticky;
     top: 20px;
-    max-height: calc(100vh - 40px);
-    overflow-y: auto; /* Scroll nếu nội dung dài */
+    /* max-height: calc(100vh - 40px); */
+    /* overflow-y: auto; Scroll nếu nội dung dài */
     border: 1px solid rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
+    height: fit-content; /* QUAN TRỌNG */
+    max-height: none;
+    overflow: visible;
 }
 
 .sidebar-title {
@@ -283,7 +286,7 @@ body {
     border-radius: 2px;
     opacity: 0;
     transition: opacity 0.3s ease;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none; /* QUAN TRỌNG */
 }
 
@@ -322,6 +325,7 @@ body {
     backdrop-filter: blur(5px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     position: relative;
+    z-index: 2;
     overflow: hidden;
 }
 
@@ -360,7 +364,7 @@ body {
     gap: 10px;
     width: 100%;
     min-width: 0;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .price-input {
@@ -528,10 +532,11 @@ body {
     .sidebar-title {
         font-size: 1.3rem;
         margin-bottom: 20px;
+        border-bottom: 3px solid #3498db;
     }
 
     .filter-form {
-        gap: 18px;
+        gap: 28px;
     }
 
     .filter-input,

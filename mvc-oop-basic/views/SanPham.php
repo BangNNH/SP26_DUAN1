@@ -28,7 +28,7 @@
                                 <div class="price-range">
                                     <input type="number" class="filter-input price-input" id="minPrice" name="min_price"
                                            placeholder="Từ" min="0" value="<?= htmlspecialchars($minPrice) ?>">
-                                    <span class="price-separator">-</span>
+                                    <!-- <span class="price-separator">-</span> -->
                                     <input type="number" class="filter-input price-input" id="maxPrice" name="max_price"
                                            placeholder="Đến" value="<?= htmlspecialchars($maxPrice < 999999999 ? $maxPrice : '') ?>">
                                 </div>
@@ -351,19 +351,47 @@ body {
 
 .price-range {
     display: flex;
-    align-items: stretch;
-    gap: 10px;
+    align-items: center;
+    gap: 15px; /* Khoảng cách giữa 2 ô */
     width: 100%;
-    min-width: 0;
-    flex-wrap: nowrap;
+    position: relative;
+}
+.price-range::after {
+    content: '-';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    font-weight: 600;
+    pointer-events: none; /* Không cản trở khi click chuột */
 }
 
 .price-input {
-    flex: 1;
-    min-width: 0;
-    width: 100%;
+    flex: 1; /* Chia đều không gian 50/50 */
+    min-width: 0; /* Ép thẻ input co lại vừa vặn với flexbox */
+    text-align: center;
+    padding: 10px 8px;
+    border-radius: 12px !important; 
+    border: 2px solid #e1e8ed !important;
+    font-weight: 500;
+    color: #2c3e50;
+    background: #ffffff;
+    transition: all 0.3s ease;
     box-sizing: border-box;
-    position: relative;
+}
+.price-input:focus {
+    border-color: #3498db !important;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15) !important;
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.price-input::-webkit-outer-spin-button,
+.price-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .price-input[type="number"]::-webkit-outer-spin-button,
@@ -386,6 +414,12 @@ body {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: 1px solid #e1e8ed;
+}
+
+.price-input:first-child,
+.price-input:last-child {
+    border-radius: 12px !important; /* Bo góc đều 4 cạnh */
+    border: 2px solid #e1e8ed !important; /* Đủ viền 4 cạnh */
 }
 
 .price-separator {
@@ -773,6 +807,63 @@ body {
     transform: translateY(-2px);
 }
 
+/* ===== FIX TRIỆT ĐỂ LỖI KHOẢNG GIÁ (DÁN XUỐNG CUỐI FILE CSS) ===== */
+.filter-group .price-range {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important; /* Khoảng trống cho dấu trừ ở giữa */
+    width: 100% !important;
+    position: relative !important;
+    margin-top: 10px !important; /* Đẩy các ô input cách xa dòng chữ Label ở trên */
+}
+
+/* Vẽ dấu trừ (-) căn giữa tuyệt đối */
+.filter-group .price-range::after {
+    content: '-' !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    color: #7f8c8d !important;
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    pointer-events: none !important; /* Để không click nhầm vào dấu trừ */
+}
+
+/* Ép 2 ô input phải thu mình lại, bo tròn và chia đều 50/50 */
+.filter-group .price-range .price-input {
+    flex: 1 1 0% !important; /* Cực kỳ quan trọng: Ép input chia đều và không được tràn viền */
+    width: 100% !important;
+    min-width: 0 !important; /* Chống phình to tự động */
+    margin: 0 !important; /* Xóa margin rác gây lệch */
+    padding: 10px !important; /* Thu gọn padding lại một chút cho cân đối */
+    text-align: center !important; /* Căn giữa số tiền */
+    border-radius: 8px !important; /* Bo tròn đều 4 góc */
+    border: 2px solid #e1e8ed !important; /* Viền xám nhạt */
+    box-sizing: border-box !important;
+    background: #fff !important;
+    height: auto !important;
+}
+
+/* Hiệu ứng mượt mà khi người dùng click vào gõ giá tiền */
+.filter-group .price-range .price-input:focus {
+    border-color: #3498db !important;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15) !important;
+    outline: none !important;
+}
+
+/* Ẩn mũi tên tăng/giảm số mặc định của input type="number" */
+.filter-group .price-range .price-input::-webkit-outer-spin-button,
+.filter-group .price-range .price-input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+.filter-group .price-range .price-input[type="number"] {
+    -moz-appearance: textfield !important;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 992px) {
     .main-layout {
@@ -821,8 +912,8 @@ body {
         font-size: 0.9rem;
     }
     .price-range {
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row; /* Luôn giữ 2 ô nằm ngang trên điện thoại */
+        gap: 12px;
     }
     .price-input:first-child {
         border-radius: 12px;
@@ -831,6 +922,13 @@ body {
     .price-input:last-child {
         border-radius: 12px;
         border-left: 2px solid #e1e8ed;
+    }
+
+    .price-input, 
+    .price-input:first-child, 
+    .price-input:last-child {
+        padding: 10px 5px !important;
+        font-size: 0.9rem;
     }
     .price-separator {
         display: none;

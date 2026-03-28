@@ -176,7 +176,7 @@ class AdminTaiKhoan
             $user = $stmt->fetch();
 
             if (!$user) {
-                return "Email không tồn tại";
+                return "Tài khoản không tồn tại";
             }
 
             // Nếu mật khẩu đã được hash, dùng password_verify

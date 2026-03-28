@@ -41,4 +41,6 @@ match ($act) {
     'login' => (new HomeController())->formLogin(),
     'check-login' => (new HomeController())->postLogin(),
     'logout' => (new HomeController())->logout(),
+    'signup' => (new HomeController())->registerLogin(),
+    'check-register' => (new HomeController())->postRegister(),
 };

@@ -146,14 +146,29 @@ class HomeController
 
         $_SESSION['old_email'] = $email;
 
+        $errors = [];
+
+        // Validation
+        if (empty($email)) {
+            $errors['email'] = "Email không được để trống";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = "Email không hợp lệ";
+        } elseif ($this->modelTaiKhoan->checkEmailExists($email)) {
+            $errors['email'] = "Email đã tồn tại";
+        }
+
         if (strlen($password) < 6) {
-            $_SESSION['error'] = "Mật khẩu phải >= 6 ký tự";
-            header("Location: " . BASE_URL . '?act=signup');
-            exit();
+            $errors['password'] = "Mật khẩu phải >= 6 ký tự";
         }
 
         if ($password !== $password_confirmation) {
-            $_SESSION['error'] = "Mật khẩu nhập lại không khớp";
+            $errors['password_confirmation'] = "Mật khẩu nhập lại không khớp";
+        }
+
+        if (!empty($errors)) {
+            foreach ($errors as $field => $message) {
+                $_SESSION['error_' . $field] = $message;
+            }
             header("Location: " . BASE_URL . '?act=signup');
             exit();
         }
@@ -167,20 +182,13 @@ class HomeController
                 throw new Exception("Không thể lưu tài khoản");
             }
 
-            session_regenerate_id(true);
-
-            $_SESSION['user_client'] = [
-                'id' => $userId,
-                'email' => $email
-            ];
-
             unset($_SESSION['old_email'], $_SESSION['csrf_token']);
-            $_SESSION['success'] = "Đăng ký thành công!";
+            $_SESSION['success'] = "Bạn đã đăng ký thành công, vui lòng đăng nhập";
 
-            header("Location: " . BASE_URL);
+            header("Location: " . BASE_URL . '?act=login');
             exit();
         } catch (Exception $e) {
-            $_SESSION['error'] = "Email đã tồn tại hoặc lỗi hệ thống";
+            $_SESSION['error'] = "Lỗi hệ thống, vui lòng thử lại";
             header("Location: " . BASE_URL . '?act=signup');
             exit();
         }

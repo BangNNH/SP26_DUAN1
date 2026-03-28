@@ -63,6 +63,11 @@ function deleteSessionError()
     unset($_SESSION['error']);
     unset($_SESSION['success']);
     unset($_SESSION['flash']);
+    // Xóa các lỗi validation cụ thể
+    unset($_SESSION['error_email']);
+    unset($_SESSION['error_password']);
+    unset($_SESSION['error_password_confirmation']);
+    unset($_SESSION['old_email']);
 }
 
 // upload - update album ảnh 

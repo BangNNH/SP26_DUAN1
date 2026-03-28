@@ -171,7 +171,7 @@ body {
 
 /* ===== CONTAINER ===== */
 .container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -217,8 +217,8 @@ body {
 
 /* ===== SIDEBAR ===== */
 .sidebar {
-    flex: 0 0 25%; /* Chiếm 25% chiều rộng */
-    max-width: 300px;
+    flex: 0 0 28%; /* Chiếm 28% chiều rộng */
+    max-width: none;
 }
 
 .sidebar-content {
@@ -268,6 +268,7 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
+    z-index: 1;
 }
 
 .filter-group::before {
@@ -282,6 +283,8 @@ body {
     border-radius: 2px;
     opacity: 0;
     transition: opacity 0.3s ease;
+    z-index: 0;
+    pointer-events: none; /* QUAN TRỌNG */
 }
 
 .filter-group:hover::before {
@@ -353,7 +356,7 @@ body {
 
 .price-range {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     gap: 10px;
     width: 100%;
     min-width: 0;
@@ -362,8 +365,6 @@ body {
 
 .price-input {
     flex: 1;
-    min-width: 90px;
-    max-width: 160px;
     min-width: 0;
     width: 100%;
     box-sizing: border-box;
@@ -590,7 +591,7 @@ body {
 /* Sử dụng CSS Grid cho danh sách sản phẩm */
 .product-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 cột */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 25px; /* Khoảng cách đều giữa các item */
 }
 

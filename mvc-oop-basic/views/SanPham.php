@@ -5,15 +5,15 @@
 <main>
     <div class="product-listing-section">
         <div class="container">
-            <div class="page-title-section">
+            <!-- <div class="page-title-section">
                 <h1 class="page-title">Danh Sách Sản Phẩm</h1>
                 <p class="page-subtitle">Khám phá bộ sưu tập đồng hồ cao cấp của chúng tôi</p>
-            </div>
+            </div> -->
 
-            <div class="main-layout">
+            <div class="main-layout mt-4">
                 <aside class="sidebar">
                     <div class="sidebar-content">
-                        <h3 class="sidebar-title">Bộ lọc sản phẩm</h3>
+                        <!-- <h3 class="sidebar-title">Bộ lọc sản phẩm</h3> -->
                         <form method="GET" id="filterForm" class="filter-form">
                             <input type="hidden" name="act" value="san-pham">
 
@@ -78,7 +78,7 @@
                     </div>
 
                     <?php if (!empty($listSanPham)): ?>
-                        <div class="product-list">
+                        <div class="product-list-box">
                             <?php foreach ($listSanPham as $sanPham): ?>
                                 <div class="product-item">
                                 <figure class="product-thumb">
@@ -159,18 +159,6 @@
 <?php require_once 'layout/miniCart.php' ?>
 
 <style>
-/* ===== RESET & BASE STYLES ===== */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
-} */
 
 /* ===== CONTAINER ===== */
 .container {
@@ -223,11 +211,11 @@
 }
 
 .sidebar-content {
-    background: #fff;
+    /* background: #fff; */
     border-radius: 14px;
     padding: 24px;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
-    border: 1px solid #eee;
+    /* box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08); */
+    /* border: 1px solid #eee; */
     position: sticky;
     top: 20px;
     max-height: calc(100vh - 40px);
@@ -262,10 +250,10 @@
 }
 
 .filter-group {
-    background: #fafafa;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #eee;
+    /* background: #fafafa; */
+    padding: 10px;
+    border-radius: 10px;    
+    /* border: 1px solid #010101; */
     transition: 0.25s;
     display: flex;
     flex-direction: column;
@@ -556,16 +544,16 @@
 }
 
 /* ===== PRODUCT LIST & ITEM ===== */
-.product-list {
+.product-list-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px; 
 }
 
 .product-item {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    /* background: #fff; */
+    /* border-radius: 12px; */
+    /* box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08); */
     overflow: hidden;
     transition: all 0.3s ease;
     position: relative;
@@ -573,7 +561,7 @@
 
 .product-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); */
 }
 
 /* ===== PRODUCT THUMB ===== */
@@ -676,7 +664,7 @@
     transform: translateY(-2px);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE DESIGN =====
 @media (max-width: 992px) {
     .main-layout {
         flex-direction: column;
@@ -758,7 +746,7 @@
     .filter-select {
         padding: 10px 12px;
     }
-}
+} */
 </style>
 
 <?php require_once 'layout/footer.php' ?>

@@ -28,11 +28,11 @@ class HomeController
 
         $listSanPhamBanChay = $this->modelSanPham->getSanPhamBanChay();
         $listSanPhamMoi = $this->modelSanPham->getSanPhamMoi();
-        $listAutomatic =  $this->modelSanPham->getSanPhamByLoai('Automatic');
-        $listQuartz =  $this->modelSanPham->getSanPhamByLoai('Quartz');
-        $listEco =  $this->modelSanPham->getSanPhamByLoai('Eco-Drive');
-        $listSport =  $this->modelSanPham->getSanPhamByLoai('Sport');
-        $listSmart =  $this->modelSanPham->getSanPhamByLoai('Smartwatch');
+        $listAutomatic =  $this->modelSanPham->getSanPhamByCategory(1);
+        $listQuartz =  $this->modelSanPham->getSanPhamByCategory(2);
+        $listEco =  $this->modelSanPham->getSanPhamByCategory(3);
+        $listSport =  $this->modelSanPham->getSanPhamByCategory(4);
+        $listSmart =  $this->modelSanPham->getSanPhamByCategory(5);
         require_once './views/home.php';
     }
 

@@ -33,7 +33,7 @@
                             <div class="card card-widget widget-user-2 shadow-sm">
                                 <div class="widget-user-header bg-info" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);padding: 20px 30px;border-radius: 12px;background: linear-gradient(135deg, #2aa4b8, #1e7f8f); display: flex; align-items: center; gap: 15px;">
                                     <div class="widget-user-image">
-                                        <img class="img-circle elevation-2" style="width: 80px; height: 80px  border-radius: 50%;  border: 3px solid #fff;  object-fit: cover; " 
+                                        <img class="img-circle elevation-2" style="width: 80px; height: 80px ; border-radius :  50%;  border: 3px solid #fff;  object-fit: cover; " 
                                         src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien'] ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
                                     </div>
                                     <div style="font-size: 20px; font-weight: 550;">

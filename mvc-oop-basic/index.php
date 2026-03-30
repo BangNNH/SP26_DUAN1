@@ -43,4 +43,6 @@ match ($act) {
     'logout' => (new HomeController())->logout(),
     'signup' => (new HomeController())->registerLogin(),
     'check-register' => (new HomeController())->postRegister(),
+    'tai-khoan' => (new HomeController())->account(), // Đảm bảo dòng này tồn tại
+    'update-profile' => (new HomeController())->updateProfile()
 };

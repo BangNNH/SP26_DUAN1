@@ -105,4 +105,39 @@ class TaiKhoan
             return false;
         }
     }
+    public function getUserById($id)
+    {
+        try {
+            $sql = "SELECT * FROM tai_khoans WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            error_log("Lỗi getUserById: " . $e->getMessage());
+            return false;
+        }
+    }
+    public function updateProfile($id, $name, $phone, $address, $avatar, $newPassword = null) {
+    try {
+        $sql = "UPDATE tai_khoans SET ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, 
+                dia_chi = :dia_chi, anh_dai_dien = :anh_dai_dien";
+        
+        $params = [
+            'ho_ten' => $name,
+            'so_dien_thoai' => $phone,
+            'dia_chi' => $address,
+            'anh_dai_dien' => $avatar,
+            'id' => $id
+        ];
+
+        if ($newPassword) {
+            $sql .= ", mat_khau = :mat_khau";
+            $params['mat_khau'] = $newPassword;
+        }
+
+        $sql .= " WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($params);
+    } catch (Exception $e) { /* ... */ }
+}
 }

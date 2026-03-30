@@ -49,7 +49,7 @@ class ProductController
 
             return round((($originalPrice - $salePrice) / $originalPrice) * 100);
         }
-
+        
         require_once './views/sanPham.php';
     }
 }

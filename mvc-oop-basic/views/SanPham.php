@@ -1,4 +1,5 @@
 <?php require_once 'layout/header.php' ?>
+
 <?php require_once 'layout/menu.php' ?>
 
 <main>
@@ -136,7 +137,6 @@
                                         Thêm vào giỏ
                                     </button>
                                 </form>
-
                             </div>
                             <?php endforeach; ?>
                         </div>
@@ -156,6 +156,8 @@
     </div>
 </main>
 
+<?php require_once 'layout/miniCart.php' ?>
+
 <style>
 /* ===== RESET & BASE STYLES ===== */
 * {
@@ -164,11 +166,11 @@
     padding: 0;
 }
 
-body {
+/* body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: #333;
-}
+} */
 
 /* ===== CONTAINER ===== */
 .container {

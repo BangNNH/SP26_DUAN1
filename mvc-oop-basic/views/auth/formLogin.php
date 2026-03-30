@@ -31,7 +31,9 @@
                     <div class="col-lg-12">
                         <div class="login-reg-form-wrap">
                             <h5 class="text-center">ĐĂNG NHẬP</h5>
-                            <?php if (!empty($_SESSION['error'])) { ?>
+                            <?php if (!empty($_SESSION['success'])) { ?>
+                                <p class="text-success login-box-msg text-center"><?= htmlspecialchars($_SESSION['success']) ?></p>
+                            <?php } elseif (!empty($_SESSION['error'])) { ?>
                                 <p class="text-danger login-box-msg text-center"><?= htmlspecialchars($_SESSION['error']) ?></p>
                             <?php } else { ?>
                                 <p class="login-box-msg text-center">Vui lòng đăng nhập</p>

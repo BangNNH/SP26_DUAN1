@@ -304,4 +304,22 @@ class HomeController
         header("Location: " . BASE_URL . '?act=tai-khoan');
         exit();
     }
+    public function forgotPassword()
+    {
+        require_once __DIR__ . '/../views/auth/forgotPassword.php';
+        deleteSessionError();
+    }
+
+    public function sendOtpForgotPassword()
+{
+
+    header("Location: " . BASE_URL . '?act=reset-password');
+    exit();
+}
+
+public function resetPassword()
+{
+
+    require_once __DIR__ . '/../views/auth/resetPassword.php';
+}
 }

@@ -48,7 +48,7 @@
                                 <div class="single-input-item">
                                     <div class="login-reg-form-meta d-flex align-items-center justify-content-between">
 
-                                        <a href="#" class="forget-pwd">Quên mật khẩu?</a>
+                                        <a href="<?= BASE_URL . '?act=forgot-password' ?>">Quên mật khẩu?</a>
                                     </div>
                                 </div>
                                 <div class="single-input-item">

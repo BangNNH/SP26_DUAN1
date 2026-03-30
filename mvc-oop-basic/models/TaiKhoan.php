@@ -117,27 +117,56 @@ class TaiKhoan
             return false;
         }
     }
-    public function updateProfile($id, $name, $phone, $address, $avatar, $newPassword = null) {
-    try {
-        $sql = "UPDATE tai_khoans SET ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, 
+    public function updateProfile($id, $name, $phone, $address, $avatar, $newPassword = null)
+    {
+        try {
+            $sql = "UPDATE tai_khoans SET ho_ten = :ho_ten, so_dien_thoai = :so_dien_thoai, 
                 dia_chi = :dia_chi, anh_dai_dien = :anh_dai_dien";
-        
-        $params = [
-            'ho_ten' => $name,
-            'so_dien_thoai' => $phone,
-            'dia_chi' => $address,
-            'anh_dai_dien' => $avatar,
-            'id' => $id
-        ];
 
-        if ($newPassword) {
-            $sql .= ", mat_khau = :mat_khau";
-            $params['mat_khau'] = $newPassword;
+            $params = [
+                'ho_ten' => $name,
+                'so_dien_thoai' => $phone,
+                'dia_chi' => $address,
+                'anh_dai_dien' => $avatar,
+                'id' => $id
+            ];
+
+            if ($newPassword) {
+                $sql .= ", mat_khau = :mat_khau";
+                $params['mat_khau'] = $newPassword;
+            }
+
+            $sql .= " WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute($params);
+        } catch (Exception $e) { /* ... */
         }
+    }
+    public function updatePassword($id, $newHashedPassword)
+    {
+        try {
+            $sql = "UPDATE tai_khoans SET mat_khau = :mat_khau WHERE id = :id";
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute(['mat_khau' => $newHashedPassword, 'id' => $id]);
+        } catch (Exception $e) {
+            error_log("Lỗi updatePassword: " . $e->getMessage());
+            return false;
+        }
+    }
 
-        $sql .= " WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        return $stmt->execute($params);
-    } catch (Exception $e) { /* ... */ }
-}
+    public function updatePasswordByEmail($email, $newHashedPassword)
+    {
+    }
+
+    public function updatePasswordByPhone($phone, $newHashedPassword)
+    {
+    }
+
+    public function getTaiKhoanFromPhone($phone)
+    {
+    }
+    
+    public  function getAllUsers()
+    {
+    }   
 }

@@ -28,7 +28,6 @@
                                 <div class="price-range">
                                     <input type="number" class="filter-input price-input" id="minPrice" name="min_price"
                                            placeholder="Từ" min="0" value="<?= htmlspecialchars($minPrice) ?>">
-                                    <!-- <span class="price-separator">-</span> -->
                                     <input type="number" class="filter-input price-input" id="maxPrice" name="max_price"
                                            placeholder="Đến" value="<?= htmlspecialchars($maxPrice < 999999999 ? $maxPrice : '') ?>">
                                 </div>
@@ -81,49 +80,64 @@
                         <div class="product-list">
                             <?php foreach ($listSanPham as $sanPham): ?>
                                 <div class="product-item">
-                                    <figure class="product-thumb">
-                                        <a class="product-thumb-link" href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>">
-                                            <img class="product-image" src="<?= htmlspecialchars($sanPham['hinh_anh'] ? BASE_URL . $sanPham['hinh_anh'] : BASE_URL . 'assets/img/avatar_default.jpg') ?>"
-                                                 alt="<?= htmlspecialchars($sanPham['ten_san_pham']) ?>"
-                                                 onerror="this.src='<?= BASE_URL . 'assets/img/avatar_default.jpg' ?>'">
-                                            <div class="product-badge">
-                                                <?php if ($sanPham['is_new'] == 1): ?>
-                                                    <div class="badge badge-new">New</div>
-                                                <?php endif; ?>
-                                                <?php if ($sanPham['is_hot'] == 1): ?>
-                                                    <div class="badge badge-hot">Hot</div>
-                                                <?php endif; ?>
-                                            </div>
-                                        </a>
-                                        <div class="product-wishlist">
-                                            <a href="#" class="wishlist-link"><i class="pe-7s-like"></i></a>
+                                <figure class="product-thumb">
+                                    <a class="product-thumb-link" href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id'] ?>">
+                                        <img class="pri-img" src="<?= BASE_URL . $sanPham['hinh_anh'] ?>" alt="product">
+                                        <div class="product-badge">
+                                            <?php
+                                            $ngayNhap = new DateTime($sanPham['ngay_nhap']);
+                                            $ngayHienTai = new DateTime();
+                                            $tinhNgay = $ngayHienTai->diff($ngayNhap);
+
+                                            if ($tinhNgay->days <= 1) {
+                                            ?>
+                                                <div class="product_label product_label_new" bis_skin_checked="1">
+                                                    <div class="product_label__item" bis_skin_checked="1">
+                                                        <span>New</span>
+                                                    </div>
+                                                </div>
+
+                                            <?php } ?>
+                                            <?php if ($sanPham['gia_khuyen_mai']) {
+                                                $phanTramGG = calcDiscountPercent($sanPham['gia_san_pham'], $sanPham['gia_khuyen_mai']); ?>
+                                                <div class="product-discount-label" bis_skin_checked="1">
+                                                    <span>-<?= $phanTramGG ?>%</span>
+                                                </div>
+                                            <?php  } ?>
+
                                         </div>
-                                    </figure>
-                                    <div class="product-info">
-                                        <h6 class="product-name">
-                                            <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>"><?= htmlspecialchars($sanPham['ten_san_pham']) ?></a>
-                                        </h6>
-                                        <p class="product-code"><?= htmlspecialchars($sanPham['code'] ?? '') ?></p>
-                                        <div class="product-details">
-                                            <span class="product-size"><?= htmlspecialchars($sanPham['kich_thuoc'] ?? '') ?></span>
-                                            <span class="product-type"><?= htmlspecialchars($sanPham['loai_may'] ?? '') ?></span>
-                                        </div>
-                                        <div class="product-price">
-                                            <?php if (!empty($sanPham['gia_san_pham'])): ?>
-                                                <p class="price-old"><del><?= number_format($sanPham['gia_san_pham'], 0, ',', '.') ?>đ</del></p>
-                                            <?php endif; ?>
-                                            <p class="price-current">
-                                                <span class="price-label">Giá KM:</span>
-                                                <span class="price-amount"><?= number_format($sanPham['gia_khuyen_mai'] ?? 0, 0, ',', '.') ?>đ</span>
-                                            </p>
-                                        </div>
-                                        <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST" class="add-to-cart-form">
-                                            <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                            <input type="hidden" name="so_luong" value="1">
-                                            <button type="submit" class="add-to-cart-btn">Thêm vào giỏ</button>
-                                        </form>
+                                    </a>
+                                    <div class="button-group">
+                                        <a href="wishlist.html" data-bs-toggle="tooltip" data-bs-placement="left"><i class="pe-7s-like"></i></a>
+                                    </div>
+                                </figure>
+                                
+                                <div class="product-caption text-center">
+                                    <h6 class="product-name">
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .  $sanPham['id'] ?>"><?= $sanPham['ten_san_pham'] ?></a>
+                                    </h6>
+                                    <p style="  color: #921817;font-weight:600; font-size:12px;"><?= $sanPham['code'] ?></p>
+                                    <div class="product-des" bis_skin_checked="1">
+                                        <span><?= $sanPham['kich_thuoc'] ?></span>
+                                        <span><?= $sanPham['loai_may'] ?></span>
+                                    </div>
+                                    <div class="price-box">
+                                        <p class="price-old"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></p>
+                                        <p class="price-regular">
+                                            <span>Giá KM:</span>
+                                            <span><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></span>
+                                        </p>
                                     </div>
                                 </div>
+                                <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                    <input type="hidden" name="so_luong" value="1">
+                                    <button type="submit" class="btn-addToCard">
+                                        Thêm vào giỏ
+                                    </button>
+                                </form>
+
+                            </div>
                             <?php endforeach; ?>
                         </div>
                     <?php else: ?>
@@ -319,16 +333,13 @@ body {
 .filter-select {
     overflow: visible; 
     appearance: none;
-    /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e"); */
     background-position: right 12px center;
     background-repeat: no-repeat;
     background-size: 16px;
-    
     height: 52px;
     line-height: 48px; 
     padding: 0 40px 0 18px; 
 }
-
 
 .filter-input::placeholder,
 .filter-select option {
@@ -351,11 +362,15 @@ body {
 
 .price-range {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 15px; /* Khoảng cách giữa 2 ô */
+    justify-content: space-between;
+    gap: 20px;
     width: 100%;
     position: relative;
+    margin-top: 10px;
 }
+
 .price-range::after {
     content: '-';
     position: absolute;
@@ -364,28 +379,32 @@ body {
     transform: translate(-50%, -50%);
     color: #7f8c8d;
     font-size: 1.2rem;
-    font-weight: 600;
-    pointer-events: none; /* Không cản trở khi click chuột */
+    font-weight: bold;
+    pointer-events: none;
 }
 
 .price-input {
-    flex: 1; /* Chia đều không gian 50/50 */
-    min-width: 0; /* Ép thẻ input co lại vừa vặn với flexbox */
+    flex: 1 1 0%;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 10px;
     text-align: center;
-    padding: 10px 8px;
-    border-radius: 12px !important; 
-    border: 2px solid #e1e8ed !important;
+    border-radius: 8px;
+    border: 2px solid #e1e8ed;
     font-weight: 500;
     color: #2c3e50;
     background: #ffffff;
     transition: all 0.3s ease;
     box-sizing: border-box;
+    height: auto;
 }
+
 .price-input:focus {
-    border-color: #3498db !important;
-    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15) !important;
-    transform: translateY(-2px);
+    border-color: #3498db;
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15);
     outline: none;
+    transform: translateY(-2px);
 }
 
 .price-input::-webkit-outer-spin-button,
@@ -402,37 +421,6 @@ body {
 
 .price-input[type="number"] {
     -moz-appearance: textfield;
-}
-
-.price-input:first-child {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-right: none;
-}
-
-.price-input:last-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: 1px solid #e1e8ed;
-}
-
-.price-input:first-child,
-.price-input:last-child {
-    border-radius: 12px !important; /* Bo góc đều 4 cạnh */
-    border: 2px solid #e1e8ed !important; /* Đủ viền 4 cạnh */
-}
-
-.price-separator {
-    color: #7f8c8d;
-    font-weight: 600;
-    font-size: 1.1rem;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 14px 8px;
-    border-radius: 0 12px 12px 0;
-    border: 2px solid #e1e8ed;
-    border-left: none;
-    position: relative;
-    z-index: 1;
 }
 
 /* ===== FILTER BUTTONS ===== */
@@ -540,9 +528,9 @@ body {
 /* Thêm z-index giảm dần để các thẻ select khi mở ra không bị các nút bên dưới đè lên */
 .filter-group:nth-child(1) { animation-delay: 0.1s; z-index: 5; }
 .filter-group:nth-child(2) { animation-delay: 0.2s; z-index: 4; }
-.filter-group:nth-child(3) { animation-delay: 0.3s; z-index: 3; } /* Nhóm chứa Select loại đồng hồ */
-.filter-group:nth-child(4) { animation-delay: 0.4s; z-index: 2; } /* Nhóm chứa nút Tìm kiếm */
-.filter-group:nth-child(5) { animation-delay: 0.5s; z-index: 1; } /* Nhóm chứa nút Reset */
+.filter-group:nth-child(3) { animation-delay: 0.3s; z-index: 3; }
+.filter-group:nth-child(4) { animation-delay: 0.4s; z-index: 2; }
+.filter-group:nth-child(5) { animation-delay: 0.5s; z-index: 1; }
 
 /* ===== MAIN CONTENT & RESULTS INFO ===== */
 .main-content {
@@ -599,18 +587,18 @@ body {
     text-decoration: none;
 }
 
-.product-image {
+.pri-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
-.product-item:hover .product-image {
+.product-item:hover .pri-img {
     transform: scale(1.05);
 }
 
-/* ===== PRODUCT BADGE & WISHLIST ===== */
+/* ===== PRODUCT BADGE ===== */
 .product-badge {
     position: absolute;
     top: 10px;
@@ -620,55 +608,7 @@ body {
     gap: 5px;
 }
 
-.badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.badge-new {
-    background: #e74c3c;
-    color: white;
-}
-
-.badge-hot {
-    background: #f39c12;
-    color: white;
-}
-
-.product-wishlist {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.wishlist-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    color: #7f8c8d;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.wishlist-link:hover {
-    background: #e74c3c;
-    color: white;
-    transform: scale(1.1);
-}
-
 /* ===== PRODUCT INFO ===== */
-.product-info {
-    padding: 20px;
-    text-align: center;
-}
-
 .product-name {
     font-size: 1.1rem;
     font-weight: 600;
@@ -686,83 +626,10 @@ body {
     color: #3498db;
 }
 
-.product-code {
-    color: #e74c3c;
-    font-weight: 600;
-    font-size: 0.85rem;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-.product-details {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-    color: #7f8c8d;
-}
-
-.product-size,
-.product-type {
-    background: #ecf0f1;
-    padding: 4px 8px;
-    border-radius: 4px;
-}
-
-.product-price {
-    margin-bottom: 15px;
-}
-
 .price-old {
     color: #7f8c8d;
     font-size: 0.9rem;
     margin: 0;
-}
-
-.price-current {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin: 5px 0 0;
-}
-
-.price-label {
-    color: #7f8c8d;
-    font-weight: 500;
-}
-
-.price-amount {
-    color: #921817;
-}
-
-/* ===== ADD TO CART BUTTON ===== */
-.add-to-cart-form {
-    opacity: 0;
-    transform: translateY(15px);
-    transition: all 0.3s ease;
-    margin-top: 15px;
-}
-
-.product-item:hover .add-to-cart-form {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.add-to-cart-btn {
-    width: 100%;
-    background: #921817;
-    color: #fff;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.add-to-cart-btn:hover {
-    opacity: 0.75;
 }
 
 /* ===== NO PRODUCTS ===== */
@@ -805,63 +672,6 @@ body {
 .no-products-link:hover {
     background: #2980b9;
     transform: translateY(-2px);
-}
-
-/* ===== FIX TRIỆT ĐỂ LỖI KHOẢNG GIÁ (DÁN XUỐNG CUỐI FILE CSS) ===== */
-.filter-group .price-range {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 20px !important; /* Khoảng trống cho dấu trừ ở giữa */
-    width: 100% !important;
-    position: relative !important;
-    margin-top: 10px !important; /* Đẩy các ô input cách xa dòng chữ Label ở trên */
-}
-
-/* Vẽ dấu trừ (-) căn giữa tuyệt đối */
-.filter-group .price-range::after {
-    content: '-' !important;
-    position: absolute !important;
-    left: 50% !important;
-    top: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    color: #7f8c8d !important;
-    font-size: 1.2rem !important;
-    font-weight: bold !important;
-    pointer-events: none !important; /* Để không click nhầm vào dấu trừ */
-}
-
-/* Ép 2 ô input phải thu mình lại, bo tròn và chia đều 50/50 */
-.filter-group .price-range .price-input {
-    flex: 1 1 0% !important; /* Cực kỳ quan trọng: Ép input chia đều và không được tràn viền */
-    width: 100% !important;
-    min-width: 0 !important; /* Chống phình to tự động */
-    margin: 0 !important; /* Xóa margin rác gây lệch */
-    padding: 10px !important; /* Thu gọn padding lại một chút cho cân đối */
-    text-align: center !important; /* Căn giữa số tiền */
-    border-radius: 8px !important; /* Bo tròn đều 4 góc */
-    border: 2px solid #e1e8ed !important; /* Viền xám nhạt */
-    box-sizing: border-box !important;
-    background: #fff !important;
-    height: auto !important;
-}
-
-/* Hiệu ứng mượt mà khi người dùng click vào gõ giá tiền */
-.filter-group .price-range .price-input:focus {
-    border-color: #3498db !important;
-    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.15) !important;
-    outline: none !important;
-}
-
-/* Ẩn mũi tên tăng/giảm số mặc định của input type="number" */
-.filter-group .price-range .price-input::-webkit-outer-spin-button,
-.filter-group .price-range .price-input::-webkit-inner-spin-button {
-    -webkit-appearance: none !important;
-    margin: 0 !important;
-}
-.filter-group .price-range .price-input[type="number"] {
-    -moz-appearance: textfield !important;
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
@@ -912,26 +722,12 @@ body {
         font-size: 0.9rem;
     }
     .price-range {
-        flex-direction: row; /* Luôn giữ 2 ô nằm ngang trên điện thoại */
+        flex-direction: row; 
         gap: 12px;
     }
-    .price-input:first-child {
-        border-radius: 12px;
-        border-right: 2px solid #e1e8ed;
-    }
-    .price-input:last-child {
-        border-radius: 12px;
-        border-left: 2px solid #e1e8ed;
-    }
-
-    .price-input, 
-    .price-input:first-child, 
-    .price-input:last-child {
+    .price-input {
         padding: 10px 5px !important;
         font-size: 0.9rem;
-    }
-    .price-separator {
-        display: none;
     }
     .filter-submit-btn {
         padding: 14px 20px;
@@ -944,9 +740,6 @@ body {
     .product-thumb {
         height: 200px;
     }
-    .product-info {
-        padding: 15px;
-    }
     .page-title {
         font-size: 1.8rem;
     }
@@ -958,9 +751,6 @@ body {
     }
     .product-item {
         border-radius: 8px;
-    }
-    .product-info {
-        padding: 12px;
     }
     .filter-input,
     .filter-select {

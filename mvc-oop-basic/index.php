@@ -9,6 +9,7 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 require_once './controllers/HomeController.php';
 require_once './controllers/CartController.php';
 require_once './controllers/OrderController.php';
+require_once './controllers/ProductController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -34,7 +35,7 @@ match ($act) {
     'lich-su-mua-hang' => (new OrderController())->lichSuMuaHang(),
     'chi-tiet-mua-hang' => (new OrderController())->chiTietMuaHang(),
     'huy-don-hang' => (new OrderController())->huyDonHang(),
-
+    'san-pham' => (new ProductController())->index(),
 
     // Auth
     'login' => (new HomeController())->formLogin(),

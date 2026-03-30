@@ -14,10 +14,16 @@ class CartController
 
     public function addGioHang()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $method = $_SERVER['REQUEST_METHOD'];
+        if ($method == 'POST' || $method == 'GET') {
 
-            $san_pham_id = $_POST['san_pham_id'] ?? 0;
-            $so_luong = $_POST['so_luong'] ?? 1;
+            $san_pham_id = (int) ($method == 'POST' ? ($_POST['san_pham_id'] ?? 0) : ($_GET['id'] ?? 0));
+            $so_luong = max(1, (int) ($method == 'POST' ? ($_POST['so_luong'] ?? 1) : ($_GET['so_luong'] ?? 1)));
+
+            if (!$san_pham_id) {
+                header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? BASE_URL));
+                exit();
+            }
 
             if (isset($_SESSION['user_client'])) {
                 // LUỒNG DB khi user đã login
@@ -50,9 +56,10 @@ class CartController
                 exit();
             } else {
                 // LUỒNG SESSION khi user chưa login
-                $_SESSION['openCart'] = true;
-                $this->addToCartSession($san_pham_id, $so_luong);
-                header("Location: " . ($_SERVER['HTTP_REFERER'] ?? BASE_URL));
+                // $_SESSION['openCart'] = true;
+                // $this->addToCartSession($san_pham_id, $so_luong);
+                // header("Location: " . ($_SERVER['HTTP_REFERER'] ?? BASE_URL));
+                header("Location: " . BASE_URL . '?act=login');
                 exit();
             }
         }

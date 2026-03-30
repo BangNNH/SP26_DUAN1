@@ -71,7 +71,7 @@
             <ul class="nav-main-menu">
                 <li><a href="?action=/" class="menu-link"><i class="fi fi-rr-home"></i><span></span></a>
                 </li>
-                <li><a href="?action=product_list" class="menu-link"><i class="fi fi-rr-watch"></i><span>SẢN PHẨM</span></a>
+                <li><a href="?act=san-pham" class="menu-link"><i class="fi fi-rr-watch"></i><span>SẢN PHẨM</span></a>
                 </li>
                 <li><a href="#" class="menu-link"><i class="fi fi-rr-marker-time"></i><span>PHỤ
                             KIỆN</span></a>

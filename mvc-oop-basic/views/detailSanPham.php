@@ -102,8 +102,8 @@
                                     <div class="product-base" bis_skin_checked="1">
                                         <div class="saleprice" bis_skin_checked="1">
                                             <div class="price-box">
-                                                <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
-                                                <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
+                                                <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'] ?? 0, 0, ",", ".") . "đ" ?></del></span>
+                                                <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'] ?? 0, 0, ",", ".") . "đ" ?></p>
                                             </div>
                                         </div>
                                         <div class="two-btn" bis_skin_checked="1">

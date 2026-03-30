@@ -39,13 +39,22 @@
                             <form action="<?= BASE_URL . '?act=check-register' ?>" method="post">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'] ?? '') ?>" />
                                 <div class="single-input-item">
-                                    <input type="text" placeholder="Tên đăng nhập / Email" name="email" value="<?= htmlspecialchars($_SESSION['old_email'] ?? '') ?>" required />
+                                    <input type="text" placeholder="Tên đăng nhập / Email" name="email" value="<?= htmlspecialchars($_SESSION['old_email'] ?? '') ?>" />
+                                    <?php if (!empty($_SESSION['error_email'])) { ?>
+                                        <p class="text-danger" style="font-size: 14px; margin-top: 5px;"><?= htmlspecialchars($_SESSION['error_email']) ?></p>
+                                    <?php } ?>
                                 </div>
                                 <div class="single-input-item">
-                                    <input type="password" placeholder="Mật khẩu" name="password" required />
+                                    <input type="password" placeholder="Mật khẩu" name="password" />
+                                    <?php if (!empty($_SESSION['error_password'])) { ?>
+                                        <p class="text-danger" style="font-size: 14px; margin-top: 5px;"><?= htmlspecialchars($_SESSION['error_password']) ?></p>
+                                    <?php } ?>
                                 </div>
                                 <div class="single-input-item">
-                                    <input type="password" placeholder="Nhập lại Mật khẩu" name="password_confirmation" required />
+                                    <input type="password" placeholder="Nhập lại Mật khẩu" name="password_confirmation" />
+                                    <?php if (!empty($_SESSION['error_password_confirmation'])) { ?>
+                                        <p class="text-danger" style="font-size: 14px; margin-top: 5px;"><?= htmlspecialchars($_SESSION['error_password_confirmation']) ?></p>
+                                    <?php } ?>
                                 </div>
                                 <div class="single-input-item">
                                     <button class="btn btn-sqr login-btn">ĐĂNG KÝ</button>

@@ -32,7 +32,7 @@
                                         <li><a href="<?= BASE_URL . '?act=login' ?>">Đăng nhập</a></li>
                                     <?php } else {
                                     ?>
-                                        <li><a href="my-account.html">Tài khoản</a></li>
+                                        <li><a href="<?= BASE_URL . '?act=tai-khoan' ?>">Tài khoản</a></li>
                                         <li><a href="<?= BASE_URL . '?act=lich-su-mua-hang' ?>">Đơn hàng</a></li>
                                         <li><a href="<?= BASE_URL . '?act=logout' ?>">Đăng xuất</a></li>
                                     <?php } ?>

@@ -44,5 +44,10 @@ match ($act) {
     'signup' => (new HomeController())->registerLogin(),
     'check-register' => (new HomeController())->postRegister(),
     'tai-khoan' => (new HomeController())->account(), // Đảm bảo dòng này tồn tại
-    'update-profile' => (new HomeController())->updateProfile()
+    'update-profile' => (new HomeController())->updateProfile(),
+    'forgot-password' => (new HomeController())->forgotPassword(),
+    'send-otp-forgot-password' => (new HomeController())->sendOtpForgotPassword(),
+    'reset-password' => (new HomeController())->resetPassword(),
+    'verify-and-reset-password' => (new HomeController())->verifyAndResetPassword(),
+
 };

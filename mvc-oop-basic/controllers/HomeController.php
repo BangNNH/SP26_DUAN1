@@ -304,4 +304,164 @@ class HomeController
         header("Location: " . BASE_URL . '?act=tai-khoan');
         exit();
     }
+    public function forgotPassword()
+    {
+        require_once __DIR__ . '/../views/auth/forgotPassword.php';
+        deleteSessionError();
+    }
+
+    public function sendOtpForgotPassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . BASE_URL);
+            exit();
+        }
+
+        $contact_info = trim($_POST['contact_info'] ?? '');
+        $_SESSION['old_contact'] = $contact_info;
+
+        $errors = [];
+
+        // Validation
+        if (empty($contact_info)) {
+            $errors['contact_info'] = "Email hoặc số điện thoại không được để trống";
+        } elseif (filter_var($contact_info, FILTER_VALIDATE_EMAIL)) {
+            // Nếu là email
+            if (!$this->modelTaiKhoan->checkEmailExists($contact_info)) {
+                $errors['contact_info'] = "Email không tồn tại trong hệ thống";
+            }
+        } else {
+            // Nếu là số điện thoại
+            $user = $this->modelTaiKhoan->getTaiKhoanFromPhone($contact_info);
+            if (!$user) {
+                $errors['contact_info'] = "Số điện thoại không tồn tại trong hệ thống";
+            }
+        }
+
+        if (!empty($errors)) {
+            foreach ($errors as $field => $message) {
+                $_SESSION['error_' . $field] = $message;
+            }
+            header("Location: " . BASE_URL . '?act=forgot-password');
+            exit();
+        }
+
+        try {
+            // Tạo OTP 6 ký tự
+            $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            
+            // Lưu OTP vào session với thời gian hết hạn (5 phút)
+            $_SESSION['otp_code'] = $otp;
+            $_SESSION['otp_contact'] = $contact_info;
+            $_SESSION['otp_time'] = time() + 300; // 5 phút
+
+            // Trong thực tế, bạn sẽ gửi OTP qua email/SMS ở đây
+            // Tạm thời lưu OTP để test
+            // TODO: Gửi OTP qua email hoặc SMS
+            // sendEmailOTP($contact_info, $otp); hoặc sendSMS($contact_info, $otp);
+
+            $_SESSION['success'] = "Mã xác thực đã được gửi. OTP (test): " . $otp;
+            header("Location: " . BASE_URL . '?act=reset-password');
+            exit();
+        } catch (Exception $e) {
+            error_log("Lỗi gửi OTP: " . $e->getMessage());
+            $_SESSION['error'] = "Lỗi hệ thống, vui lòng thử lại";
+            header("Location: " . BASE_URL . '?act=forgot-password');
+            exit();
+        }
+    }
+
+    public function resetPassword()
+    {
+        // Kiểm tra xem OTP đã được tạo chưa
+        if (!isset($_SESSION['otp_code'])) {
+            header("Location: " . BASE_URL . '?act=forgot-password');
+            exit();
+        }
+
+        require_once __DIR__ . '/../views/auth/resetPassword.php';
+        deleteSessionError();
+    }
+
+    public function verifyAndResetPassword()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: " . BASE_URL);
+            exit();
+        }
+
+        // Kiểm tra OTP có tồn tại trong session không
+        if (!isset($_SESSION['otp_code']) || !isset($_SESSION['otp_contact'])) {
+            $_SESSION['error'] = "Phiên làm việc đã hết hạn. Vui lòng thử lại từ đầu.";
+            header("Location: " . BASE_URL . '?act=forgot-password');
+            exit();
+        }
+
+        // Kiểm tra OTP có hết hạn không
+        if (time() > $_SESSION['otp_time']) {
+            unset($_SESSION['otp_code'], $_SESSION['otp_contact'], $_SESSION['otp_time']);
+            $_SESSION['error'] = "Mã xác thực đã hết hạn. Vui lòng thử lại.";
+            header("Location: " . BASE_URL . '?act=forgot-password');
+            exit();
+        }
+
+        $otp_input = trim($_POST['otp_code'] ?? '');
+        $password = trim($_POST['password'] ?? '');
+        $password_confirmation = trim($_POST['password_confirmation'] ?? '');
+
+        $errors = [];
+
+        // Validation
+        if (empty($otp_input)) {
+            $errors['otp_code'] = "Mã xác thực không được để trống";
+        } elseif ($otp_input !== $_SESSION['otp_code']) {
+            $errors['otp_code'] = "Mã xác thực không chính xác";
+        }
+
+        if (empty($password)) {
+            $errors['password'] = "Mật khẩu mới không được để trống";
+        } elseif (strlen($password) < 6) {
+            $errors['password'] = "Mật khẩu phải >= 6 ký tự";
+        }
+
+        if ($password !== $password_confirmation) {
+            $errors['password_confirmation'] = "Mật khẩu nhập lại không khớp";
+        }
+
+        if (!empty($errors)) {
+            foreach ($errors as $field => $message) {
+                $_SESSION['error_' . $field] = $message;
+            }
+            header("Location: " . BASE_URL . '?act=reset-password');
+            exit();
+        }
+
+        try {
+            $contact_info = $_SESSION['otp_contact'];
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            // Cập nhật mật khẩu theo email hoặc số điện thoại
+            $result = false;
+            if (filter_var($contact_info, FILTER_VALIDATE_EMAIL)) {
+                $result = $this->modelTaiKhoan->updatePasswordByEmail($contact_info, $hashedPassword);
+            } else {
+                $result = $this->modelTaiKhoan->updatePasswordByPhone($contact_info, $hashedPassword);
+            }
+
+            if ($result) {
+                // Xóa OTP từ session
+                unset($_SESSION['otp_code'], $_SESSION['otp_contact'], $_SESSION['otp_time'], $_SESSION['old_contact']);
+                $_SESSION['success'] = "Mật khẩu đã được đặt lại thành công. Vui lòng đăng nhập.";
+                header("Location: " . BASE_URL . '?act=login');
+                exit();
+            } else {
+                throw new Exception("Không thể cập nhật mật khẩu");
+            }
+        } catch (Exception $e) {
+            error_log("Lỗi verifyAndResetPassword: " . $e->getMessage());
+            $_SESSION['error'] = "Lỗi hệ thống, vui lòng thử lại";
+            header("Location: " . BASE_URL . '?act=reset-password');
+            exit();
+        }
+    }
 }

@@ -29,10 +29,36 @@
                                     <div class="minicart-content">
                                         <h3><?= $item['ten_san_pham'] ?></h3>
 
-                                        <p>
+                                        <!-- <p>
                                             <?= $item['so_luong'] ?> ×
                                             <?= formatPrice($item['gia_san_pham']) ?>đ
-                                        </p>
+                                        </p> -->
+                                        <div class="product-item-pricing">
+                                            <div class="details-qty">
+                                                <label for="">Số lượng</label>
+                                                <div class="quant">
+                                                    <form action="?act=cap-nhat-gio-hang-session" method="POST" class="quantity-form">
+                                                        <input type="hidden" name="san_pham_id" value="<?= $item['san_pham_id'] ?>">
+                                                        <div class="quantity-control">
+                                                            <button id="btn-subtract-session" type="submit" name="action" value="decrease">−</button>
+                                                            <input type="text" name="so_luong_hien_tai" value="<?= $item['so_luong'] ?>">
+                                                            <button id="btn-plus-session" type="submit" name="action" value="increase">+</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="remove-product-session">
+                                                    <form action="?act=xoa-gio-hang-session" method="POST">
+                                                        <input type="hidden" name="san_pham_id" value="<?= $item['san_pham_id'] ?>">
+                                                        <button id="btn-delete" type="submit" name="submit_delete" value="remove"><i class="fa fa-trash-o"></i></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="product-info-price">
+                                                <label for="">Giá</label>
+                                                <span> <?= formatPrice($item['gia_san_pham']) ?>đ</span>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </li>
 

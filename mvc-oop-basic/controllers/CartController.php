@@ -60,6 +60,7 @@ class CartController
 
     function addToCartSession($san_pham_id, $so_luong)
     {
+        // debug($_SESSION['cart']);
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
@@ -70,6 +71,46 @@ class CartController
             $_SESSION['cart'][$san_pham_id] = [
                 'so_luong' => $so_luong
             ];
+        }
+    }
+
+    public function capNhatGioHangSession()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $san_pham_id = $_POST['san_pham_id'];
+            $action = $_POST['action'];
+
+            if (!isset($_SESSION['cart'][$san_pham_id])) {
+                return;
+            }
+
+            if ($action === 'increase') {
+                $_SESSION['cart'][$san_pham_id]['so_luong']++;
+            }
+
+            if ($action === 'decrease') {
+                $_SESSION['cart'][$san_pham_id]['so_luong']--;
+
+                if ($_SESSION['cart'][$san_pham_id]['so_luong'] <= 0) {
+                    unset($_SESSION['cart'][$san_pham_id]);
+                }
+            }
+            // redirect tránh spam POST
+            header("Location: ?act=gio-hang");
+            exit();
+        }
+    }
+
+    public function xoaGioHangSession()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $san_pham_id = $_POST['san_pham_id'];
+
+            unset($_SESSION['cart'][$san_pham_id]);
+
+            header("Location: ?act=gio-hang");
+            exit();
         }
     }
 

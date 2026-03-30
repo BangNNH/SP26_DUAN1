@@ -312,16 +312,14 @@ class HomeController
 
     public function sendOtpForgotPassword()
 {
-    // Xóa sạch logic kiểm tra Database, Email, OTP...
-    // Chỉ để lại lệnh điều hướng sang trang Reset Password để xem giao diện
+
     header("Location: " . BASE_URL . '?act=reset-password');
     exit();
 }
 
 public function resetPassword()
 {
-    // Bỏ qua việc kiểm tra $_SESSION['otp_code']
-    // Cho phép truy cập thẳng vào file View
+
     require_once __DIR__ . '/../views/auth/resetPassword.php';
 }
 }

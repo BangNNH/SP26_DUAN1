@@ -48,6 +48,5 @@ match ($act) {
     'forgot-password' => (new HomeController())->forgotPassword(),
     'send-otp-forgot-password' => (new HomeController())->sendOtpForgotPassword(),
     'reset-password' => (new HomeController())->resetPassword(),
-    'verify-and-reset-password' => (new HomeController())->verifyAndResetPassword(),
 
 };

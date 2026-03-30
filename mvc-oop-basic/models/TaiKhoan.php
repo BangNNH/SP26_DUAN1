@@ -156,50 +156,17 @@ class TaiKhoan
 
     public function updatePasswordByEmail($email, $newHashedPassword)
     {
-        try {
-            $sql = "UPDATE tai_khoans SET mat_khau = :mat_khau WHERE email = :email";
-            $stmt = $this->conn->prepare($sql);
-            return $stmt->execute(['mat_khau' => $newHashedPassword, 'email' => $email]);
-        } catch (Exception $e) {
-            error_log("Lỗi updatePasswordByEmail: " . $e->getMessage());
-            return false;
-        }
     }
 
     public function updatePasswordByPhone($phone, $newHashedPassword)
     {
-        try {
-            $sql = "UPDATE tai_khoans SET mat_khau = :mat_khau WHERE so_dien_thoai = :so_dien_thoai";
-            $stmt = $this->conn->prepare($sql);
-            return $stmt->execute(['mat_khau' => $newHashedPassword, 'so_dien_thoai' => $phone]);
-        } catch (Exception $e) {
-            error_log("Lỗi updatePasswordByPhone: " . $e->getMessage());
-            return false;
-        }
     }
 
     public function getTaiKhoanFromPhone($phone)
     {
-        try {
-            $sql = "SELECT * FROM tai_khoans WHERE so_dien_thoai = :so_dien_thoai";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['so_dien_thoai' => $phone]);
-            return $stmt->fetch();
-        } catch (Exception $e) {
-            error_log("Lỗi getTaiKhoanFromPhone: " . $e->getMessage());
-            return false;
-        }
     }
     
     public  function getAllUsers()
     {
-        try {
-            $sql = "SELECT * FROM tai_khoans";
-            $stmt = $this->conn->query($sql);
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            error_log("Lỗi getAllUsers: " . $e->getMessage());
-            return false;
-        }
     }   
 }

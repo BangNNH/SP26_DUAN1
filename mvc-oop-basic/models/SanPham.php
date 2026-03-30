@@ -52,12 +52,12 @@ class SanPham
         }
     }
 
-    public function getSanPhamByLoai($type)
+    public function getSanPhamByCategory($cateId)
     {
         try {
-            $sql = "SELECT * FROM san_phams WHERE loai_may = :type";
+            $sql = "SELECT * FROM san_phams WHERE danh_muc_id = :cateId";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':type', $type);
+            $stmt->bindParam(':cateId', $cateId);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {

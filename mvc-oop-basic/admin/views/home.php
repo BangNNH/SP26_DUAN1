@@ -112,19 +112,27 @@
                     </h4>
                 </div>
             </div>
+            <?php
+            $isTang = $phanTramTaiKhoan >= 0;
+            $class = $isTang ? 'bg-red-light' : 'bg-slate-light';
+            $icon = $isTang ? '+' : '';
+            ?>
+
             <div class="col-md-3">
                 <div class="card p-4 stat-card">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="icon-box bg-slate-light">
-                            <span class="material-symbols-outlined">speed</span>
+                            <span class="material-symbols-outlined">person_add</span>
                         </div>
-                        <span class="badge-stat bg-slate-light text-muted">-1.4%</span>
+                        <span class="badge-stat <?= $class ?>">
+                            <?= $icon . round($phanTramTaiKhoan, 1) ?>%
+                        </span>
                     </div>
                     <p class="text-secondary fw-bold text-uppercase mb-1"
                         style="font-size: 10px; letter-spacing: 0.05em">
-                        Conversion Rate
+                        Tài khoản mới
                     </p>
-                    <h4 class="fw-black mb-0">3.42%</h4>
+                    <h4 class="fw-black mb-0"><?= $homNayTaiKhoan ?? 0 ?> tài khoản</h4>
                 </div>
             </div>
         </div>

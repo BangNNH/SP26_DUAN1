@@ -154,4 +154,17 @@ class AdminBaoCaoThongKe
 
         return $this->conn->query($sql)->fetchAll();
     }
+    public function getTaiKhoanMoiHomNayVaHomQua()
+    {
+        $sql = "
+        SELECT 
+            DATE(ngay_dang_ky) as ngay,
+            COUNT(*) as tong_tai_khoan_moi
+        FROM tai_khoans
+        WHERE DATE(ngay_dang_ky) IN (CURDATE(), CURDATE() - INTERVAL 1 DAY)
+        GROUP BY DATE(ngay_dang_ky)
+    ";
+
+        return $this->conn->query($sql)->fetchAll();
+    }
 }

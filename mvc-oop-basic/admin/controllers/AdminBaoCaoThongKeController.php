@@ -111,6 +111,25 @@ class AdminBaoCaoThongKeController
         $data7Ngay = $this->modelBaoCaoThongKe->getDoanhThuTuan();
         $data12Thang = $this->modelBaoCaoThongKe->getDoanhThu12Thang();
 
+        // tính toán lượng tài khoản đăng ký mới theo ngày
+        $dataTaiKhoanMoi = $this->modelBaoCaoThongKe->getTaiKhoanMoiHomNayVaHomQua();
+
+        $homNayTaiKhoan = 0;
+        $homQuaTaiKhoan = 0;
+
+        foreach ($dataTaiKhoanMoi as $item) {
+            if ($item['ngay'] == date('Y-m-d')) {
+                $homNayTaiKhoan = $item['tong_tai_khoan_moi'];
+            } else {
+                $homQuaTaiKhoan = $item['tong_tai_khoan_moi'];
+            }
+        }
+        // tính % tài khoản mới
+        $phanTramTaiKhoan = 0;
+        if ($homQuaTaiKhoan > 0) {
+            $phanTramTaiKhoan = (($homNayTaiKhoan - $homQuaTaiKhoan) / $homQuaTaiKhoan) * 100;
+        }
+
         require_once './views/home.php';
     }
 }

@@ -193,4 +193,133 @@ class HomeController
             exit();
         }
     }
+    public function account()
+    {
+        if (!isset($_SESSION['user_client'])) {
+            header("Location: " . BASE_URL . '?act=login');
+            exit();
+        }
+
+        $userId = $_SESSION['user_client']['id'];
+        $user = $this->modelTaiKhoan->getUserById($userId);
+
+        if (!$user) {
+            // Nếu không tìm thấy người dùng, xóa session và chuyển hướng về trang đăng nhập
+            unset($_SESSION['user_client']);
+            $_SESSION['error'] = "Tài khoản không tồn tại hoặc đã bị xóa.";
+            header("Location: " . BASE_URL . '?act=login');
+            exit();
+        }
+        require_once __DIR__ . '/../views/auth/acount.php';
+    }
+    public function updateProfile()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user_client'])) {
+            header("Location: " . BASE_URL);
+            exit();
+        }
+
+        $userId = $_SESSION['user_client']['id'];
+        $name = trim($_POST['name'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $oldPassword = trim($_POST['old_password'] ?? '');
+        $newPassword = trim($_POST['new_password'] ?? '');
+
+        $errors = [];
+        $passwordToUpdate = null; // Biến này sẽ chứa mật khẩu mới đã được băm nếu có thay đổi
+
+        // Lấy thông tin người dùng hiện tại để xác minh mật khẩu cũ (nếu người dùng muốn đổi mật khẩu)
+        $currentUser = $this->modelTaiKhoan->getUserById($userId);
+        if (!$currentUser) {
+            $_SESSION['error'] = "Không tìm thấy thông tin người dùng.";
+            header("Location: " . BASE_URL . '?act=tai-khoan');
+            exit();
+        }
+
+        // Xử lý thay đổi mật khẩu
+        if (!empty($oldPassword) || !empty($newPassword)) {
+            // Xác thực mật khẩu hiện tại
+            if (empty($oldPassword)) {
+                $errors['old_password'] = "Vui lòng nhập mật khẩu hiện tại.";
+            } elseif (!password_verify($oldPassword, $currentUser['mat_khau'])) {
+                $errors['old_password'] = "Mật khẩu hiện tại không đúng.";
+            }
+
+            // Xác thực mật khẩu mới
+            if (empty($newPassword)) {
+                $errors['new_password'] = "Vui lòng nhập mật khẩu mới.";
+            } elseif (strlen($newPassword) < 6) {
+                $errors['new_password'] = "Mật khẩu mới phải có ít nhất 6 ký tự.";
+            }
+
+            // Nếu không có lỗi liên quan đến mật khẩu, băm mật khẩu mới
+            if (empty($errors)) {
+                $passwordToUpdate = password_hash($newPassword, PASSWORD_BCRYPT);
+            }
+        }
+
+        // Nếu có bất kỳ lỗi nào, lưu vào session và chuyển hướng
+        if (!empty($errors)) {
+            $_SESSION['error'] = implode("<br>", $errors); // Gộp các lỗi để hiển thị
+            header("Location: " . BASE_URL . '?act=tai-khoan');
+            exit();
+        }
+
+        try {
+            // Xử lý upload ảnh đại diện
+            $avatarPath = $currentUser['anh_dai_dien'] ?? '';
+            if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = './uploads/avatars/';
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+
+                $uploaded = uploadFile($_FILES['avatar'], $uploadDir);
+                if ($uploaded) {
+                    // Xóa ảnh cũ nếu khác rỗng
+                    if (!empty($currentUser['anh_dai_dien']) && file_exists(PATH_ROOT . $currentUser['anh_dai_dien'])) {
+                        deleteFile($currentUser['anh_dai_dien']);
+                    }
+                    $avatarPath = $uploaded;
+                } else {
+                    $_SESSION['error'] = "Không thể upload ảnh đại diện.";
+                    header("Location: " . BASE_URL . '?act=tai-khoan');
+                    exit();
+                }
+            }
+
+            $result = $this->modelTaiKhoan->updateProfile($userId, $name, $phone, $address, $avatarPath, $passwordToUpdate);
+
+            if ($result === true) {
+                $_SESSION['success'] = "Cập nhật thông tin thành công";
+            } else {
+                $_SESSION['error'] = "Lỗi cập nhật thông tin.";
+            }
+        } catch (Exception $e) {
+            error_log("Lỗi cập nhật thông tin: " . $e->getMessage());
+            $_SESSION['error'] = "Lỗi cập nhật thông tin: " . $e->getMessage(); // Hiển thị lỗi cụ thể hơn để debug
+        }
+
+        header("Location: " . BASE_URL . '?act=tai-khoan');
+        exit();
+    }
+    public function forgotPassword()
+    {
+        require_once __DIR__ . '/../views/auth/forgotPassword.php';
+        deleteSessionError();
+    }
+
+    public function sendOtpForgotPassword()
+{
+
+    header("Location: " . BASE_URL . '?act=reset-password');
+    exit();
+}
+
+public function resetPassword()
+{
+
+    require_once __DIR__ . '/../views/auth/resetPassword.php';
+}
 }

@@ -124,11 +124,8 @@ function getCartFromSession()
 {
     $cart = $_SESSION['cart'] ?? [];
     $result = [];
-
     foreach ($cart as $id => $item) {
-
         $sp = getProductById($id);
-
         if ($sp) {
             $result[] = [
                 'san_pham_id' => $id,
@@ -141,7 +138,6 @@ function getCartFromSession()
             ];
         }
     }
-
     return $result;
 }
 

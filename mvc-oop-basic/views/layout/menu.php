@@ -55,7 +55,7 @@
                                     <!--Chưa login -->
                                     <a href="#" class="minicart-btn">
                                         <i class="pe-7s-shopbag"></i>
-                                        <div class="notification"><?= $soLuongCart ?? 0 ?></div>
+                                        <div class="notification" id="cart-count"><?= $_SESSION['tong_so_luong'] ?></div>
                                     </a>
                                 <?php endif; ?>
                             </li>

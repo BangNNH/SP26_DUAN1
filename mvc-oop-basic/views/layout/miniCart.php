@@ -64,14 +64,17 @@
                                         <span id="thanh-toan"><?= isset($_SESSION['thanhToan']) ? $_SESSION['thanhToan'] : 0  ?></span>
                                     </li>
                                 </ul>
+                                <div class="minicart-button">
+                                    <a href="<?= BASE_URL . '?act=thanh-toan' ?>"><i class="fa fa-shopping-cart"></i> Thanh toán</a>
+                                    <a href="<?= BASE_URL . '?act=/' ?>"><i class="fa fa-share"></i>Tiếp tục mua sắm</a>
+                                </div>
+                            </div>
+                            <div id="empty-cart" style="display: none;">
+                                Không có sản phẩm nào trong giỏ hàng của bạn
                             </div>
 
-                            <div class="minicart-button">
-                                <a href="<?= BASE_URL . '?act=thanh-toan' ?>"><i class="fa fa-shopping-cart"></i> Thanh toán</a>
-                                <a href="<?= BASE_URL . '?act=/' ?>"><i class="fa fa-share"></i>Tiếp tục mua sắm</a>
-                            </div>
                         <?php else: ?>
-                            <div id="empty-cart" style="display: block;">
+                            <div style="display: block;">
                                 Không có sản phẩm nào trong giỏ hàng của bạn
                             </div>
                         <?php endif; ?>

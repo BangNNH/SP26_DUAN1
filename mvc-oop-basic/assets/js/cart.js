@@ -63,7 +63,11 @@ function updateCartUI(id, data) {
         emptyBox.style.display = "none";
         summaryBox.style.display = "block";
     }
+
+    document.querySelector("#cart-count").innerText = data.totalQuantity;
+    console.log(data.totalQuantity);
+
 }
-// document.querySelector("#cart-count").innerText = Object.keys(data.cart || {}).length;
+
 // e.target.disabled = true;
 // setTimeout(() => e.target.disabled = false, 300);

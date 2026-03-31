@@ -66,7 +66,7 @@ class CartController
         }
 
         if (isset($_SESSION['cart'][$san_pham_id])) {
-            $_SESSION['cart'][$san_pham_id]['so_luong'] += $so_luong;
+            $_SESSION['cart'][$san_pham_id]['so_luong'] += 1;
         } else {
             $_SESSION['cart'][$san_pham_id] = [
                 'so_luong' => $so_luong
@@ -90,10 +90,21 @@ class CartController
         $_SESSION['tamTinh'] = $tamTinh;
         $_SESSION['giamGia'] = $giamGia;
         $_SESSION['thanhToan'] = $tamTinh - $giamGia;
+        $totalQuantity = 0;
+
+        if (!empty($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item) {
+                if (!is_array($item)) continue;
+                $totalQuantity += $item['so_luong'];
+            }
+        }
+        $_SESSION['tong_so_luong'] = $totalQuantity;
+
         return [
             'tamTinh' =>  $tamTinh,
             'giamGia' => $giamGia,
-            'thanhToan' => $tamTinh - $giamGia
+            'thanhToan' => $tamTinh - $giamGia,
+            'totalQuantity' => $totalQuantity
         ];
     }
 
@@ -137,7 +148,8 @@ class CartController
             'tamTinh' => $result['tamTinh'],
             'giamGia' => $result['giamGia'],
             'thanhToan' => $result['thanhToan'],
-            'isEmpty' => $isEmpty
+            'isEmpty' => $isEmpty,
+            'totalQuantity' => $result['totalQuantity']
         ]);
         exit;
     }

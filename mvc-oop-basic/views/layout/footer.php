@@ -141,6 +141,7 @@
                 .classList.add('active');
         }
     </script> -->
+    <script src="assets/js/cart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
@@ -149,7 +150,6 @@
                 if (btn) btn.click();
             <?php unset($_SESSION['openCart']);
             endif; ?>
-
         });
     </script>
     <!-- Modernizer JS -->

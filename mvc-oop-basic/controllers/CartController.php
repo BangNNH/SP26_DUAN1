@@ -72,48 +72,75 @@ class CartController
                 'so_luong' => $so_luong
             ];
         }
+        $cart = getCartFromSession();
+        $this->calculateCartSession($cart);
     }
 
-    public function capNhatGioHangSession()
+    public function calculateCartSession($cart)
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $tamTinh = 0;
+        $giamGia = 0;
 
-            $san_pham_id = $_POST['san_pham_id'];
-            $action = $_POST['action'];
-
-            if (!isset($_SESSION['cart'][$san_pham_id])) {
-                return;
+        if (!empty($cart)) {
+            foreach ($cart as $item) {
+                $tamTinh += $item['gia_san_pham'] * $item['so_luong'];
+                $giamGia += ($item['gia_san_pham'] - $item['gia_khuyen_mai']) * $item['so_luong'];
             }
-
-            if ($action === 'increase') {
-                $_SESSION['cart'][$san_pham_id]['so_luong']++;
-            }
-
-            if ($action === 'decrease') {
-                $_SESSION['cart'][$san_pham_id]['so_luong']--;
-
-                if ($_SESSION['cart'][$san_pham_id]['so_luong'] <= 0) {
-                    unset($_SESSION['cart'][$san_pham_id]);
-                }
-            }
-            // redirect tránh spam POST
-            header("Location: ?act=gio-hang");
-            exit();
         }
+        $_SESSION['tamTinh'] = $tamTinh;
+        $_SESSION['giamGia'] = $giamGia;
+        $_SESSION['thanhToan'] = $tamTinh - $giamGia;
+        return [
+            'tamTinh' =>  $tamTinh,
+            'giamGia' => $giamGia,
+            'thanhToan' => $tamTinh - $giamGia
+        ];
     }
 
-    public function xoaGioHangSession()
+    public function ajaxCartSession()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $san_pham_id = $_POST['san_pham_id'];
+        header('Content-Type: application/json');
 
-            unset($_SESSION['cart'][$san_pham_id]);
+        $data = json_decode(file_get_contents("php://input"), true);
 
-            header("Location: ?act=gio-hang");
-            exit();
+        $id = $data['san_pham_id'];
+        $action = $data['action'];
+
+        if (!isset($_SESSION['cart'][$id])) {
+            echo json_encode(['success' => false]);
+            exit;
         }
-    }
 
+        if ($action === 'increase') {
+            $_SESSION['cart'][$id]['so_luong']++;
+        }
+
+        if ($action === 'decrease') {
+            $_SESSION['cart'][$id]['so_luong']--;
+            if ($_SESSION['cart'][$id]['so_luong'] <= 0) {
+                unset($_SESSION['cart'][$id]);
+            }
+        }
+
+        if ($action === 'delete') {
+            unset($_SESSION['cart'][$id]);
+        }
+
+        $cart = getCartFromSession();
+        $result = $this->calculateCartSession($cart);
+        $isEmpty = empty($cart);
+
+        echo json_encode([
+            'success' => true,
+            'id' => $id,
+            'so_luong' => $_SESSION['cart'][$id]['so_luong'] ?? 0,
+            'tamTinh' => $result['tamTinh'],
+            'giamGia' => $result['giamGia'],
+            'thanhToan' => $result['thanhToan'],
+            'isEmpty' => $isEmpty
+        ]);
+        exit;
+    }
 
     public function gioHang()
     {

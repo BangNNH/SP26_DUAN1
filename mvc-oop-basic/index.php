@@ -36,6 +36,8 @@ match ($act) {
     'chi-tiet-mua-hang' => (new OrderController())->chiTietMuaHang(),
     'huy-don-hang' => (new OrderController())->huyDonHang(),
     'san-pham' => (new ProductController())->index(),
+    'ajax-cart-session' => (new CartController())->ajaxCartSession(),
+    // 'ajax-full-cart-session' => (new CartController())->ajaxGetFullCartSession(),
 
     // Auth
     'login' => (new HomeController())->formLogin(),

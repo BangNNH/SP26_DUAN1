@@ -60,19 +60,99 @@ class CartController
 
     function addToCartSession($san_pham_id, $so_luong)
     {
+        // debug($_SESSION['cart']);
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
 
         if (isset($_SESSION['cart'][$san_pham_id])) {
-            $_SESSION['cart'][$san_pham_id]['so_luong'] += $so_luong;
+            $_SESSION['cart'][$san_pham_id]['so_luong'] += 1;
         } else {
             $_SESSION['cart'][$san_pham_id] = [
                 'so_luong' => $so_luong
             ];
         }
+        $cart = getCartFromSession();
+        $this->calculateCartSession($cart);
     }
 
+    public function calculateCartSession($cart)
+    {
+        $tamTinh = 0;
+        $giamGia = 0;
+
+        if (!empty($cart)) {
+            foreach ($cart as $item) {
+                $tamTinh += $item['gia_san_pham'] * $item['so_luong'];
+                $giamGia += ($item['gia_san_pham'] - $item['gia_khuyen_mai']) * $item['so_luong'];
+            }
+        }
+        $_SESSION['tamTinh'] = $tamTinh;
+        $_SESSION['giamGia'] = $giamGia;
+        $_SESSION['thanhToan'] = $tamTinh - $giamGia;
+        $totalQuantity = 0;
+
+        if (!empty($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item) {
+                if (!is_array($item)) continue;
+                $totalQuantity += $item['so_luong'];
+            }
+        }
+        $_SESSION['tong_so_luong'] = $totalQuantity;
+
+        return [
+            'tamTinh' =>  $tamTinh,
+            'giamGia' => $giamGia,
+            'thanhToan' => $tamTinh - $giamGia,
+            'totalQuantity' => $totalQuantity
+        ];
+    }
+
+    public function ajaxCartSession()
+    {
+        header('Content-Type: application/json');
+
+        $data = json_decode(file_get_contents("php://input"), true);
+
+        $id = $data['san_pham_id'];
+        $action = $data['action'];
+
+        if (!isset($_SESSION['cart'][$id])) {
+            echo json_encode(['success' => false]);
+            exit;
+        }
+
+        if ($action === 'increase') {
+            $_SESSION['cart'][$id]['so_luong']++;
+        }
+
+        if ($action === 'decrease') {
+            $_SESSION['cart'][$id]['so_luong']--;
+            if ($_SESSION['cart'][$id]['so_luong'] <= 0) {
+                unset($_SESSION['cart'][$id]);
+            }
+        }
+
+        if ($action === 'delete') {
+            unset($_SESSION['cart'][$id]);
+        }
+
+        $cart = getCartFromSession();
+        $result = $this->calculateCartSession($cart);
+        $isEmpty = empty($cart);
+
+        echo json_encode([
+            'success' => true,
+            'id' => $id,
+            'so_luong' => $_SESSION['cart'][$id]['so_luong'] ?? 0,
+            'tamTinh' => $result['tamTinh'],
+            'giamGia' => $result['giamGia'],
+            'thanhToan' => $result['thanhToan'],
+            'isEmpty' => $isEmpty,
+            'totalQuantity' => $result['totalQuantity']
+        ]);
+        exit;
+    }
 
     public function gioHang()
     {

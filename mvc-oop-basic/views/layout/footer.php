@@ -13,7 +13,7 @@
 
     <!-- footer area start -->
     <footer class="footer-widget-area">
-        <div class="footer-top section-padding">
+        <div class="footer-top section-padding" style="padding: 60px 0;">
             <div class="container">
                 <div class="row">
 
@@ -23,7 +23,7 @@
                             <div class="widget-title">
                                 <div class="widget-logo">
                                     <a href="<?= BASE_URL ?>">
-                                        <img src="<?= BASE_ASSETS_IMG . 'logo/sub-logo1.png' ?>" alt="Brand Logo">
+                                        <img src="<?= BASE_ASSETS_IMG . 'logo/main-logo2-removebg.png' ?>" alt="Brand Logo">
                                     </a>
                                 </div>
                             </div>
@@ -40,9 +40,9 @@
                             <div class="widget-body">
                                 <address class="contact-block">
                                     <ul>
-                                        <li><i class="pe-7s-home"></i> 123 Đường ABC, Hà Nội</li>
-                                        <li><i class="pe-7s-mail"></i> <a href="mailto:shopthucung@gmail.com">shopthucung@gmail.com</a></li>
-                                        <li><i class="pe-7s-call"></i> <a href="tel:0123456789">0123 456 789</a></li>
+                                        <li><i class="pe-7s-home"></i> 181 Xuân Thủy - Cầu Giấy - Hà Nội</li>
+                                        <li><i class="pe-7s-mail"></i> <a href="mailto:watchhub@gmail.com">watchhub@gmail.com</a></li>
+                                        <li><i class="pe-7s-call"></i> <a href="tel:0978665665">0978 665 665</a></li>
                                     </ul>
                                 </address>
                             </div>
@@ -110,18 +110,6 @@
             </div>
         </div>
 
-        <!-- Footer bottom -->
-        <!-- <div class="footer-bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="copyright-text text-center">
-                        <p>&copy; 2026 <b>Shop Thú Cưng</b> 🐶🐱</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
         <div class="footer-copyright" bis_skin_checked="1">
             <p>© All rights reserved - Bản quyền thuộc về Công ty TNHH Phân phối đồng hồ cao cấp
                 <strong> WATCH HUB</strong>
@@ -133,14 +121,6 @@
 
     <!-- JS
 ============================================ -->
-    <!-- <script>
-        const params = new URLSearchParams(window.location.search);
-
-        if (params.get('openCart') === '1') {
-            document.querySelector('.offcanvas-minicart-wrapper')
-                .classList.add('active');
-        }
-    </script> -->
     <script src="assets/js/cart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

@@ -11,7 +11,7 @@
                         <nav aria-label="breadcrumb">
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="<?= BASE_URL ?>"><i class="fa fa-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="<?= BASE_URL . '?act=gio-hang' ?>">Giỏ hàng</a></li>
+                                <li class="breadcrumb-item"><a href="<?= isset($_SESSION['user_client']) ? '?act=gio-hang' : '?act=login' ?>">Giỏ hàng</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Thanh toán</li>
                             </ul>
                         </nav>

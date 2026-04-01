@@ -106,6 +106,12 @@ class HomeController
                     'id' => $user['id'],
                     'email' => $user['email']
                 ];
+
+                // merge cart from session
+                require_once './services/CartService.php';
+                $cartService = new CartService();
+                $cartService->mergeCartAfterLogin($user['id']);
+
                 $_SESSION['login_success'] = "Đăng nhập thành công";
                 header("Location: " . BASE_URL);
                 exit();
@@ -311,15 +317,15 @@ class HomeController
     }
 
     public function sendOtpForgotPassword()
-{
+    {
 
-    header("Location: " . BASE_URL . '?act=reset-password');
-    exit();
-}
+        header("Location: " . BASE_URL . '?act=reset-password');
+        exit();
+    }
 
-public function resetPassword()
-{
+    public function resetPassword()
+    {
 
-    require_once __DIR__ . '/../views/auth/resetPassword.php';
-}
+        require_once __DIR__ . '/../views/auth/resetPassword.php';
+    }
 }

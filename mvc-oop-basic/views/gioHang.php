@@ -11,8 +11,8 @@
                     <div class="breadcrumb-wrap">
                         <nav aria-label="breadcrumb">
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i class="fa fa-home"></i></a></li>
-                                <li class="breadcrumb-item"><a href="shop.html">Danh sách sản phẩm</a></li>
+                                <li class="breadcrumb-item"><a href="?act=/"><i class="fa fa-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="?act=san-pham">Danh sách sản phẩm</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
                             </ul>
                         </nav>
@@ -24,7 +24,7 @@
     <!-- breadcrumb area end -->
 
     <!-- cart main wrapper start -->
-    <div class="cart-main-wrapper section-padding pt-2">
+    <div class="cart-main-wrapper section-padding pt-4">
         <div class="container">
             <div class="section-bg-color">
                 <div class="row">

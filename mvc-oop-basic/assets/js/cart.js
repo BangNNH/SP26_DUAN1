@@ -49,9 +49,13 @@ function updateCartUI(id, data) {
         if (item) item.remove();
     }
 
-    document.querySelector("#tam-tinh").innerText = data.tamTinh;
-    document.querySelector("#giam-gia").innerText = data.giamGia;
-    document.querySelector("#thanh-toan").innerText = data.thanhToan;
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN').format(price) + ' đ';
+    }
+
+    document.querySelector("#tam-tinh").innerText = formatPrice(data.tamTinh);
+    document.querySelector("#giam-gia").innerText = formatPrice(data.giamGia);
+    document.querySelector("#thanh-toan").innerText = formatPrice(data.thanhToan);
 
     const emptyBox = document.querySelector("#empty-cart");
     const summaryBox = document.querySelector("#cart-summary");

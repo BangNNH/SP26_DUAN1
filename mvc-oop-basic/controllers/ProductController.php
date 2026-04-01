@@ -40,7 +40,7 @@ class ProductController
         // Lấy danh sách các loại sản phẩm duy nhất từ database để hiển thị filter
         $productTypes = $this->modelSanPham->getProductTypes();
 
-        $listSanPham = $this->modelSanPham->getAllSanPham();
+        // $listSanPham = $this->modelSanPham->getAllSanPham();
         function calcDiscountPercent($originalPrice, $salePrice)
         {
             if ($originalPrice <= 0 || $salePrice >= $originalPrice) {

@@ -53,15 +53,15 @@
                                 <ul>
                                     <li>
                                         <span>Tạm tính</span>
-                                        <span id="tam-tinh"><?= isset($_SESSION['tamTinh']) ? $_SESSION['tamTinh'] : 0  ?></span>
+                                        <span id="tam-tinh"><?= isset($_SESSION['tamTinh']) ? formatPrice($_SESSION['tamTinh']) : 0  ?>đ</span>
                                     </li>
                                     <li>
                                         <span>Giảm giá</span>
-                                        <span id="giam-gia"><?= isset($_SESSION['giamGia']) ? $_SESSION['giamGia'] : 0  ?></span>
+                                        <span id="giam-gia"><?= isset($_SESSION['giamGia']) ? formatPrice($_SESSION['giamGia']) : 0  ?>đ</span>
                                     </li>
                                     <li class="total" style="font-weight: bold;">
                                         <span>Tổng thanh toán</span>
-                                        <span id="thanh-toan"><?= isset($_SESSION['thanhToan']) ? $_SESSION['thanhToan'] : 0  ?></span>
+                                        <span id="thanh-toan"><?= isset($_SESSION['thanhToan']) ? formatPrice($_SESSION['thanhToan']) : 0  ?>đ</span>
                                     </li>
                                 </ul>
                                 <div class="minicart-button">
@@ -69,13 +69,13 @@
                                     <a href="<?= BASE_URL . '?act=/' ?>"><i class="fa fa-share"></i>Tiếp tục mua sắm</a>
                                 </div>
                             </div>
-                            <div id="empty-cart" style="display: none;">
-                                Không có sản phẩm nào trong giỏ hàng của bạn
+                            <div class="empty-cart" id="empty-cart" style="display: none;">
+                                <span class="empty-cart-title">Không có sản phẩm nào trong giỏ hàng của bạn</span>
                             </div>
 
                         <?php else: ?>
-                            <div style="display: block;">
-                                Không có sản phẩm nào trong giỏ hàng của bạn
+                            <div class="empty-cart" style="display: block;">
+                                <span class="empty-cart-title">Không có sản phẩm nào trong giỏ hàng của bạn</span>
                             </div>
                         <?php endif; ?>
                     </ul>

@@ -233,7 +233,9 @@
   }
 
   function renderTopProducts(products) {
-    const container = document.querySelector(".top-products-container");
+    const container = document.querySelector(
+      "#filteredDashboard .top-products-container",
+    );
     if (!container) return;
 
     container.innerHTML = "";
@@ -279,18 +281,36 @@
   function renderTopUsers(users) {
     const container = document.querySelector(".user-list");
     if (!container) return;
+
     container.innerHTML = "";
 
     users.forEach((user) => {
-      container.innerHTML +=
-        '<div class="user-item d-flex justify-content-between">' +
-        "<span>" +
-        (user.ho_ten || "") +
-        "</span>" +
-        "<span>" +
-        Number(user.total_spent || 0).toLocaleString() +
-        "đ</span>" +
-        "</div>";
+      const avatar = user.avatar
+        ? user.avatar
+        : "https://i.imgur.com/6VBx3io.png";
+
+      container.innerHTML += `
+      <div class="user-item d-flex justify-content-between align-items-center py-2">
+        
+        <div class="d-flex align-items-center gap-3">
+          <!-- AVATAR -->
+          <img src="${avatar}" 
+               style="width:40px;height:40px;border-radius:50%;object-fit:cover">
+          
+          <!-- INFO -->
+          <div>
+            <div class="fw-bold">${user.ho_ten || "Khách"}</div>
+            <small class="text-muted">${user.total_orders || 0} đơn</small>
+          </div>
+        </div>
+
+        <!-- MONEY -->
+        <div class="fw-bold text-danger">
+          ${Number(user.total_spent || 0).toLocaleString()}đ
+        </div>
+
+      </div>
+    `;
     });
   }
 
@@ -318,7 +338,22 @@
 
     // Reset body
     document.body.classList.remove("modal-open");
-    document.body.removeAttribute("style"); // ✅ xóa toàn bộ inline style của body
+    document.body.removeAttribute("style");
   }
+  todayBtn.addEventListener("click", function () {
+    const today = new Date();
+
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
+
+    document.getElementById("dateFrom").value = formattedDate;
+    document.getElementById("dateTo").value = formattedDate;
+
+    // 🔥 TỰ ĐỘNG CLICK LỌC
+    document.getElementById("filterBtn").click();
+  });
   loadChart("day");
 });

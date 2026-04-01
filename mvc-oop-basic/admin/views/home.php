@@ -303,39 +303,47 @@
                     </div>
 
                     <div class="vstack gap-4 top-products-container">
+
                         <?php foreach ($topProducts as $item):
                             $percentQty = $maxQuantity > 0 ? ($item['total_quantity'] / $maxQuantity) * 100 : 0;
                             $percentRevenue = $maxRevenue > 0 ? ($item['total_revenue'] / $maxRevenue) * 100 : 0;
                             ?>
-                            <div class="row align-items-center">
-                                <div class="col-md-2">
+
+                            <div class="product-item d-flex align-items-center gap-4">
+
+                                <!-- LEFT -->
+                                <div class="product-info">
                                     <div class="fw-bold small">
                                         <?= $item['ten_san_pham'] ?>
                                     </div>
-                                    <div class="text-muted">
+                                    <div class="text-muted small">
                                         <?= $item['ten_danh_muc'] ?? 'N/A' ?>
                                     </div>
                                 </div>
 
-                                <div class="col-md-10">
+                                <!-- RIGHT -->
+                                <div class="flex-grow-1">
 
                                     <!-- SỐ LƯỢNG -->
-                                    <div class="progress-stack position-relative group">
-                                        <div style="width: <?= $percentQty ?>%; height: 100%; background: #b70011; border-radius: 100px;"
-                                            title="Số lượng: <?= $item['total_quantity'] ?>">
+                                    <div class="progress-stack">
+                                        <div class="progress-bar-qty" style="width: <?= $percentQty ?>%"
+                                            title="<?= $item['total_quantity'] ?>">
                                         </div>
                                     </div>
 
                                     <!-- DOANH THU -->
-                                    <div class="progress-sub position-relative group">
-                                        <div style="width: <?= $percentRevenue ?>%; height: 100%; background: #ffdad6; border-radius: 100px;"
-                                            title="Doanh thu: <?= number_format($item['total_revenue']) ?> đ">
+                                    <div class=" progress-sub mt-2">
+                                        <div class="progress-bar-revenue" style="width: <?= $percentRevenue ?>%"
+                                            title="<?= number_format($item['total_revenue']) ?>đ">
                                         </div>
                                     </div>
 
                                 </div>
+
                             </div>
+
                         <?php endforeach; ?>
+
                     </div>
 
                 </div>
@@ -409,20 +417,20 @@
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <div>
                             <h3 class="h4 fw-bold text-dark">
-                                Top 3 Best Selling Products
+                                Top sản phẩm bán chạy nhất
                             </h3>
                             <p class="small text-muted mb-0">
-                                Performance leader comparison
+                                Sản phẩm có số lượng bán ra cao nhất trong khoảng thời gian đã chọn
                             </p>
                         </div>
                         <div class="d-flex gap-3">
                             <div class="d-flex align-items-center gap-2">
                                 <div class="bg-danger rounded-1" style="width: 12px; height: 12px"></div>
-                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Units Sold</span>
+                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Sản phẩm</span>
                             </div>
                             <div class="d-flex align-items-center gap-2">
                                 <div class="bg-danger-subtle rounded-1" style="width: 12px; height: 12px"></div>
-                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Revenue</span>
+                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Doanh thu</span>
                             </div>
                         </div>
                     </div>
@@ -459,7 +467,7 @@
             <div class="col-lg-5">
                 <div class="custom-card h-100">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h3 class="h5 fw-bold text-dark">Top 5 Most Active Users</h3>
+                        <h3 class="h5 fw-bold text-dark">Top 5 khách hàng chi tiêu nhiều nhất</h3>
                         <button class="btn btn-link text-muted p-0">
                             <span class="material-symbols-outlined">more_horiz</span>
                         </button>
@@ -468,9 +476,9 @@
                         <?php foreach ($topUsers as $user): ?>
                             <div class="user-item">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img class="avatar" src="https://i.pravatar.cc/40" />
+                                    <img class="avatar" src="<?= BASE_URL_ADMIN ?>assets/images/users/user-1.jpg" />
                                     <div>
-                                        <p class="mb-0 fw-bold small text-dark">
+                                        <p class=" mb-0 fw-bold small text-dark">
                                             <?= $user['ho_ten'] ?>
                                         </p>
                                     </div>

@@ -378,6 +378,7 @@ main {
   width: 24px;
   border-radius: 2px 2px 0 0;
   transition: opacity 0.2s;
+  position: relative;
 }
 
 .bar-revenue {
@@ -385,6 +386,7 @@ main {
   width: 24px;
   border-radius: 2px 2px 0 0;
   transition: opacity 0.2s;
+  position: relative;
 }
 
 .bar-value {
@@ -393,7 +395,12 @@ main {
   position: absolute;
   top: -20px;
 }
-
+.top-products-container {
+  height: 320px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+}
 /* User List */
 .user-item {
   display: flex;
@@ -440,4 +447,37 @@ main {
   transform: translateY(-50%);
   color: #727783;
   font-size: 1.25rem;
+}
+/* ITEM */
+.product-item {
+  width: 100%;
+}
+
+/* LEFT */
+.product-info {
+  width: 200px;
+  flex-shrink: 0;
+}
+
+/* BAR CHA */
+.progress-stack,
+.progress-sub {
+  width: 100%;
+  height: 16px;
+  background: #f1f1f1;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+/* BAR CON */
+.progress-bar-qty {
+  height: 100%;
+  background: #b70011;
+  border-radius: 100px;
+}
+
+.progress-bar-revenue {
+  height: 100%;
+  background: #ffdad6;
+  border-radius: 100px;
 }

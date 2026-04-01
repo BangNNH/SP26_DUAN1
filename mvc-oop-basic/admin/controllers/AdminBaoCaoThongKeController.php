@@ -156,6 +156,7 @@ class AdminBaoCaoThongKeController
             'top_users' => $topUsers,
         ];
 
+
         header('Content-Type: application/json');
         echo json_encode($result);
         exit;

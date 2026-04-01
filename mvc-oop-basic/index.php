@@ -9,6 +9,7 @@ require_once './commons/function.php'; // Hàm hỗ trợ
 require_once './controllers/HomeController.php';
 require_once './controllers/CartController.php';
 require_once './controllers/OrderController.php';
+require_once './controllers/ProductController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -34,7 +35,9 @@ match ($act) {
     'lich-su-mua-hang' => (new OrderController())->lichSuMuaHang(),
     'chi-tiet-mua-hang' => (new OrderController())->chiTietMuaHang(),
     'huy-don-hang' => (new OrderController())->huyDonHang(),
-
+    'san-pham' => (new ProductController())->index(),
+    'ajax-cart-session' => (new CartController())->ajaxCartSession(),
+    // 'ajax-full-cart-session' => (new CartController())->ajaxGetFullCartSession(),
 
     // Auth
     'login' => (new HomeController())->formLogin(),
@@ -42,4 +45,10 @@ match ($act) {
     'logout' => (new HomeController())->logout(),
     'signup' => (new HomeController())->registerLogin(),
     'check-register' => (new HomeController())->postRegister(),
+    'tai-khoan' => (new HomeController())->account(), // Đảm bảo dòng này tồn tại
+    'update-profile' => (new HomeController())->updateProfile(),
+    'forgot-password' => (new HomeController())->forgotPassword(),
+    'send-otp-forgot-password' => (new HomeController())->sendOtpForgotPassword(),
+    'reset-password' => (new HomeController())->resetPassword(),
+
 };

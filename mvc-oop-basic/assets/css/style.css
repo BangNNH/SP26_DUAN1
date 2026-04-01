@@ -457,8 +457,8 @@ only screen and (max-width: 767.98px) {
 }
 
 .slick-dot-style ul.slick-dots li.slick-active button {
-  border-color: #c29958;
-  background-color: #c29958;
+  border-color: #921817;
+    background-color: #921817;
 }
 
 .slick-row-3 .slick-list {
@@ -1273,11 +1273,11 @@ only screen and (max-width: 767.98px) {
   font-size: 10px;
   color: #fff;
   border-radius: 50%;
-  background-color: #c29958;
+  background-color: #921817;
 }
 
 .header-configure-area ul li a:hover {
-  color: #c29958;
+  color: #921817;
 }
 
 .header-configure-area ul li:first-child {
@@ -1322,7 +1322,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .header-configure-area ul li.user-hover .dropdown-list li a:hover {
-  color: #c29958;
+  color: #921817;
 }
 
 .header-configure-area ul li.user-hover:hover .dropdown-list {
@@ -1344,7 +1344,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .header-search-box:hover .header-search-btn {
-  color: #c29958;
+  color: #921817;
 }
 
 .header-search-btn {
@@ -1401,7 +1401,7 @@ only screen and (max-width: 767.98px) {
 }
 
 .header-social-link a:hover {
-  color: #c29958;
+  color: #921817;
 }
 
 /*-------- header social link end --------*/
@@ -1440,7 +1440,7 @@ only screen and (max-width: 767.98px) {
 
 .main-menu ul li:hover>a,
 .main-menu ul li.active>a {
-  color: #c29958;
+  color: #921817;
 }
 
 .main-menu ul li ul.dropdown {
@@ -1788,7 +1788,7 @@ only screen and (max-width: 767.98px) {
 
 .btn-sqr:hover {
   color: #fff;
-    background-color: rgb(178, 23, 23);
+  background-color: rgb(178, 23, 23);
 }
 
 /*----- mobile menu start -----*/
@@ -2281,7 +2281,7 @@ only screen and (max-width: 767.98px) {
   width: 50px;
   height: 50px;
   text-align: center;
-  background-color: #c29958;
+  background-color: #921817;
   color: #fff;
   font-size: 50px;
   cursor: pointer;
@@ -2324,7 +2324,7 @@ only screen and (max-width: 767.98px) {
 .minicart-content-box {
   overflow: auto;
   height: 100%;
-  padding-right: 30px;
+  padding-right: 16px;
   margin-right: -15px;
 }
 
@@ -2421,6 +2421,7 @@ only screen and (max-width: 767.98px) {
   padding-bottom: 20px;
   margin-bottom: 20px;
   padding-top: 15px;
+  padding-right: 30px;
 }
 
 .minicart-pricing-box li {
@@ -2465,6 +2466,7 @@ only screen and (max-width: 767.98px) {
   border-radius: 40px;
   text-align: center;
   margin-bottom: 10px;
+  margin-top: 20px;
 }
 
 .minicart-button a i {
@@ -2474,7 +2476,7 @@ only screen and (max-width: 767.98px) {
 .minicart-button a:hover {
   color: #fff;
   letter-spacing: 1.1px;
-  background-color: #c29958;
+  background-color: #921817;
 }
 
 .minicart-button a:last-child {
@@ -3231,7 +3233,7 @@ only screen and (max-width: 479.98px) {
 .custom-radio .custom-control-input:checked~.custom-control-label:before,
 .custom-radio .custom-control-input:checked label:before {
   background-color: #921918;
-    border-color: #921918;
+  border-color: #921918;
 }
 
 .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
@@ -4012,7 +4014,7 @@ only screen and (max-width: 767.98px) {
 /*----- testimonial area end -----*/
 /*----- breadcrumb style css start -----*/
 .breadcrumb-area {
-  background-color: #fff;
+  background-color: #f5f5f5;
 }
 
 .breadcrumb-wrap {
@@ -4277,13 +4279,13 @@ only screen and (max-width: 767.98px) {
 
 .paginatoin-area .pagination-box li a:hover {
   color: #fff;
-  border-color: #c29958;
-  background-color: #c29958;
+  border-color: #921817;
+    background-color: #921817;
 }
 
 .paginatoin-area .pagination-box li.active a {
   color: #fff;
-  background-color: #c29958;
+  background-color: #921817;
 }
 
 /*------ pagination area style end ------*/
@@ -5108,11 +5110,11 @@ only screen and (max-width: 767.98px) {
 }
 
 .top-bar-left .product-view-mode a:hover {
-  color: #c29958;
+  color: #921817;
 }
 
 .top-bar-left .product-view-mode a.active {
-  color: #c29958;
+  color: #921817;
 }
 
 .top-bar-left .product-amount p {
@@ -6009,6 +6011,7 @@ only screen and (max-width: 767.98px) {
   font-size: 15px;
   white-space: nowrap;
 }
+
 /* 
 .order-summary-table .table tr td,
 .order-summary-table .table tr th,
@@ -6032,6 +6035,7 @@ only screen and (max-width: 767.98px) {
 .order-summary-table table tr td a:hover {
   color: #921918;
 }
+
 .order-summary-table .table tr td strong,
 .order-summary-table .table tr th strong,
 .order-summary-table table tr td strong,
@@ -6152,7 +6156,7 @@ only screen and (max-width: 767.98px) {
 .single-input-item input:focus,
 .single-input-item textarea:active,
 .single-input-item textarea:focus {
-  border-color: #c29958;
+  border-color: #921817;
   background-color: #fff;
 }
 
@@ -6325,7 +6329,7 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 
 .cart-update-option .apply-coupon-wrapper form input:focus,
 .cart-update-option .apply-coupon-wrapper form input:active {
-  border-color: #c29958;
+  border-color: #921817;
 }
 
 @media only screen and (max-width: 767.98px) {
@@ -6510,8 +6514,8 @@ only screen and (min-width: 768px) and (max-width: 991px) {
 
 .myaccount-tab-menu a:hover,
 .myaccount-tab-menu a.active {
-  background-color: #c29958;
-  border-color: #c29958;
+  background-color: #921817;
+    border-color: #921817;
   color: #fff;
 }
 
@@ -6977,12 +6981,7 @@ only screen and (max-width: 767.98px) {
 
 .nav-main-menu li {
   display: block;
-  padding: 13px;
-}
-
-.nav-main-menu li:first-child i {
-  font-size: 18px;
-  color: #000;
+  padding: 8px;
 }
 
 .menu-link:link,
@@ -6990,10 +6989,10 @@ only screen and (max-width: 767.98px) {
   display: flex;
   align-items: center;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 13.41px;
-  letter-spacing: 0.03em;
+  /* letter-spacing: 0.03em; */
   color: #000;
   transition: all 0.3s ease-out;
 }
@@ -7016,8 +7015,8 @@ only screen and (max-width: 767.98px) {
 /* ----------------------------------------HEADER---------------------------------------- */
 .header-wrapper {
   background-color: #fff;
-  height: 127px;
-  margin-bottom: 10px;
+  height: 66px;
+    /* margin-bottom: 10px; */
 }
 
 .header-slogan a {
@@ -7029,7 +7028,7 @@ only screen and (max-width: 767.98px) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 0 20px;
   /* border-bottom: 3px solid #921817; */
 }
 
@@ -7048,7 +7047,7 @@ only screen and (max-width: 767.98px) {
 
 .header-contact a i {
   color: #921818a3;
-  font-size: 22px;
+  font-size: 18px;
   margin-right: 8px;
   vertical-align: middle;
 }
@@ -7160,7 +7159,15 @@ only screen and (max-width: 767.98px) {
 /* ----------------------------------------promo-section---------------------------------------- */
 .promo-section {
   background-color: #921817;
-  margin-top: 20px;
+  margin-top: 6px;
+  }
+  
+  .desktop-menu {
+    margin-left: 30px;
+  }
+  
+  .desktop-menu ul li a {
+    font-weight: 450;
 }
 
 .promo-list {
@@ -7444,4 +7451,46 @@ only screen and (max-width: 767.98px) {
 
 .product-tab-menu a:hover::after {
   width: 100%;
+}
+
+.minicart-content h3 {
+  font-weight: 700;
+  color: #000;
+  margin: 5px 0 10px;
+  text-align: left !important;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-size: 18px;
+}
+
+.details-qty {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.details-qty label {
+  margin-right: 5px;
+  font-weight: 400;
+}
+
+.minicart-items-wrapper .minicart-items .product-item .quant {
+  display: inline-flex;
+  border-radius: 20px;
+  border: 2px solid #C0C0C0;
+  margin-left: 5px;
+}
+
+.product-info-price {
+  display: flex;
+  gap: 20px;
+}
+
+.product-info-price span {
+  font-weight: 600;
 }

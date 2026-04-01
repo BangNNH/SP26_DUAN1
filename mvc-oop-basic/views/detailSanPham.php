@@ -31,7 +31,7 @@
     <!-- breadcrumb area end -->
 
     <!-- page main wrapper start -->
-    <div class="shop-main-wrapper section-padding pb-0 pt-2">
+    <div class="shop-main-wrapper section-padding pb-0 pt-4">
         <div class="container">
             <div class="row">
                 <!-- product details wrapper start -->
@@ -102,8 +102,8 @@
                                     <div class="product-base" bis_skin_checked="1">
                                         <div class="saleprice" bis_skin_checked="1">
                                             <div class="price-box">
-                                                <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'], 0, ",", ".") . "đ" ?></del></span>
-                                                <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'], 0, ",", ".") . "đ" ?></p>
+                                                <span class="price-old-pr"><del><?= number_format($sanPham['gia_san_pham'] ?? 0, 0, ",", ".") . "đ" ?></del></span>
+                                                <p class="price-regular"><?= number_format($sanPham['gia_khuyen_mai'] ?? 0, 0, ",", ".") . "đ" ?></p>
                                             </div>
                                         </div>
                                         <div class="two-btn" bis_skin_checked="1">
@@ -190,7 +190,7 @@
                                 <div class="store-strength" bis_skin_checked="1">
                                     <div class="title__wrapper_block" bis_skin_checked="1">
                                         <h2 class="title__wrapper">
-                                            <span>TẠI SAO NÊN CHỌN LUXURY STORE</span>
+                                            <span>TẠI SAO NÊN CHỌN WATCH HUB</span>
                                         </h2>
                                     </div>
                                     <ul class="promo-items">
@@ -221,7 +221,7 @@
                                                     <path d="M15.3009 11.3336C14.9346 11.3483 14.5958 11.5047 14.3472 11.7741L12.1436 14.1606L11.598 13.6334C11.0538 13.1075 10.183 13.1222 9.65695 13.6665C9.13101 14.2107 9.14578 15.0814 9.69006 15.6075L11.2454 17.1107C11.5027 17.3595 11.8415 17.4965 12.1994 17.4965C12.213 17.4965 12.2266 17.4963 12.2385 17.4959C12.6056 17.4854 12.959 17.3247 13.208 17.0549L16.3642 13.6364C16.8777 13.0803 16.843 12.2101 16.2868 11.6966C16.0175 11.4479 15.6669 11.3192 15.3009 11.3336V11.3336ZM15.7195 13.0412C15.7195 13.0412 12.5633 16.4597 12.5632 16.4598C12.3751 16.6635 12.0544 16.6723 11.8552 16.4799C11.8543 16.4789 10.2998 14.9766 10.2998 14.9766C10.1034 14.7867 10.0981 14.4726 10.2878 14.2763C10.3849 14.1759 10.5144 14.1254 10.6441 14.1254C10.7681 14.1254 10.8922 14.1716 10.9882 14.2643C10.9882 14.2643 11.8553 15.1024 11.8565 15.1035C12.0288 15.2701 12.3209 15.2622 12.4838 15.0857C12.4838 15.0857 14.9839 12.3779 14.9918 12.3694C15.4156 11.9105 16.1561 12.5685 15.7195 13.0412V13.0412Z" fill="#B22E1C"></path>
                                                 </svg> </span>
                                             <div class="promo-content" bis_skin_checked="1">
-                                                <p class="promo-detail">GÓI BẢO DƯỠNG LUXURY CARE</p>
+                                                <p class="promo-detail">GÓI BẢO DƯỠNG WATCH CARE</p>
                                             </div>
                                         </li>
                                         <li>

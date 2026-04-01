@@ -63,6 +63,11 @@ function deleteSessionError()
     unset($_SESSION['error']);
     unset($_SESSION['success']);
     unset($_SESSION['flash']);
+    // Xóa các lỗi validation cụ thể
+    unset($_SESSION['error_email']);
+    unset($_SESSION['error_password']);
+    unset($_SESSION['error_password_confirmation']);
+    unset($_SESSION['old_email']);
 }
 
 // upload - update album ảnh 
@@ -119,11 +124,8 @@ function getCartFromSession()
 {
     $cart = $_SESSION['cart'] ?? [];
     $result = [];
-
     foreach ($cart as $id => $item) {
-
         $sp = getProductById($id);
-
         if ($sp) {
             $result[] = [
                 'san_pham_id' => $id,
@@ -136,7 +138,6 @@ function getCartFromSession()
             ];
         }
     }
-
     return $result;
 }
 
@@ -150,4 +151,17 @@ function getProductById($id)
     $stmt->execute(['id' => $id]);
 
     return $stmt->fetch();
+}
+
+function getCartDBCount()
+{
+    require_once './models/GioHang.php';
+
+    $gioHangModel = new GioHang();
+
+    if (isset($_SESSION['user_client'])) {
+        return $gioHangModel->getTotalQuantity($_SESSION['user_client']['id']);
+    }
+
+    return array_sum(array_column($_SESSION['cart'] ?? [], 'quantity'));
 }

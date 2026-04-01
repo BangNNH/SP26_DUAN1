@@ -25,3 +25,9 @@
     padding: 0;
     margin-bottom: 0;
 }
+
+.empty-cart {
+    display: block;
+    padding: 30px 40px;
+    text-align: center;
+}

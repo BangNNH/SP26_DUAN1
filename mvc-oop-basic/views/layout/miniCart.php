@@ -10,17 +10,8 @@
             <div class="minicart-content-box">
                 <div class="minicart-item-wrapper">
                     <ul>
-                        <?php $tamTinh = 0;
-                        $giamGia = 0;
-                        $thanhToan = 0;
-                        $countSl = 0; ?>
                         <?php if (!empty($cart)): ?>
-                            <?php foreach ($cart as $item):
-                                $tamTinh += $item['gia_san_pham'] * $item['so_luong'];
-                                $giamGia += ($item['gia_san_pham'] - $item['gia_khuyen_mai'])  * $item['so_luong'];
-                                $thanhToan  = $tamTinh - $giamGia;
-                                $countSl += $item['so_luong'];
-                            ?>
+                            <?php foreach ($cart as $item): ?>
                                 <li class="minicart-item">
                                     <div class="minicart-thumb">
                                         <img src="<?= BASE_URL . $item['hinh_anh'] ?>">
@@ -29,41 +20,70 @@
                                     <div class="minicart-content">
                                         <h3><?= $item['ten_san_pham'] ?></h3>
 
-                                        <p>
+                                        <!-- <p>
                                             <?= $item['so_luong'] ?> ×
                                             <?= formatPrice($item['gia_san_pham']) ?>đ
-                                        </p>
+                                        </p> -->
+                                        <div class="product-item-pricing">
+                                            <div class="details-qty details-qty-box">
+                                                <label for="">Số lượng</label>
+                                                <div class="quantity-control">
+                                                    <button type="button" class="btn-subtract-session" data-id="<?= $item['san_pham_id'] ?>">−</button>
+
+                                                    <input type="text" class="qty-input" data-id="<?= $item['san_pham_id'] ?>" value="<?= $item['so_luong'] ?>" readonly>
+
+                                                    <button type="button" class="btn-increase-session" data-id="<?= $item['san_pham_id'] ?>">+</button>
+                                                </div>
+
+                                                <button type="button" class="btn-delete-pd-session" data-id="<?= $item['san_pham_id'] ?>">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </button>
+                                            </div>
+                                            <div class="product-info-price">
+                                                <label for="">Giá</label>
+                                                <span> <?= formatPrice($item['gia_san_pham']) ?>đ</span>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </li>
 
                             <?php endforeach; ?>
+                            <div class="minicart-pricing-box" id="cart-summary">
+                                <ul>
+                                    <li>
+                                        <span>Tạm tính</span>
+                                        <span id="tam-tinh"><?= isset($_SESSION['tamTinh']) ? formatPrice($_SESSION['tamTinh']) : 0  ?>đ</span>
+                                    </li>
+                                    <li>
+                                        <span>Giảm giá</span>
+                                        <span id="giam-gia"><?= isset($_SESSION['giamGia']) ? formatPrice($_SESSION['giamGia']) : 0  ?>đ</span>
+                                    </li>
+                                    <li class="total" style="font-weight: bold;">
+                                        <span>Tổng thanh toán</span>
+                                        <span id="thanh-toan"><?= isset($_SESSION['thanhToan']) ? formatPrice($_SESSION['thanhToan']) : 0  ?>đ</span>
+                                    </li>
+                                </ul>
+                                <div class="minicart-button">
+                                    <a href="<?= BASE_URL . '?act=thanh-toan' ?>"><i class="fa fa-shopping-cart"></i> Thanh toán</a>
+                                    <a href="<?= BASE_URL . '?act=/' ?>"><i class="fa fa-share"></i>Tiếp tục mua sắm</a>
+                                </div>
+                            </div>
+                            <div class="empty-cart" id="empty-cart" style="display: none;">
+                                <span class="empty-cart-title">Không có sản phẩm nào trong giỏ hàng của bạn</span>
+                            </div>
+
                         <?php else: ?>
-                            <li>Giỏ hàng trống</li>
+                            <div class="empty-cart" style="display: block;">
+                                <span class="empty-cart-title">Không có sản phẩm nào trong giỏ hàng của bạn</span>
+                            </div>
                         <?php endif; ?>
                     </ul>
                 </div>
+                <!-- <div id="empty-cart" style="display: none;">
+                    Không có sản phẩm nào trong giỏ hàng của bạn
+                </div> -->
 
-                <div class="minicart-pricing-box">
-                    <ul>
-                        <li>
-                            <span>Tạm tính</span>
-                            <span><strong><?= formatPrice($tamTinh)  ?> VNĐ</strong></span>
-                        </li>
-                        <li>
-                            <span>Giảm giá</span>
-                            <span><strong><?= formatPrice($giamGia)  ?> VNĐ</strong></span>
-                        </li>
-                        <li class="total" style="font-weight: bold;">
-                            <span>Tổng thanh toán</span>
-                            <span style="font-weight: bold; color: #921918"><?= formatPrice($thanhToan)  ?> VNĐ</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="minicart-button">
-                    <a href="<?= BASE_URL . '?act=thanh-toan' ?>"><i class="fa fa-shopping-cart"></i> Thanh toán</a>
-                    <a href="<?= BASE_URL . '?act=/' ?>"><i class="fa fa-share"></i>Tiếp tục mua sắm</a>
-                </div>
             </div>
         </div>
     </div>

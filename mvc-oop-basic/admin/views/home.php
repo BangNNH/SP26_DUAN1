@@ -343,7 +343,7 @@
         </div>
     </div>
     <!-- thống kê sau khi lọc -->
-    <div class="container-fluid p-2" id="filteredDashboard">
+    <div class="container-fluid p-2" id="filteredDashboard" style="display:none">
         <!-- Page Header -->
         <div class=" d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -471,7 +471,7 @@
                                     <img class="avatar" src="https://i.pravatar.cc/40" />
                                     <div>
                                         <p class="mb-0 fw-bold small text-dark">
-                                            <?= $user['ten_tai_khoan'] ?>
+                                            <?= $user['ho_ten'] ?>
                                         </p>
                                     </div>
                                 </div>
@@ -495,6 +495,7 @@
     <script>
         window.data7Ngay = <?= json_encode($data7Ngay) ?>;
         window.data12Thang = <?= json_encode($data12Thang) ?>;
+        window.ADMIN_URL = "<?= BASE_URL_ADMIN ?>index.php";
     </script>
     <script src="<?= BASE_ASSETS ?>js/dashboard/dashboard.js"></script>
     <!--////////////////// Footer //////////////////-->

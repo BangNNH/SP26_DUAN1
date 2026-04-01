@@ -168,5 +168,70 @@ class AdminBaoCaoThongKe
         return $this->conn->query($sql)->fetchAll();
     }
     //===================Thống kê sau khi lọc===================
+    public function getThongKeTheoKhoangThoiGian($from, $to)
+    {
+        $sql = "
+        SELECT 
+            SUM(CASE WHEN trang_thai_id = 9 THEN tong_tien ELSE 0 END) as doanh_thu,
+            COUNT(CASE WHEN trang_thai_id = 1 THEN 1 END) as don_moi
+        FROM don_hangs
+        WHERE DATE(ngay_dat) BETWEEN :from AND :to
+    ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':from' => $from, ':to' => $to]);
+        return $stmt->fetch();
+    }
 
+    public function getTaiKhoanMoiTheoKhoang($from, $to)
+    {
+        $sql = "
+        SELECT COUNT(*) as tai_khoan
+        FROM tai_khoans
+        WHERE DATE(ngay_dang_ky) BETWEEN :from AND :to
+    ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':from' => $from, ':to' => $to]);
+        return $stmt->fetch();
+    }
+
+    public function getTopSanPhamTheoKhoang($from, $to)
+    {
+        $sql = "
+        SELECT 
+            sp.ten_san_pham,
+            SUM(ct.so_luong) as total_quantity,
+            SUM(ct.thanh_tien) as total_revenue
+        FROM chi_tiet_don_hangs ct
+        JOIN san_phams sp ON ct.san_pham_id = sp.id
+        JOIN don_hangs dh ON ct.don_hang_id = dh.id
+        WHERE dh.trang_thai_id = 9
+        AND DATE(dh.ngay_dat) BETWEEN :from AND :to
+        GROUP BY sp.id, sp.ten_san_pham
+        ORDER BY total_quantity DESC
+        LIMIT 5
+    ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':from' => $from, ':to' => $to]);
+        return $stmt->fetchAll();
+    }
+
+    public function getTopUsersTheoKhoang($from, $to)
+    {
+        $sql = "
+        SELECT 
+            tk.ho_ten,
+            COUNT(dh.id) as total_orders,
+            SUM(dh.tong_tien) as total_spent
+        FROM don_hangs dh
+        JOIN tai_khoans tk ON dh.tai_khoan_id = tk.id
+        WHERE dh.trang_thai_id = 9
+        AND DATE(dh.ngay_dat) BETWEEN :from AND :to
+        GROUP BY tk.id, tk.ho_ten
+        ORDER BY total_spent DESC
+        LIMIT 5
+    ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':from' => $from, ':to' => $to]);
+        return $stmt->fetchAll();
+    }
 }

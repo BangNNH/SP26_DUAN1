@@ -132,5 +132,34 @@ class AdminBaoCaoThongKeController
 
         require_once './views/home.php';
     }
+    public function filter()
+    {
+        $from = $_GET['from'] ?? '';
+        $to = $_GET['to'] ?? '';
+
+        if (!$from || !$to) {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Thiếu ngày']);
+            exit;
+        }
+
+        $thongKe = $this->modelBaoCaoThongKe->getThongKeTheoKhoangThoiGian($from, $to);
+        $taiKhoan = $this->modelBaoCaoThongKe->getTaiKhoanMoiTheoKhoang($from, $to);
+        $topProducts = $this->modelBaoCaoThongKe->getTopSanPhamTheoKhoang($from, $to);
+        $topUsers = $this->modelBaoCaoThongKe->getTopUsersTheoKhoang($from, $to);
+
+        $result = [
+            'doanh_thu' => $thongKe['doanh_thu'] ?? 0,
+            'don_moi' => $thongKe['don_moi'] ?? 0,
+            'tai_khoan' => $taiKhoan['tai_khoan'] ?? 0,
+            'top_products' => $topProducts,
+            'top_users' => $topUsers,
+        ];
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
 }
+
 ?>

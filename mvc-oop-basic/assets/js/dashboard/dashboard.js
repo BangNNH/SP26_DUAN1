@@ -201,7 +201,7 @@
 
       try {
         const res = await fetch(
-          "index.php?act=thong-ke-filter&from=" + from + "&to=" + to,
+          window.ADMIN_URL + "?act=thong-ke-filter&from=" + from + "&to=" + to,
         );
         const data = await res.json();
         updateDashboard(data, from, to);
@@ -218,22 +218,18 @@
   }
 
   function updateDashboard(data, from, to) {
-    if (!data || typeof data !== "object") {
-      console.error("Invalid response from dashboard filter:", data);
-      return;
-    }
+    // ✅ querySelector trong scope filteredDashboard thôi
+    const filtered = document.getElementById("filteredDashboard");
 
-    document.querySelector(".doanh-thu").innerText = Number(
+    filtered.querySelector(".doanh-thu").innerText = Number(
       data.doanh_thu || 0,
     ).toLocaleString();
-    document.querySelector(".don-moi").innerText = data.don_moi || 0;
-    document.querySelector(".tai-khoan").innerText = data.tai_khoan || 0;
-    document.querySelector(".date-range").innerText = from + " → " + to;
+    filtered.querySelector(".don-moi").innerText = data.don_moi || 0;
+    filtered.querySelector(".tai-khoan").innerText = data.tai_khoan || 0;
+    filtered.querySelector(".date-range").innerText = from + " → " + to;
+
     renderTopProducts(data.top_products || []);
     renderTopUsers(data.top_users || []);
-
-    const filteredSection = document.getElementById("filteredDashboard");
-    if (filteredSection) filteredSection.style.display = "block";
   }
 
   function renderTopProducts(products) {
@@ -289,7 +285,7 @@
       container.innerHTML +=
         '<div class="user-item d-flex justify-content-between">' +
         "<span>" +
-        (user.ten_tai_khoan || "") +
+        (user.ho_ten || "") +
         "</span>" +
         "<span>" +
         Number(user.total_spent || 0).toLocaleString() +
@@ -308,5 +304,21 @@
     });
   }
 
+  function closeModal() {
+    const modalEl = document.getElementById("dateFilterModal");
+
+    // Ẩn modal thủ công, không dùng bootstrap.Modal.hide()
+    modalEl.classList.remove("show");
+    modalEl.style.display = "none";
+    modalEl.setAttribute("aria-hidden", "true");
+    modalEl.removeAttribute("aria-modal");
+
+    // Xóa backdrop
+    document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
+
+    // Reset body
+    document.body.classList.remove("modal-open");
+    document.body.removeAttribute("style"); // ✅ xóa toàn bộ inline style của body
+  }
   loadChart("day");
 });

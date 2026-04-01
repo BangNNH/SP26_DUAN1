@@ -133,7 +133,7 @@ class AdminBaoCaoThongKe
             DATE(ngay_dat) as ngay,
             SUM(CASE WHEN trang_thai_id = 9 THEN tong_tien ELSE 0 END) as doanh_thu
         FROM don_hangs
-        WHERE YEARWEEK(ngay_dat, 1) = YEARWEEK(CURDATE(), 1)
+        WHERE ngay_dat >= CURDATE() - INTERVAL 6 DAY
         GROUP BY DATE(ngay_dat)
         ORDER BY ngay ASC
     ";
@@ -167,4 +167,6 @@ class AdminBaoCaoThongKe
 
         return $this->conn->query($sql)->fetchAll();
     }
+    //===================Thống kê sau khi lọc===================
+
 }

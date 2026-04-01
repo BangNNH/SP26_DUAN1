@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
   const labelsContainer = document.querySelector(".chart-labels");
   const buttons = document.querySelectorAll(".chart-filter button");
   const svg = document.querySelector(".chart-container svg");
 
-  // ===== TOOLTIP =====
+  // Placeholder tooltip
   let tooltip = document.createElement("div");
   tooltip.id = "chart-tooltip";
   tooltip.style.position = "absolute";
@@ -16,209 +16,297 @@ document.addEventListener("DOMContentLoaded", function () {
   tooltip.style.pointerEvents = "none";
   document.body.appendChild(tooltip);
 
-  // ===== FORMAT DATE (FIX TIMEZONE) =====
-  function formatDateLocal(date) {
-    let y = date.getFullYear();
-    let m = String(date.getMonth() + 1).padStart(2, "0");
-    let d = String(date.getDate()).padStart(2, "0");
+  const data7Ngay = window.data7Ngay || [];
+  const data12Thang = window.data12Thang || [];
 
-    return `${y}-${m}-${d}`;
+  function getDateKey(dateStr) {
+    return new Date(dateStr).toISOString().slice(0, 10);
   }
 
-  // ===== LABEL =====
-  function renderLabels(type) {
-    let labels = [];
-
-    if (type === "day") {
-      for (let i = 6; i >= 0; i--) {
-        let d = new Date();
-        d.setDate(d.getDate() - i);
-        labels.push(d.getDate());
-      }
-    }
-
-    if (type === "week") {
-      labels = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
-    }
-
-    if (type === "month") {
-      labels = [
-        "Th1",
-        "Th2",
-        "Th3",
-        "Th4",
-        "Th5",
-        "Th6",
-        "Th7",
-        "Th8",
-        "Th9",
-        "Th10",
-        "Th11",
-        "Th12",
-      ];
-    }
-
-    labelsContainer.innerHTML = labels.map((l) => `<span>${l}</span>`).join("");
-  }
-
-  // ===== 7 NGÀY GẦN NHẤT =====
-  function fill7Days(data) {
-    let result = [];
-    let today = new Date();
-
-    for (let i = 6; i >= 0; i--) {
-      let d = new Date();
-      d.setDate(today.getDate() - i);
-
-      let dateStr = formatDateLocal(d);
-
-      let found = data.find((x) => x.ngay === dateStr);
-
-      result.push({
-        value: found ? Number(found.doanh_thu) : 0,
-      });
-    }
-
-    return result;
-  }
-
-  // ===== TUẦN (T2 → CN) =====
-  function getWeekData(data) {
-    let result = [];
-
-    let today = new Date();
-    let day = today.getDay();
-
-    if (day === 0) day = 7;
-
-    let monday = new Date(today);
-    monday.setDate(today.getDate() - day + 1);
-
-    for (let i = 0; i < 7; i++) {
-      let d = new Date(monday);
-      d.setDate(monday.getDate() + i);
-
-      let dateStr = formatDateLocal(d);
-
-      let found = data.find((x) => x.ngay === dateStr);
-
-      result.push({
-        value: found ? Number(found.doanh_thu) : 0,
-      });
-    }
-
-    return result;
-  }
-
-  // ===== CONVERT DATA =====
-  function convertData(type) {
-    let arr = [];
-
-    if (type === "day") {
-      arr = fill7Days(data7Ngay);
-    }
-
-    if (type === "week") {
-      arr = getWeekData(data7Ngay);
-    }
-
-    if (type === "month") {
-      let temp = new Array(12).fill(0);
-
-      data12Thang.forEach((item) => {
-        temp[item.thang - 1] = Number(item.doanh_thu);
-      });
-
-      arr = temp.map((v) => ({ value: v }));
-    }
-
-    return arr;
-  }
-
-  // ===== DRAW CHART =====
-  function drawChart(data) {
-    if (!data || data.length === 0) return;
-
-    let max = Math.max(...data.map((i) => i.value), 1);
-    let step = 100 / (data.length - 1);
-
-    let path = "";
-
-    data.forEach((point, index) => {
-      let x = index * step;
-      let y = 40 - (point.value / max) * 30;
-
-      path += index === 0 ? `M${x},${y}` : ` L${x},${y}`;
+  function getLast7DaysData() {
+    const today = new Date();
+    const map = new Map();
+    data7Ngay.forEach((item) => {
+      const key = getDateKey(item.ngay);
+      map.set(key, Number(item.doanh_thu || 0));
     });
 
-    document.querySelector(".line-chart").setAttribute("d", path);
-    document
-      .querySelector(".area-chart")
-      .setAttribute("d", path + " L100,40 L0,40 Z");
+    let result = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(today);
+      d.setDate(today.getDate() - i);
+      const key = d.toISOString().slice(0, 10);
+      result.push({
+        label: String(d.getDate()),
+        value: map.has(key) ? map.get(key) : 0,
+        key,
+      });
+    }
 
-    // remove dot cũ
-    document.querySelectorAll(".dot").forEach((e) => e.remove());
+    return result;
+  }
 
-    // vẽ dot
+  function getCurrentWeekData() {
+    const dayNames = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+    const weekStart = new Date();
+    const day = weekStart.getDay();
+
+    // convert Sunday(0) to end
+    const offset = day === 0 ? 6 : day - 1;
+    weekStart.setDate(weekStart.getDate() - offset);
+
+    const map = new Map();
+    data7Ngay.forEach((item) => {
+      const key = getDateKey(item.ngay);
+      map.set(key, Number(item.doanh_thu || 0));
+    });
+
+    let result = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(weekStart);
+      d.setDate(weekStart.getDate() + i);
+      const key = d.toISOString().slice(0, 10);
+      result.push({
+        label: dayNames[i],
+        value: map.has(key) ? map.get(key) : 0,
+        key,
+      });
+    }
+
+    return result;
+  }
+
+  function getLast12MonthsData() {
+    const monthMap = new Map();
+    data12Thang.forEach((item) => {
+      monthMap.set(Number(item.thang), Number(item.doanh_thu || 0));
+    });
+
+    let result = [];
+    const currentYear = new Date().getFullYear();
+
+    for (let m = 1; m <= 12; m++) {
+      const paddedMonth = String(m).padStart(2, "0");
+      result.push({
+        label: "Th" + m,
+        value: monthMap.has(m) ? monthMap.get(m) : 0,
+        key: currentYear + "-" + paddedMonth,
+      });
+    }
+
+    return result;
+  }
+
+  function renderLabels(data) {
+    if (!labelsContainer) return;
+    labelsContainer.innerHTML = data
+      .map((item) => "<span>" + item.label + "</span>")
+      .join("");
+  }
+
+  function drawChart(data) {
+    if (!data || data.length === 0) {
+      if (svg) {
+        const line = svg.querySelector(".line-chart");
+        const area = svg.querySelector(".area-chart");
+        if (line) line.setAttribute("d", "M0,40 L100,40");
+        if (area) area.setAttribute("d", "M0,40 L100,40 L0,40 Z");
+      }
+      return;
+    }
+
+    const max = Math.max(...data.map((d) => d.value), 1);
+    const stepX = data.length > 1 ? 100 / (data.length - 1) : 100;
+
+    let path = "";
     data.forEach((point, index) => {
-      let x = index * step;
-      let y = 40 - (point.value / max) * 30;
+      const x = index * stepX;
+      const y = 40 - (point.value / max) * 30;
+      if (index === 0) {
+        path = "M" + x + "," + y;
+      } else {
+        path += " L" + x + "," + y;
+      }
+    });
 
-      let circle = document.createElementNS(
+    const lineEl = svg.querySelector(".line-chart");
+    const areaEl = svg.querySelector(".area-chart");
+    if (lineEl) lineEl.setAttribute("d", path);
+    if (areaEl) areaEl.setAttribute("d", path + " L100,40 L0,40 Z");
+
+    svg.querySelectorAll(".dot").forEach((dot) => dot.remove());
+
+    data.forEach((point, index) => {
+      const x = index * stepX;
+      const y = 40 - (point.value / max) * 30;
+
+      const circle = document.createElementNS(
         "http://www.w3.org/2000/svg",
         "circle",
       );
-
       circle.setAttribute("cx", x);
       circle.setAttribute("cy", y);
-      circle.setAttribute("r", 1.5);
+      circle.setAttribute("r", "1.5");
       circle.setAttribute("fill", "#b70011");
       circle.classList.add("dot");
 
-      // hover
       circle.addEventListener("mousemove", (e) => {
         tooltip.style.display = "block";
         tooltip.style.left = e.pageX + 10 + "px";
         tooltip.style.top = e.pageY - 20 + "px";
-
-        let label = labelsContainer.children[index]?.innerText || "";
-
-        tooltip.innerHTML = `
-          ${label} <br>
-          ${point.value.toLocaleString()} đ
-        `;
-      });
-
-      circle.addEventListener("mouseenter", () => {
-        circle.setAttribute("r", 2.5);
+        tooltip.innerHTML =
+          point.label + "<br>" + point.value.toLocaleString() + " đ";
       });
 
       circle.addEventListener("mouseleave", () => {
         tooltip.style.display = "none";
-        circle.setAttribute("r", 1.5);
       });
 
       svg.appendChild(circle);
     });
   }
 
-  // ===== LOAD =====
-  function loadChart(type) {
-    renderLabels(type);
-    let data = convertData(type);
-    drawChart(data);
+  function loadChart(type = "day") {
+    let chartData = [];
+
+    if (type === "day") {
+      chartData = getLast7DaysData();
+    } else if (type === "week") {
+      chartData = getCurrentWeekData();
+    } else if (type === "month") {
+      chartData = getLast12MonthsData();
+    }
+
+    renderLabels(chartData);
+    drawChart(chartData);
   }
 
-  // ===== CLICK =====
   buttons.forEach((btn) => {
     btn.addEventListener("click", function () {
       buttons.forEach((b) => b.classList.remove("active", "bg-red-light"));
       this.classList.add("active", "bg-red-light");
-
       loadChart(this.dataset.type);
     });
   });
 
-  // init
+  const filterBtn = document.getElementById("filterBtn");
+  if (filterBtn) {
+    filterBtn.addEventListener("click", async function () {
+      const from = document.getElementById("dateFrom").value;
+      const to = document.getElementById("dateTo").value;
+      if (!from || !to) {
+        alert("Chọn ngày!");
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          "index.php?act=thong-ke-filter&from=" + from + "&to=" + to,
+        );
+        const data = await res.json();
+        updateDashboard(data, from, to);
+        closeModal();
+
+        const mainDashboard = document.getElementById("mainDashboard");
+        const filteredDashboard = document.getElementById("filteredDashboard");
+        if (mainDashboard) mainDashboard.style.display = "none";
+        if (filteredDashboard) filteredDashboard.style.display = "block";
+      } catch (err) {
+        console.error("Lỗi:", err);
+      }
+    });
+  }
+
+  function updateDashboard(data, from, to) {
+    if (!data || typeof data !== "object") {
+      console.error("Invalid response from dashboard filter:", data);
+      return;
+    }
+
+    document.querySelector(".doanh-thu").innerText = Number(
+      data.doanh_thu || 0,
+    ).toLocaleString();
+    document.querySelector(".don-moi").innerText = data.don_moi || 0;
+    document.querySelector(".tai-khoan").innerText = data.tai_khoan || 0;
+    document.querySelector(".date-range").innerText = from + " → " + to;
+    renderTopProducts(data.top_products || []);
+    renderTopUsers(data.top_users || []);
+
+    const filteredSection = document.getElementById("filteredDashboard");
+    if (filteredSection) filteredSection.style.display = "block";
+  }
+
+  function renderTopProducts(products) {
+    const container = document.querySelector(".top-products-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+    const maxQty = products.length
+      ? Math.max(...products.map((p) => p.total_quantity || 0))
+      : 0;
+    const maxRevenue = products.length
+      ? Math.max(...products.map((p) => p.total_revenue || 0))
+      : 0;
+
+    products.forEach((item) => {
+      const percentQty = maxQty ? (item.total_quantity / maxQty) * 100 : 0;
+      const percentRevenue = maxRevenue
+        ? (item.total_revenue / maxRevenue) * 100
+        : 0;
+      container.innerHTML +=
+        '<div class="bar-group">' +
+        '  <div class="bars">' +
+        '    <div class="bar-units" style="height:' +
+        percentQty +
+        '%">' +
+        '      <span class="bar-value text-danger">' +
+        Number(item.total_quantity || 0).toLocaleString() +
+        "</span>" +
+        "    </div>" +
+        '    <div class="bar-revenue" style="height:' +
+        percentRevenue +
+        '%">' +
+        '      <span class="bar-value text-danger-emphasis">' +
+        Number(item.total_revenue || 0).toLocaleString() +
+        "đ</span>" +
+        "    </div>" +
+        "  </div>" +
+        '  <div class="text-center mt-3">' +
+        '    <p class="mb-0 fw-bold small text-truncate">' +
+        (item.ten_san_pham || "N/A") +
+        "</p>" +
+        "  </div>" +
+        "</div>";
+    });
+  }
+
+  function renderTopUsers(users) {
+    const container = document.querySelector(".user-list");
+    if (!container) return;
+    container.innerHTML = "";
+
+    users.forEach((user) => {
+      container.innerHTML +=
+        '<div class="user-item d-flex justify-content-between">' +
+        "<span>" +
+        (user.ten_tai_khoan || "") +
+        "</span>" +
+        "<span>" +
+        Number(user.total_spent || 0).toLocaleString() +
+        "đ</span>" +
+        "</div>";
+    });
+  }
+
+  const clearFilterButton = document.getElementById("clearFilter");
+  if (clearFilterButton) {
+    clearFilterButton.addEventListener("click", function () {
+      const filteredSection = document.getElementById("filteredDashboard");
+      const mainDashboard = document.getElementById("mainDashboard");
+      if (filteredSection) filteredSection.style.display = "none";
+      if (mainDashboard) mainDashboard.style.display = "block";
+    });
+  }
+
   loadChart("day");
 });

@@ -152,3 +152,16 @@ function getProductById($id)
 
     return $stmt->fetch();
 }
+
+function getCartDBCount()
+{
+    require_once './models/GioHang.php';
+
+    $gioHangModel = new GioHang();
+
+    if (isset($_SESSION['user_client'])) {
+        return $gioHangModel->getTotalQuantity($_SESSION['user_client']['id']);
+    }
+
+    return array_sum(array_column($_SESSION['cart'] ?? [], 'quantity'));
+}

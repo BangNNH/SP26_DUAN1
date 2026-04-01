@@ -55,6 +55,23 @@ class GioHang
         }
     }
 
+    public function getTotalQuantity($tai_khoan_id)
+    {
+        $sql = "SELECT SUM(ct.so_luong) as total
+            FROM chi_tiet_gio_hangs ct
+            JOIN gio_hangs gh ON ct.gio_hang_id = gh.id
+            WHERE gh.tai_khoan_id = :tai_khoan_id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':tai_khoan_id' => $tai_khoan_id
+        ]);
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $result['total'] ?? 0;
+    }
+
     public function updateSoLuong($gio_hang_id, $san_pham_id, $so_luong)
     {
         try {
@@ -228,6 +245,4 @@ class GioHang
     {
         $this->conn->rollBack();
     }
-
-    
 }

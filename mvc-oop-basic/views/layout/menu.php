@@ -1,3 +1,5 @@
+<?php $totalQuantity = getCartDBCount() ?>
+
 <!-- <div class="sticky">
     <header class="header-wrapper">
         <div class="header-content">
@@ -174,13 +176,17 @@
                                     <!--Đã login -->
                                     <a href="<?= BASE_URL . '?act=gio-hang' ?>">
                                         <i class="pe-7s-shopbag"></i>
-                                        <div class="notification"><?= $soLuongCart ?? 0 ?></div>
+                                        <div class="notification"><?= (isset($totalQuantity)
+                                                                        ? $totalQuantity : 0) ?></div>
                                     </a>
                                 <?php else: ?>
                                     <!--Chưa login -->
                                     <a href="#" class="minicart-btn">
                                         <i class="pe-7s-shopbag"></i>
-                                        <div class="notification" id="cart-count"><?= isset($_SESSION['tong_so_luong']) ? $_SESSION['tong_so_luong'] : 0 ?></div>
+                                        <div class="notification" id="cart-count">
+                                            <?= isset($_SESSION['tong_so_luong'])
+                                                ? $_SESSION['tong_so_luong'] : 0 ?>
+                                        </div>
                                     </a>
                                 <?php endif; ?>
                             </li>

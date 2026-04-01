@@ -55,7 +55,7 @@
                                     <!--Chưa login -->
                                     <a href="#" class="minicart-btn">
                                         <i class="pe-7s-shopbag"></i>
-                                        <div class="notification" id="cart-count"><?= $_SESSION['tong_so_luong'] ?></div>
+                                        <div class="notification" id="cart-count"><?= isset($_SESSION['tong_so_luong']) ? $_SESSION['tong_so_luong'] : 0 ?></div>
                                     </a>
                                 <?php endif; ?>
                             </li>

@@ -181,4 +181,53 @@ class GioHang
             'san_pham_id' => $san_pham_id
         ]);
     }
+
+    // check item đã có trong giỏ hàng chưa
+    public function findItem($gio_hang_id, $san_pham_id)
+    {
+        $sql = "SELECT * FROM chi_tiet_gio_hangs 
+            WHERE gio_hang_id = :gio_hang_id 
+            AND san_pham_id = :san_pham_id 
+            LIMIT 1";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':gio_hang_id' => $gio_hang_id,
+            ':san_pham_id' => $san_pham_id
+        ]);
+
+        return $stmt->fetch();
+    }
+
+    // add hoặc update
+    public function addOrUpdateItem($gio_hang_id, $san_pham_id, $so_luong)
+    {
+        $existing = $this->findItem($gio_hang_id, $san_pham_id);
+
+        if ($existing) {
+            $newQty = $existing['so_luong'] + $so_luong;
+
+            return $this->updateSoLuong($gio_hang_id, $san_pham_id, $newQty);
+        } else {
+            return $this->addDetailGioHang($gio_hang_id, $san_pham_id, $so_luong);
+        }
+    }
+
+    // transaction
+    public function beginTransaction()
+    {
+        $this->conn->beginTransaction();
+    }
+
+    public function commit()
+    {
+        $this->conn->commit();
+    }
+
+    public function rollBack()
+    {
+        $this->conn->rollBack();
+    }
+
+    
 }

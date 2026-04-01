@@ -180,6 +180,18 @@
     <script src="assets/js/plugins/google-map.js"></script>
     <!-- Main JS -->
     <script src="assets/js/main.js"></script>
+    <div id="launcher" onclick="toggleAI()" style="position:fixed; bottom:90px; right:30px; cursor:pointer; z-index:9999;">
+        <img src="https://cdn-icons-png.flaticon.com/512/8943/8943377.png" width="60" style="filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.3));">
+    </div>
+
+    <iframe id="ai-frame" src="/SP26_DUAN1/chat-plugin.php" style="display:none; position:fixed; bottom:160px; right:30px; width:350px; height:600px; border:none; box-shadow:0 5px 25px rgba(0,0,0,0.2); border-radius:15px; z-index:9999;"></iframe>
+
+    <script>
+        function toggleAI() {
+            var f = document.getElementById("ai-frame");
+            f.style.display = (f.style.display === "none") ? "block" : "none";
+        }
+    </script>
     </body>
 
 

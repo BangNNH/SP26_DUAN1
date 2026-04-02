@@ -27,6 +27,7 @@ if ($act !== 'login-admin' && $act !== 'check-login-admin' && $act !== 'logout-a
 match ($act) {
     // router báo cáo thống kê - trang chủ
     '/' => (new AdminBaoCaoThongKeController())->home(),
+    'thong-ke-filter' => (new AdminBaoCaoThongKeController())->filter(),
 
     // router danh mục 
     'danh-muc' => (new AdminDanhMucController())->danhSachDanhMuc(),

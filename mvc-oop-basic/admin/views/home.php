@@ -13,16 +13,46 @@
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content -->
-    <div class="container-fluid p-5">
+    <div class="container-fluid p-2" id="mainDashboard">
         <!-- Page Header -->
-        <div class="d-flex justify-content-between align-items-end mb-5">
+        <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
-                <h3 class="display-6 fw-extrabold mt-1 mb-0">Thống kê</h3>
+                <h3 class="display-6 fw-extrabold mt-1 mb-3">Thống kê</h3>
+                <p class="text-muted">Tổng quan về doanh thu và đơn hàng</p>
             </div>
-            <button class="btn btn-primary-executive d-flex align-items-center gap-2">
-                <span class="material-symbols-outlined">download</span>
-                Export Report
+            <button class="btn btn-primary-executive d-flex align-items-center gap-2" data-bs-toggle="modal"
+                data-bs-target="#dateFilterModal">
+                <span class="material-symbols-outlined">
+                    calendar_month
+                </span>
+                Lọc theo ngày
             </button>
+            <!-- popup lọc dashboard -->
+            <div class="modal fade" id="dateFilterModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Lọc theo ngày</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Từ ngày</label>
+                                <input type="date" class="form-control" id="dateFrom">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Đến ngày</label>
+                                <input type="date" class="form-control" id="dateTo">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="todayBtn">Hôm nay</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                            <button type="button" class="btn btn-primary-executive" id="filterBtn">Lọc</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Summary Cards -->
         <div class="row g-4 mb-5">
@@ -112,19 +142,27 @@
                     </h4>
                 </div>
             </div>
+            <?php
+            $isTang = $phanTramTaiKhoan >= 0;
+            $class = $isTang ? 'bg-red-light' : 'bg-slate-light';
+            $icon = $isTang ? '+' : '';
+            ?>
+
             <div class="col-md-3">
                 <div class="card p-4 stat-card">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="icon-box bg-slate-light">
-                            <span class="material-symbols-outlined">speed</span>
+                            <span class="material-symbols-outlined">person_add</span>
                         </div>
-                        <span class="badge-stat bg-slate-light text-muted">-1.4%</span>
+                        <span class="badge-stat <?= $class ?>">
+                            <?= $icon . round($phanTramTaiKhoan, 1) ?>%
+                        </span>
                     </div>
                     <p class="text-secondary fw-bold text-uppercase mb-1"
                         style="font-size: 10px; letter-spacing: 0.05em">
-                        Conversion Rate
+                        Tài khoản mới
                     </p>
-                    <h4 class="fw-black mb-0">3.42%</h4>
+                    <h4 class="fw-black mb-0"><?= $homNayTaiKhoan ?? 0 ?> tài khoản</h4>
                 </div>
             </div>
         </div>
@@ -162,7 +200,7 @@
                             </path>
 
                             <!-- LINE -->
-                            <path class="line-chart" d="M0,30 L100,30" fill="none" stroke="#b70011" stroke-width="1.5">
+                            <path class="line-chart" d="M0,30 L100,30" fill="none" stroke="#b70011" stroke-width="0.5">
                             </path>
                         </svg>
                     </div>
@@ -264,63 +302,218 @@
                         </div>
                     </div>
 
-                    <div class="vstack gap-4">
+                    <div class="vstack gap-4 top-products-container">
+
                         <?php foreach ($topProducts as $item):
                             $percentQty = $maxQuantity > 0 ? ($item['total_quantity'] / $maxQuantity) * 100 : 0;
                             $percentRevenue = $maxRevenue > 0 ? ($item['total_revenue'] / $maxRevenue) * 100 : 0;
                             ?>
-                            <div class="row align-items-center">
-                                <div class="col-md-2">
+
+                            <div class="product-item d-flex align-items-center gap-4">
+
+                                <!-- LEFT -->
+                                <div class="product-info">
                                     <div class="fw-bold small">
                                         <?= $item['ten_san_pham'] ?>
                                     </div>
-                                    <div class="text-muted">
+                                    <div class="text-muted small">
                                         <?= $item['ten_danh_muc'] ?? 'N/A' ?>
                                     </div>
                                 </div>
 
-                                <div class="col-md-10">
+                                <!-- RIGHT -->
+                                <div class="flex-grow-1">
 
                                     <!-- SỐ LƯỢNG -->
-                                    <div class="progress-stack position-relative group">
-                                        <div style="width: <?= $percentQty ?>%; height: 100%; background: #b70011; border-radius: 100px;"
-                                            title="Số lượng: <?= $item['total_quantity'] ?>">
+                                    <div class="progress-stack">
+                                        <div class="progress-bar-qty" style="width: <?= $percentQty ?>%"
+                                            title="<?= $item['total_quantity'] ?>">
                                         </div>
                                     </div>
 
                                     <!-- DOANH THU -->
-                                    <div class="progress-sub position-relative group">
-                                        <div style="width: <?= $percentRevenue ?>%; height: 100%; background: #ffdad6; border-radius: 100px;"
-                                            title="Doanh thu: <?= number_format($item['total_revenue']) ?> đ">
+                                    <div class=" progress-sub mt-2">
+                                        <div class="progress-bar-revenue" style="width: <?= $percentRevenue ?>%"
+                                            title="<?= number_format($item['total_revenue']) ?>đ">
                                         </div>
                                     </div>
 
                                 </div>
+
                             </div>
+
                         <?php endforeach; ?>
+
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-    </header>
-</div>
+    <!-- thống kê sau khi lọc -->
+    <div class="container-fluid p-2" id="filteredDashboard" style="display:none">
+        <!-- Page Header -->
+        <div class=" d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <h3 class="display-6 fw-extrabold mt-1 mb-3">Thống kê</h3>
+                <p class="text-muted">Tổng quan về doanh thu và đơn hàng</p>
+            </div>
+            <button id="clearFilter" class="btn btn-primary-executive d-flex align-items-center gap-2">
+                <span class="material-symbols-outlined">
+                    arrow_back
+                </span>
+                Quay lại
+            </button>
+        </div>
+        <div class="row g-4">
+            <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                    <div class="custom-card metric-card-red d-flex flex-column justify-content-between">
+                        <div>
+                            <span class="badge bg-white bg-opacity-10 text-uppercase tracking-wider py-2 px-3">Tổng
+                                doanh thu</span>
+                            <h3 class="display-4 fw-bold mt-4 mb-1 doanh-thu">
+                                <?= number_format($tongDoanhThu ?? 0) ?>
+                            </h3>
+                            <p class="text-white text-opacity-75 date-range">
+                                Khoảng thời gian
+                                <?= $from ?? '' ?> →
+                                <?= $to ?? '' ?>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="custom-card metric-card-light d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="bg-white rounded-3 d-inline-flex p-2 mb-3 text-danger shadow-sm">
+                                <span class="material-symbols-outlined">analytics</span>
+                            </div>
+                            <h4 class="h5 fw-bold mb-1">Đơn hàng mới</h4>
+                            <p class="display-6 fw-bold mb-0 don-moi">
+                                <?= $tongDonMoi ?? 0 ?>
+                            </p>
+                        </div>
 
-<!-- chuyển dữ liệu db sang js -->
-<script>
-    const data7Ngay = <?= json_encode($data7Ngay) ?>;
-    const data12Thang = <?= json_encode($data12Thang) ?>;
-</script>
-<script src="<?= BASE_ASSETS ?>js/dashboard/dashboard.js"></script>
-<!--////////////////// Footer //////////////////-->
-<?php include './views/layout/footer.php' ?>
-<!--//////////////////End Footer //////////////////-->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="custom-card metric-card-light d-flex flex-column justify-content-between">
+                        <div>
+                            <div class="bg-danger bg-opacity-10 rounded-3 d-inline-flex p-2 mb-3 text-danger">
+                                <span class="material-symbols-outlined">speed</span>
+                            </div>
+                            <h4 class="h5 fw-bold mb-1">Tài khoản mới</h4>
+                            <p class="display-6 fw-bold mb-0 tai-khoan">
+                                <?= $tongTaiKhoan ?? 0 ?>
+                            </p>
+                        </div>
 
-<!-- Page specific script -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="custom-card h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h3 class="h4 fw-bold text-dark">
+                                Top sản phẩm bán chạy nhất
+                            </h3>
+                            <p class="small text-muted mb-0">
+                                Sản phẩm có số lượng bán ra cao nhất trong khoảng thời gian đã chọn
+                            </p>
+                        </div>
+                        <div class="d-flex gap-3">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-danger rounded-1" style="width: 12px; height: 12px"></div>
+                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Sản phẩm</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="bg-danger-subtle rounded-1" style="width: 12px; height: 12px"></div>
+                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Doanh thu</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="top-products-container">
+                        <?php foreach ($topProducts as $item): ?>
+                            <?php
+                            $percentQty = $maxQuantity > 0 ? ($item['total_quantity'] / $maxQuantity) * 100 : 0;
+                            $percentRevenue = $maxRevenue > 0 ? ($item['total_revenue'] / $maxRevenue) * 100 : 0;
+                            ?>
+                            <div class="bar-group">
+                                <div class="bars">
+                                    <div class="bar-units" style="height: <?= $percentQty ?>%">
+                                        <span class="bar-value text-danger">
+                                            <?= number_format($item['total_quantity']) ?>
+                                        </span>
+                                    </div>
+                                    <div class="bar-revenue" style="height: <?= $percentRevenue ?>%">
+                                        <span class="bar-value text-danger-emphasis">
+                                            <?= number_format($item['total_revenue']) ?>đ
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <p class="mb-0 fw-bold small text-truncate">
+                                        <?= $item['ten_san_pham'] ?>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+            <!-- Active Users List -->
+            <div class="col-lg-5">
+                <div class="custom-card h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="h5 fw-bold text-dark">Top 5 khách hàng chi tiêu nhiều nhất</h3>
+                        <button class="btn btn-link text-muted p-0">
+                            <span class="material-symbols-outlined">more_horiz</span>
+                        </button>
+                    </div>
+                    <div class="user-list">
+                        <?php foreach ($topUsers as $user): ?>
+                            <div class="user-item">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img class="avatar" src="<?= BASE_URL_ADMIN ?>assets/images/users/user-1.jpg" />
+                                    <div>
+                                        <p class=" mb-0 fw-bold small text-dark">
+                                            <?= $user['ho_ten'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <p class="mb-0 fw-extrabold text-danger">
+                                        <?= number_format($user['total_spent']) ?>đ
+                                    </p>
+                                    <p class="mb-0 text-muted" style="font-size: 10px">
+                                        <?= $user['total_orders'] ?> đơn
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- Code injected by live-server -->
+    <!-- chuyển dữ liệu db sang js -->
+    <script>
+        window.data7Ngay = <?= json_encode($data7Ngay) ?>;
+        window.data12Thang = <?= json_encode($data12Thang) ?>;
+        window.ADMIN_URL = "<?= BASE_URL_ADMIN ?>index.php";
+    </script>
+    <script src="<?= BASE_ASSETS ?>js/dashboard/dashboard.js"></script>
+    <!--////////////////// Footer //////////////////-->
+    <?php include './views/layout/footer.php' ?>
+    <!--//////////////////End Footer //////////////////-->
 
-</body>
+    <!-- Page specific script -->
 
-</html>
+    <!-- Code injected by live-server -->
+
+    </body>
+
+    </html>

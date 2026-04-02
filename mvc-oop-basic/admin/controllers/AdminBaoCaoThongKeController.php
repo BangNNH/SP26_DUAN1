@@ -111,7 +111,56 @@ class AdminBaoCaoThongKeController
         $data7Ngay = $this->modelBaoCaoThongKe->getDoanhThuTuan();
         $data12Thang = $this->modelBaoCaoThongKe->getDoanhThu12Thang();
 
+        // tính toán lượng tài khoản đăng ký mới theo ngày
+        $dataTaiKhoanMoi = $this->modelBaoCaoThongKe->getTaiKhoanMoiHomNayVaHomQua();
+
+        $homNayTaiKhoan = 0;
+        $homQuaTaiKhoan = 0;
+
+        foreach ($dataTaiKhoanMoi as $item) {
+            if ($item['ngay'] == date('Y-m-d')) {
+                $homNayTaiKhoan = $item['tong_tai_khoan_moi'];
+            } else {
+                $homQuaTaiKhoan = $item['tong_tai_khoan_moi'];
+            }
+        }
+        // tính % tài khoản mới
+        $phanTramTaiKhoan = 0;
+        if ($homQuaTaiKhoan > 0) {
+            $phanTramTaiKhoan = (($homNayTaiKhoan - $homQuaTaiKhoan) / $homQuaTaiKhoan) * 100;
+        }
+
         require_once './views/home.php';
     }
+    public function filter()
+    {
+        $from = $_GET['from'] ?? '';
+        $to = $_GET['to'] ?? '';
+
+        if (!$from || !$to) {
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Thiếu ngày']);
+            exit;
+        }
+
+        $thongKe = $this->modelBaoCaoThongKe->getThongKeTheoKhoangThoiGian($from, $to);
+        $taiKhoan = $this->modelBaoCaoThongKe->getTaiKhoanMoiTheoKhoang($from, $to);
+        $topProducts = $this->modelBaoCaoThongKe->getTopSanPhamTheoKhoang($from, $to);
+        $topUsers = $this->modelBaoCaoThongKe->getTopUsersTheoKhoang($from, $to);
+
+        $result = [
+            'doanh_thu' => $thongKe['doanh_thu'] ?? 0,
+            'don_moi' => $thongKe['don_moi'] ?? 0,
+            'tai_khoan' => $taiKhoan['tai_khoan'] ?? 0,
+            'top_products' => $topProducts,
+            'top_users' => $topUsers,
+        ];
+
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
+        exit;
+    }
 }
+
 ?>

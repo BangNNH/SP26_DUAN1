@@ -10,6 +10,7 @@ require_once './controllers/HomeController.php';
 require_once './controllers/CartController.php';
 require_once './controllers/OrderController.php';
 require_once './controllers/ProductController.php';
+require_once './controllers/PaymentController.php';
 
 // Require toàn bộ file Models
 require_once './models/SanPham.php';
@@ -17,6 +18,7 @@ require_once './models/TaiKhoan.php';
 require_once './models/GioHang.php';
 require_once './models/DonHang.php';
 require_once './models/BinhLuan.php';
+require_once './models/PaymentModel.php';
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -51,4 +53,7 @@ match ($act) {
     'send-otp-forgot-password' => (new HomeController())->sendOtpForgotPassword(),
     'reset-password' => (new HomeController())->resetPassword(),
 
+    // Payment
+    'momo-payment' => (new PaymentController())->momo_payment(),
+    'payment-callback' => (new PaymentController())->callback(),
 };

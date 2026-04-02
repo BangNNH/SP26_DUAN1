@@ -128,7 +128,11 @@
             </form>
             <form action="?act=momo-payment" method="POST" id="momo-payment-form" style="display: none;">
                 <input type="hidden" name="total_momo" value="<?= $tongGioHang + 30000 ?>">
-                <input type="hidden" name="order_id_real" value="<?= $_SESSION['last_order_id'] ?? '' ?>">
+                <input type="hidden" name="ten_nguoi_nhan" id="momo_ten">
+                <input type="hidden" name="email_nguoi_nhan" id="momo_email">
+                <input type="hidden" name="sdt_nguoi_nhan" id="momo_sdt">
+                <input type="hidden" name="dia_chi_nguoi_nhan" id="momo_diachi">
+                <input type="hidden" name="ghi_chu" id="momo_ghichu">
             </form>
         </div>
     </div>
@@ -150,7 +154,14 @@
                         return false;
                     }
 
-                    console.log("Đang chuyển hướng MoMo...");
+                    // ĐỔ DỮ LIỆU TỪ FORM CHÍNH SANG FORM MOMO TRƯỚC KHI SUBMIT
+                    document.getElementById('momo_ten').value = document.getElementById('ten_nguoi_nhan').value;
+                    document.getElementById('momo_email').value = document.getElementById('email_nguoi_nhan').value;
+                    document.getElementById('momo_sdt').value = document.getElementById('sdt_nguoi_nhan').value;
+                    document.getElementById('momo_diachi').value = document.getElementById('dia_chi_nguoi_nhan').value;
+                    document.getElementById('momo_ghichu').value = document.getElementById('ghi_chu').value;
+
+                    console.log("Dữ liệu đã copy xong. Đang chuyển hướng MoMo...");
                     document.getElementById('momo-payment-form').submit();
                 }
             });

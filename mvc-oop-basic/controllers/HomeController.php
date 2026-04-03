@@ -43,6 +43,10 @@ class HomeController
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
         $listBinhLuan = $this->modelBinhLuan->getBinhLuanFromSanPham($id);
+        // Chỉ hiển thị bình luận còn trạng thái 1 (đã duyệt, hiển thị)
+        $listBinhLuan = array_filter($listBinhLuan, function($bl) {
+            return isset($bl['trang_thai']) && $bl['trang_thai'] == 1;
+        });
         $listSanPhamCungDanhMuc = $this->modelSanPham->getListSanPhamDanhMuc($sanPham['danh_muc_id'], $id);
         if ($sanPham) {
             require_once './views/detailSanPham.php';

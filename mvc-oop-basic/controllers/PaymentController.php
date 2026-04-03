@@ -131,7 +131,8 @@ class PaymentController
                             $sanPham['san_pham_id'], 
                             $donGia,
                             $sanPham['so_luong'],
-                            $thanhTien
+                            $thanhTien,
+                            $sanPham['ten_san_pham'] ?? null
                         );
                     }
                     

@@ -101,31 +101,46 @@
                         <div class="row">
                             <?php if ($tongGioHang > 0): ?>
                                 <div class="col-lg-5 ml-auto" style="float: right;">
-                                    <div class="cart-tax">
-                                        <h6>Tổng giỏ hàng</h6>
-                                        <div class="cart-calculator">
-                                            <span><?= formatPrice($tongGioHang) ?>đ</span>
+                                    <!-- Cart Calculation Area -->
+                                    <div class="cart-calculator-wrapper">
+                                        <div class="cart-calculate-items">
+                                            <h6>Tổng đơn hàng</h6>
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <tr>
+                                                        <td>Tổng tiền sản phẩm</td>
+                                                        <td><?= formatPrice($tongGioHang) . "đ" ?></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Vận chuyển</td>
+                                                        <td>30.000đ</td>
+                                                    </tr>
+                                                    <tr class="total">
+                                                        <td>Tổng thanh toán</td>
+                                                        <td class="total-amount"><?= formatPrice($tongGioHang + 30000) . "đ" ?></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
+                                        <a href="<?= BASE_URL . '?act=thanh-toan' ?>" class="btn btn-sqr d-block">Đặt Hàng</a>
                                     </div>
-                                    <a href="?act=thanh-toan" class="btn btn-primary">Thanh toán</a>
-                                </div>
-                            <?php else: ?>
-                                <div class="col-12 text-center" style="padding: 40px 0;">
-                                    <div class="cart-tax">
-                                        <h6 style="margin-bottom: 20px;">Giỏ hàng của bạn đang trống</h6>
+                                <?php else: ?>
+                                    <div class="col-12 text-center" style="padding: 40px 0;">
+                                        <div class="cart-tax">
+                                            <h6 style="margin-bottom: 20px;">Giỏ hàng của bạn đang trống</h6>
+                                        </div>
+                                        <a href="index.php">
+                                            Tiếp tục mua sắm
+                                        </a>
                                     </div>
-                                    <a href="index.php"  >
-                                        Tiếp tục mua sắm
-                                    </a>
+                                <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- cart main wrapper end -->
+        <!-- cart main wrapper end -->
 </main>
 
 

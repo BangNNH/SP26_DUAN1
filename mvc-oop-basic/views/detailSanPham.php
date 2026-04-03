@@ -76,7 +76,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-5" style="padding-left: 40px;">
                                 <div class="detail-center" bis_skin_checked="1">
                                     <div class="product-name" bis_skin_checked="1">
                                         <div class="box-name" bis_skin_checked="1">

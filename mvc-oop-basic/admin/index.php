@@ -68,6 +68,7 @@ match ($act) {
     'them-quan-tri' => (new AdminTaiKhoanController())->postAddQuanTri(),
     'form-sua-quan-tri' => (new AdminTaiKhoanController())->formEditQuanTri(),
     'sua-quan-tri' => (new AdminTaiKhoanController())->postEditQuanTri(),
+    
 
     'reset-password' => (new AdminTaiKhoanController())->resetPassword(),
 

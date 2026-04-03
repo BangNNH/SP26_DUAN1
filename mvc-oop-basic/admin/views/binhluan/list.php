@@ -208,12 +208,13 @@ function getSortIcon($column, $current_sort, $current_order) {
                                     </a>
                                 </th>
                                 <th>Nội dung</th>
+                                <th>Trạng thái</th>
                                 <th style="width: 150px;">
                                     <a href="?act=quan-ly-binh-luan&sort=ngay_dang&order=<?= $next_order . $filter_params ?>" class="text-dark d-flex justify-content-between align-items-center">
                                         Ngày đăng <?= getSortIcon('ngay_dang', $current_sort, $current_order) ?>
                                     </a>
                                 </th>
-                                <th style="width: 100px;">Thao tác</th>
+                                <th style="width: 150px;">Thao tác</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -232,8 +233,20 @@ function getSortIcon($column, $current_sort, $current_order) {
                                             </a>
                                         </td>
                                         <td><?= htmlspecialchars($bl['noi_dung']) ?></td>
-                                        <td class="text-center"><?= date("d/m/Y", strtotime($bl['ngay_dang'])) ?></td>
                                         <td class="text-center">
+                                            <?php if ($bl['trang_thai'] == 1): ?>
+                                                <span class="badge badge-success">Hiển thị</span>
+                                            <?php else: ?>
+                                                <span class="badge badge-secondary">Ẩn</span>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="text-center"> <?= date("d/m/Y", strtotime($bl['ngay_dang'])) ?></td>
+                                        <td class="text-center">
+                                            <a href="?act=update-trang-thai-binh-luan&id_binh_luan=<?= $bl['id'] ?>&name_view=binh_luan" 
+                                               class="btn btn-sm <?= ($bl['trang_thai'] == 1 ? 'btn-warning' : 'btn-success') ?>" 
+                                               onclick="return confirm('Bạn có chắc chắn muốn <?= ($bl['trang_thai'] == 1 ? 'ẩn' : 'hiển thị lại') ?> bình luận này?')">
+                                                <i class="fas <?= ($bl['trang_thai'] == 1 ? 'fa-eye-slash' : 'fa-eye') ?>"></i>
+                                            </a>
                                             <a href="?act=xoa-binh-luan&id_binh_luan=<?= $bl['id'] ?>" 
                                                class="btn btn-danger btn-sm" 
                                                onclick="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn bình luận này?')">

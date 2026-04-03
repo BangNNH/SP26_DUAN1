@@ -48,11 +48,26 @@ class DonHang
         }
     }
 
-    public function addChiTietDonHang($donHangId, $sanPhamId, $donGia, $soLuong, $thanhTien)
+    public function addChiTietDonHang($donHangId, $sanPhamId, $donGia, $soLuong, $thanhTien, $tenSanPham = null)
     {
         try {
-            $sql = "INSERT INTO chi_tiet_don_hangs(don_hang_id, san_pham_id, don_gia, so_luong, thanh_tien)
-            VALUES (:don_hang_id, :san_pham_id, :don_gia, :so_luong, :thanh_tien)";
+            // Nếu chưa có cột ten_san_pham, bạn cần chạy alter table trên DB:
+            // ALTER TABLE chi_tiet_don_hangs ADD COLUMN ten_san_pham VARCHAR(255) NULL;
+
+            if ($tenSanPham === null) {
+                $sqlProduct = "SELECT ten_san_pham FROM san_phams WHERE id = :id LIMIT 1";
+                $stmtProduct = $this->conn->prepare($sqlProduct);
+                $stmtProduct->execute([':id' => $sanPhamId]);
+                $product = $stmtProduct->fetch(PDO::FETCH_ASSOC);
+                if ($product && !empty($product['ten_san_pham'])) {
+                    $tenSanPham = $product['ten_san_pham'];
+                } else {
+                    $tenSanPham = ''; // Hoặc có thể đặt giá trị mặc định khác
+                }
+            }
+
+            $sql = "INSERT INTO chi_tiet_don_hangs(don_hang_id, san_pham_id, don_gia, so_luong, thanh_tien, ten_san_pham)
+            VALUES (:don_hang_id, :san_pham_id, :don_gia, :so_luong, :thanh_tien, :ten_san_pham)";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
@@ -60,10 +75,10 @@ class DonHang
                 ':san_pham_id' => $sanPhamId,
                 ':don_gia' => $donGia,
                 ':so_luong' => $soLuong,
-                ':thanh_tien' => $thanhTien
+                ':thanh_tien' => $thanhTien,
+                ':ten_san_pham' => $tenSanPham,
             ]);
             return true;
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }
@@ -79,7 +94,6 @@ class DonHang
                 ':tai_khoan_id' => $taiKhoanId,
             ]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }
@@ -94,7 +108,6 @@ class DonHang
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }
@@ -109,7 +122,6 @@ class DonHang
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }
@@ -124,7 +136,6 @@ class DonHang
             $stmt->execute([':id' => $donHangId]);
 
             return $stmt->fetch(PDO::FETCH_ASSOC);
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }
@@ -134,18 +145,17 @@ class DonHang
     {
         try {
             $sql = "SELECT 
-                chi_tiet_don_hangs.*,
-                san_phams.ten_san_pham,
-                san_phams.hinh_anh
+                    chi_tiet_don_hangs.*,
+                COALESCE(chi_tiet_don_hangs.ten_san_pham, san_phams.ten_san_pham, '') AS ten_san_pham,
+                    COALESCE(san_phams.hinh_anh, '') AS hinh_anh
             FROM chi_tiet_don_hangs 
-            JOIN san_phams ON chi_tiet_don_hangs.san_pham_id = san_phams.id 
+            LEFT JOIN san_phams ON chi_tiet_don_hangs.san_pham_id = san_phams.id 
             WHERE chi_tiet_don_hangs.don_hang_id = :don_hang_id";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':don_hang_id' => $donHangId]);
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }
@@ -163,7 +173,6 @@ class DonHang
             ]);
 
             return true;
-
         } catch (Exception $e) {
             echo "Lỗi" . $e->getMessage();
         }

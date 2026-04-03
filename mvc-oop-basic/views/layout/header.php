@@ -14,7 +14,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/img/dog.png">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/img/logo/main-logo0.1.png">
 
     <!-- CSS
 	============================================ -->

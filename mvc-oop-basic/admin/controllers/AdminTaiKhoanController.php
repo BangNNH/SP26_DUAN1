@@ -353,27 +353,52 @@ class AdminTaiKhoanController
             if (empty($errors)) {
                 $user = $this->modelTaiKhoan->getTaiKhoanformEmail($_SESSION['user_admin']);
                 $trang_thai = $user['trang_thai'] ?? 1;
+                $avatarPath = $user['anh_dai_dien'] ?? '';
 
-                $status = $this->modelTaiKhoan->updateTaiKhoan(
-                    $user['id'],
-                    $ho_ten,
-                    $email,
-                    $so_dien_thoai,
-                    $ngay_sinh,
-                    $dia_chi,
-                    $trang_thai
-                );
-
-                if ($status) {
-                    // Nếu đổi email, cập nhật session để các trang khác dùng đúng
-                    if ($email !== $_SESSION['user_admin']) {
-                        $_SESSION['user_admin'] = $email;
+                // Xử lý upload avatar nếu file được gửi lên
+                if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+                    $uploadDir = 'uploads/avatars/';
+                    if (!file_exists(PATH_ROOT . $uploadDir)) {
+                        mkdir(PATH_ROOT . $uploadDir, 0755, true);
                     }
-                    $_SESSION['success'] = 'Cập nhật thông tin cá nhân thành công';
-                } else {
-                    $_SESSION['errors']['general'] = 'Có lỗi xảy ra khi cập nhật thông tin';
+
+                    $uploaded = uploadFile($_FILES['avatar'], $uploadDir);
+                    if ($uploaded) {
+                        if (!empty($avatarPath) && file_exists(PATH_ROOT . $avatarPath)) {
+                            deleteFile($avatarPath);
+                        }
+                        $avatarPath = $uploaded;
+                    } else {
+                        $errors['avatar'] = 'Upload ảnh thất bại. Vui lòng thử lại.';
+                    }
+                } elseif (isset($_FILES['avatar']) && $_FILES['avatar']['error'] !== UPLOAD_ERR_NO_FILE) {
+                    $errors['avatar'] = 'Lỗi upload ảnh: ' . $_FILES['avatar']['error'];
                 }
-                $_SESSION['flash'] = true;
+
+                if (empty($errors)) {
+                    $status = $this->modelTaiKhoan->updateTaiKhoanWithAvatar(
+                        $user['id'],
+                        $ho_ten,
+                        $email,
+                        $so_dien_thoai,
+                        $ngay_sinh,
+                        $dia_chi,
+                        $avatarPath,
+                        $trang_thai
+                    );
+
+                    if ($status) {
+                        if ($email !== $_SESSION['user_admin']) {
+                            $_SESSION['user_admin'] = $email;
+                        }
+                        $_SESSION['success'] = 'Cập nhật thông tin cá nhân thành công';
+                    } else {
+                        $_SESSION['errors']['general'] = 'Có lỗi xảy ra khi cập nhật thông tin';
+                    }
+                    $_SESSION['flash'] = true;
+                } else {
+                    $_SESSION['flash'] = true;
+                }
             } else {
                 $_SESSION['flash'] = true;
             }

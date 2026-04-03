@@ -17,10 +17,32 @@ class OrderController
 
     public function thanhToan()
     {
-        if (isset($_SESSION['user_client'])) {
-            // LUỒNG USER LOGIN (DB)
-            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
+        $direct_san_pham_id = $_POST['san_pham_id'] ?? $_GET['san_pham_id'] ?? null;
+        $direct_so_luong = isset($_POST['so_luong']) ? (int)$_POST['so_luong'] : 1;
 
+        // Nếu user đã đăng nhập, luôn lấy thông tin user để fill form
+        $user = null;
+        if (isset($_SESSION['user_client'])) {
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
+        }
+
+        if ($direct_san_pham_id) {
+            // Mua ngay từ chi tiết sản phẩm, ngay cả khi chưa đăng nhập
+            $product = getProductById($direct_san_pham_id);
+            $chiTietGioHang = [];
+            if ($product) {
+                $chiTietGioHang[] = [
+                    'san_pham_id' => $product['id'],
+                    'id' => $product['id'],
+                    'ten_san_pham' => $product['ten_san_pham'],
+                    'gia_san_pham' => $product['gia_san_pham'],
+                    'gia_khuyen_mai' => $product['gia_khuyen_mai'],
+                    'hinh_anh' => $product['hinh_anh'],
+                    'so_luong' => max(1, $direct_so_luong),
+                ];
+            }
+        } elseif (isset($_SESSION['user_client'])) {
+            // LUỒNG USER LOGIN (DB)
             $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
 
             if (!$gioHang) {
@@ -33,8 +55,10 @@ class OrderController
             // LUỒNG KHÁCH (SESSION)
             $chiTietGioHang = getCartFromSession();
         }
+
         require_once './views/thanhToan.php';
     }
+
 
     public function postThanhToan()
     {
@@ -49,12 +73,37 @@ class OrderController
             $tong_tien = $_POST['tong_tien'];
             $phuong_thuc_thanh_toan_id = $_POST['phuong_thuc_thanh_toan_id'];
 
+            $direct_san_pham_id = $_POST['direct_san_pham_id'] ?? $_POST['san_pham_id'] ?? null;
+            $direct_so_luong = isset($_POST['direct_so_luong']) ? (int)$_POST['direct_so_luong'] : (int)($_POST['so_luong'] ?? 1);
+            $isDirectPurchase = !empty($direct_san_pham_id);
+
             $ngay_dat = date('Y-m-d H:i:s');
             $trang_thai_id = 1;
             $ma_don_hang = 'DH' . rand(1000, 9999);
 
             // PHÂN LUỒNG
-            if (isset($_SESSION['user_client'])) {
+            if ($direct_san_pham_id) {
+                $chiTietGioHang = [];
+                $product = getProductById($direct_san_pham_id);
+                if ($product) {
+                    $chiTietGioHang[] = [
+                        'san_pham_id' => $product['id'],
+                        'id' => $product['id'],
+                        'ten_san_pham' => $product['ten_san_pham'],
+                        'gia_san_pham' => $product['gia_san_pham'],
+                        'gia_khuyen_mai' => $product['gia_khuyen_mai'],
+                        'hinh_anh' => $product['hinh_anh'],
+                        'so_luong' => max(1, $direct_so_luong),
+                    ];
+                }
+
+                if (isset($_SESSION['user_client'])) {
+                    $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
+                    $tai_khoan_id = $user['id'];
+                } else {
+                    $tai_khoan_id = null;
+                }
+            } elseif (isset($_SESSION['user_client'])) {
                 // USER LOGIN
                 $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
                 $tai_khoan_id = $user['id'];
@@ -64,8 +113,7 @@ class OrderController
             } else {
                 // GUEST
                 $tai_khoan_id = null;
-
-                $chiTietGioHang = getCartFromSession(); // lấy từ session
+                $chiTietGioHang = getCartFromSession();
             }
 
             // Thêm đơn hàng
@@ -102,13 +150,15 @@ class OrderController
                 }
 
                 // CLEAR CART
-                if (isset($_SESSION['user_client'])) {
-                    // DB
-                    $this->modelGioHang->clearDetailGioHang($gioHang['id']);
-                    $this->modelGioHang->clearGioHang($tai_khoan_id);
-                } else {
-                    // SESSION
-                    unset($_SESSION['cart']);
+                if (!$isDirectPurchase) {
+                    if (isset($_SESSION['user_client'])) {
+                        // DB
+                        $this->modelGioHang->clearDetailGioHang($gioHang['id']);
+                        $this->modelGioHang->clearGioHang($tai_khoan_id);
+                    } else {
+                        // SESSION
+                        unset($_SESSION['cart']);
+                    }
                 }
 
                 // REDIRECT

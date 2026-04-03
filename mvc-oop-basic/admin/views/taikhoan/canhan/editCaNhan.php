@@ -32,10 +32,11 @@
                         <div class="col-lg-4">
                             <div class="card card-widget widget-user-2 shadow-sm">
                                 <div class="widget-user-header bg-info" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);padding: 20px 30px;border-radius: 12px;background: linear-gradient(135deg, #2aa4b8, #1e7f8f); display: flex; align-items: center; gap: 15px;">
-                                    <div class="widget-user-image">
-                                        <img class="img-circle elevation-2" style="width: 80px; height: 80px ; border-radius :  50%;  border: 3px solid #fff;  object-fit: cover; " 
-                                        src="<?= BASE_URL_ADMIN . $thongTin['anh_dai_dien'] ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
-                                    </div>
+                                    <div class="widget-user-image" style="position: relative; width: 80px; height: 80px;">
+                                    <img id="avatarPreview" class="img-circle elevation-2" style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid #fff; object-fit: cover; cursor: pointer;" 
+                                        src="<?= BASE_URL . ($thongTin['anh_dai_dien'] ?: 'uploads/avatars/default-avatar.png') ?>" alt="Avatar" onerror="this.onerror=null;this.src='https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'">
+                                    <label for="avatarInput" style="position: absolute; bottom: -5px; right: -5px; width: 28px; height: 28px; border-radius: 50%; background: #dc3545; color: #fff; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer;">+</label>
+                                </div>
                                     <div style="font-size: 20px; font-weight: 550;">
                                         <h5 class="widget-user-username text-white" style="margin-left: 0px;"><?= htmlspecialchars($thongTin['ho_ten'] ?? 'Admin') ?></h5>
                                         <span class="info-box-number" style="background: rgba(255,255,255,0.2);padding: 4px 10px;  border-radius: 20px; font-size: 13px;  display: inline-block;">Chức vụ: <?= htmlspecialchars($thongTin['ten_dang_nhap'] ?? 'admin') ?></span>
@@ -80,7 +81,8 @@
                                     <h5 class="card-title">Thông tin cá nhân</h5>
                                 </div>
                                 <div class="card-body">
-                                    <form action="<?= BASE_URL_ADMIN . '?act=sua-thong-tin-ca-nhan-admin' ?>" method="post">
+                                    <form action="<?= BASE_URL_ADMIN . '?act=sua-thong-tin-ca-nhan-admin' ?>" method="post" enctype="multipart/form-data" id="profileForm">
+                                        <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;">
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Họ tên</label>
@@ -148,6 +150,31 @@
     </section>
     <!-- /.content -->
 </div>
+
+<script>
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+    const profileForm = document.getElementById('profileForm');
+
+    if (avatarInput && avatarPreview && profileForm) {
+        avatarInput.addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                avatarPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+
+            profileForm.submit();
+        });
+
+        avatarPreview.addEventListener('click', function () {
+            avatarInput.click();
+        });
+    }
+</script>
 <!-- /.content-wrapper -->
 
 <!--////////////////// Footer //////////////////-->

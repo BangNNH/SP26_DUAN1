@@ -57,6 +57,11 @@
         {
             // debug($data);
             try {
+                // Nếu số lượng về 0, tự động đổi trạng thái thành dừng bán (trang_thai = 0)
+                if ($data['so_luong'] <= 0) {
+                    $data['trang_thai'] = 0;
+                }
+
                 $sql = "INSERT INTO san_phams (
             ten_san_pham,
             gia_san_pham,
@@ -162,6 +167,11 @@
             $chong_nuoc
         ) {
             try {
+                // Nếu số lượng về 0, tự động đổi trạng thái thành dừng bán (trang_thai = 0)
+                if ($so_luong <= 0) {
+                    $trang_thai = 0;
+                }
+
                 $sql = "UPDATE san_phams SET ten_san_pham=:ten_san_pham, gia_san_pham=:gia_san_pham,
                                             gia_khuyen_mai=:gia_khuyen_mai, so_luong=:so_luong, ngay_nhap=:ngay_nhap,
                                             danh_muc_id=:danh_muc_id, trang_thai=:trang_thai, mo_ta=:mo_ta, hinh_anh=:hinh_anh,

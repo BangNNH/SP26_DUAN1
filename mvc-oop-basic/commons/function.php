@@ -26,14 +26,28 @@ function connectDB()
 // Thêm file
 function uploadFile($file, $folderUpload)
 {
-    $pathStorage = $folderUpload . time() . $file['name'];
+    if (empty($file) || !isset($file['tmp_name']) || $file['error'] !== UPLOAD_ERR_OK) {
+        return null;
+    }
 
-    $from = $file['tmp_name'];
+    $filename = basename($file['name'] ?? '');
+    if (empty($filename)) {
+        return null;
+    }
+
+    // Chuẩn hóa folderUpload không có ./
+    $folderUpload = ltrim($folderUpload, './');
+    if (!str_ends_with($folderUpload, '/')) {
+        $folderUpload .= '/';
+    }
+
+    $pathStorage = $folderUpload . time() . '-' . $filename;
     $to = PATH_ROOT . $pathStorage;
 
-    if (move_uploaded_file($from, $to)) {
+    if (move_uploaded_file($file['tmp_name'], $to)) {
         return $pathStorage;
     }
+
     return null;
 }
 

@@ -32,10 +32,10 @@ class AdminSanPhamController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // ===== 1. Gom data =====
             $data = [
-                'ten_san_pham'   => $_POST['ten_san_pham'] ?? '',
+                'ten_san_pham'   => trim($_POST['ten_san_pham'] ?? ''),
                 'gia_san_pham'   => $_POST['gia_san_pham'] ?? '',
-                'gia_khuyen_mai' => $_POST['gia_khuyen_mai'] ?? '',
-                'so_luong'       => $_POST['so_luong'] ?? '',
+                'gia_khuyen_mai' => $_POST['gia_khuyen_mai'] ?? null,
+                'so_luong'       => $_POST['so_luong'] ?? '0',
                 'ngay_nhap'      => $_POST['ngay_nhap'] ?? '',
                 'danh_muc_id'    => $_POST['danh_muc_id'] ?? '',
                 'trang_thai'     => $_POST['trang_thai'] ?? '',
@@ -51,9 +51,21 @@ class AdminSanPhamController
                 'chong_nuoc'     => $_POST['chong_nuoc'] ?? '',
             ];
 
+            // Normalize data
+            $data['gia_khuyen_mai'] = ($data['gia_khuyen_mai'] !== '' && $data['gia_khuyen_mai'] !== null) ? $data['gia_khuyen_mai'] : null;
+            $data['so_luong'] = (int)$data['so_luong'];
+            $data['is_new'] = (int)$data['is_new'];
+            $data['is_hot'] = (int)$data['is_hot'];
+            $data['trang_thai'] = (int)$data['trang_thai'];
+            $data['danh_muc_id'] = (int)$data['danh_muc_id'];
+
             $hinh_anh = $_FILES['hinh_anh'] ?? null;
+            $data['hinh_anh'] = null;
+
             // ===== 4. Upload ảnh =====
-            $data['hinh_anh'] = uploadFile($hinh_anh, './uploads/');
+            if ($hinh_anh && $hinh_anh['error'] === UPLOAD_ERR_OK) {
+                $data['hinh_anh'] = uploadFile($hinh_anh, 'uploads/');
+            }
 
             $img_array = $_FILES['img_array'] ?? [];
 
@@ -92,8 +104,14 @@ class AdminSanPhamController
                 $errors['trang_thai'] = 'Trạng thái không được để trống.';
             }
 
-            if ($hinh_anh['error'] !== 0) {
-                $errors['hinh_anh'] = 'Vui lòng chọn ảnh sản phẩm.';
+            if (!$hinh_anh || $hinh_anh['error'] !== UPLOAD_ERR_OK) {
+                if (!$hinh_anh) {
+                    $errors['hinh_anh'] = 'Vui lòng chọn ảnh sản phẩm.';
+                } else {
+                    $errors['hinh_anh'] = 'Lỗi upload ảnh: ' . $hinh_anh['error'];
+                }
+            } elseif (!$data['hinh_anh']) {
+                $errors['hinh_anh'] = 'Upload ảnh thất bại, vui lòng thử lại.';
             }
 
             $_SESSION['errors'] = $errors;
@@ -357,26 +375,25 @@ class AdminSanPhamController
 
     public function updateTrangThaiBinhLuan()
     {
-        $id_binh_luan = $_POST['id_binh_luan'];
-        $name_view = $_POST['name_view'];
+        $id_binh_luan = $_POST['id_binh_luan'] ?? $_GET['id_binh_luan'] ?? null;
+        $name_view = $_POST['name_view'] ?? $_GET['name_view'] ?? null;
         $binhLuan = $this->modelSanPham->getDetailBinhLuan($id_binh_luan);
 
-
         if ($binhLuan) {
-            $trang_thai_update = "";
-            if ($binhLuan['trang_thai'] == 1) {
-                $trang_thai_update = 2;
-            } else {
-                $trang_thai_update = 1;
-            }
+            $trang_thai_update = ($binhLuan['trang_thai'] == 1) ? 2 : 1;
             $status = $this->modelSanPham->updateTrangThaiBinhLuan($id_binh_luan, $trang_thai_update);
             if ($status) {
                 if ($name_view == 'detail_khach') {
                     header("Location: " . BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $binhLuan['tai_khoan_id']);
+                } elseif ($name_view == 'binh_luan') {
+                    header("Location: " . BASE_URL_ADMIN . '?act=quan-ly-binh-luan');
                 } else {
                     header("Location: " . BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $binhLuan['san_pham_id']);
                 }
+                exit();
             }
         }
+        header("Location: " . BASE_URL_ADMIN . '?act=quan-ly-binh-luan');
+        exit();
     }
 }

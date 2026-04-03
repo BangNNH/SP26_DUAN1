@@ -3,6 +3,7 @@
 require_once './models/DonHang.php';
 require_once './models/PaymentModel.php';
 require_once './models/GioHang.php'; // Đã bổ sung gọi Model GioHang
+require_once './models/SanPham.php'; // Gọi Model SanPham để kiểm tra tồn kho
 
 class PaymentController
 {
@@ -10,6 +11,49 @@ class PaymentController
     private $partnerCode = 'MOMOBKUN20180529';
     private $accessKey = 'klm05TvNBzhg7h7j';
     private $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+
+    /**
+     * Kiểm tra tồn kho trước khi thanh toán
+     * @param int $tai_khoan_id - ID tài khoản
+     * @return array ['status' => true/false, 'errors' => ['lỗi1', 'lỗi2', ...]]
+     */
+    private function validateStockBeforePayment($tai_khoan_id)
+    {
+        $errors = [];
+        $gioHangModel = new GioHang();
+        $sanPhamModel = new SanPham();
+
+        // Lấy giỏ hàng của user
+        $gioHang = $gioHangModel->getGioHangFromUser($tai_khoan_id);
+
+        if (!$gioHang) {
+            $errors[] = 'Giỏ hàng không tồn tại';
+            return ['status' => false, 'errors' => $errors];
+        }
+
+        // Lấy danh sách chi tiết giỏ hàng
+        $chiTietGioHang = $gioHangModel->getDetailGioHang($gioHang['id']);
+
+        if (!$chiTietGioHang || empty($chiTietGioHang)) {
+            $errors[] = 'Giỏ hàng của bạn trống';
+            return ['status' => false, 'errors' => $errors];
+        }
+
+        // Kiểm tra từng sản phẩm
+        foreach ($chiTietGioHang as $item) {
+            $checkResult = $sanPhamModel->checkStock($item['san_pham_id'], $item['so_luong']);
+
+            if (!$checkResult['status']) {
+                $errors[] = $checkResult['message'];
+            }
+        }
+
+        if (!empty($errors)) {
+            return ['status' => false, 'errors' => $errors];
+        }
+
+        return ['status' => true, 'errors' => []];
+    }
 
     public function momo_payment()
     {
@@ -31,6 +75,19 @@ class PaymentController
         $trang_thai_id = 1; // 1: Chờ thanh toán
         $ngay_dat = date('Y-m-d H:i:s'); // Thời gian hiện tại
         $ma_don_hang = 'DH' . time(); // Sinh mã đơn hàng ngẫu nhiên (VD: DH1712000)
+
+        // ========================================================
+        // BƯỚC 1.5: KIỂM TRA TỒN KHO
+        // ========================================================
+        $stockValidation = $this->validateStockBeforePayment($tai_khoan_id);
+
+        if (!$stockValidation['status']) {
+            // Có lỗi tồn kho
+            $_SESSION['errors'] = $stockValidation['errors'];
+            $_SESSION['flash'] = true;
+            header('Location: ' . BASE_URL . '?act=thanh-toan&status=stock-error');
+            exit();
+        }
 
         // ========================================================
         // BƯỚC 2: GỌI MODEL LƯU VỎ ĐƠN HÀNG VÀO DATABASE
@@ -74,7 +131,8 @@ class PaymentController
                             $sanPham['san_pham_id'], 
                             $donGia,
                             $sanPham['so_luong'],
-                            $thanhTien
+                            $thanhTien,
+                            $sanPham['ten_san_pham'] ?? null
                         );
                     }
                     
@@ -157,11 +215,25 @@ class PaymentController
         $orderId = $orderIdParts[0]; 
 
         $paymentModel = new PaymentModel();
+        $donHangModel = new DonHang();
+        $sanPhamModel = new SanPham();
 
         if ($resultCode == 0) {
             // Thanh toán thành công -> Đổi trạng thái đơn hàng
             $paymentModel->updatePaymentStatus($orderId, 2);
             $paymentModel->insertPaymentHistory($orderId, $transId, $amount, $message);
+            
+            // ========================================================
+            // GIẢM SỐ LƯỢNG SẢN PHẨM TRONG KHO SAU KHI THANH TOÁN MOMO THÀNH CÔNG
+            // ========================================================
+            $chiTietDonHang = $donHangModel->getChiTietDonHangByDonHangId($orderId);
+            
+            if ($chiTietDonHang) {
+                foreach ($chiTietDonHang as $item) {
+                    // Giảm tồn kho cho mỗi sản phẩm
+                    $sanPhamModel->decreaseStock($item['san_pham_id'], $item['so_luong']);
+                }
+            }
             
             // Xóa session giỏ hàng nếu bạn đang dùng Session lưu giỏ hàng
             if (isset($_SESSION['cart'])) {

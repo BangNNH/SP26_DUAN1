@@ -76,7 +76,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-5" style="padding-left: 40px;">
                                 <div class="detail-center" bis_skin_checked="1">
                                     <div class="product-name" bis_skin_checked="1">
                                         <div class="box-name" bis_skin_checked="1">
@@ -94,8 +94,8 @@
                                                 <i class="fi fi-rr-star"></i>
                                             </div>
                                             <div class="status-special" bis_skin_checked="1">
-                                                <i class="fi fi-rr-check-circle <?= $sanPham['so_luong'] > 0 ? 'text-success' : 'text-danger' ?>"></i>
-                                                <span class="<?= $sanPham['so_luong'] > 0 ? 'text-success' : 'text-danger' ?>"><?= $sanPham['so_luong'] > 0 ? 'Còn hàng' : 'Hết hàng' ?></span>
+                                                <i class="fi fi-rr-check-circle <?= $sanPham['trang_thai'] == 1 ? 'text-success' : 'text-danger' ?>"></i>
+                                                <span class="<?= $sanPham['trang_thai'] == 1 ? 'text-success' : 'text-danger' ?>"><?= $sanPham['trang_thai'] == 1 ? 'Còn hàng' : 'Hết hàng' ?></span>
                                             </div>
                                         </div>
                                     </div>
@@ -107,20 +107,24 @@
                                             </div>
                                         </div>
                                         <div class="two-btn" bis_skin_checked="1">
-                                            <form action="<?= BASE_URL . '?act=thanh-toan' ?>" method="POST">
-                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                                <input type="hidden" name="so_luong" value="1">
-                                                <button type="submit" class="btn btn-buy">
-                                                    Mua ngay
-                                                </button>
-                                            </form>
-                                            <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
-                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                                <input type="hidden" name="so_luong" value="1">
-                                                <button type="submit" class="btn btn-add-to-cart">
-                                                    Thêm vào giỏ
-                                                </button>
-                                            </form>
+                                            <?php if ($sanPham['trang_thai'] == 1): ?>
+                                                <form action="<?= BASE_URL . '?act=thanh-toan' ?>" method="POST">
+                                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                    <input type="hidden" name="so_luong" value="1">
+                                                    <button type="submit" class="btn btn-buy">
+                                                        Mua ngay
+                                                    </button>
+                                                </form>
+                                                <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                    <input type="hidden" name="so_luong" value="1">
+                                                    <button type="submit" class="btn btn-add-to-cart">
+                                                        Thêm vào giỏ
+                                                    </button>
+                                                </form>
+                                            <?php else: ?>
+                                                <p class="text-danger" style="font-weight: bold;">Sản phẩm tạm thời hết hàng</p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                     <div class="promotion" bis_skin_checked="1">

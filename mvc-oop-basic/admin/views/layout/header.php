@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Watch Hub</title>
+    <link rel="shortcut icon" type="image/x-icon" href="<?= BASE_ASSETS_IMG . '/logo/main-logo0.1.png' ?>">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"

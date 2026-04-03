@@ -22,7 +22,55 @@
 
     <div class="checkout-page-wrapper section-padding pt-4">
         <div class="container">
+            <!-- Hiển thị lỗi sản phẩm bị xoá -->
+            <?php if (!empty($_SESSION['errors']) && ($_GET['status'] ?? '' === 'product-deleted' || !empty($_SESSION['flash']))): ?>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">⚠️ Sản phẩm không khả dụng</h4>
+                    <ul style="margin-bottom: 0;">
+                        <?php foreach ($_SESSION['errors'] as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                        <?php endforeach ?>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['errors']); unset($_SESSION['flash']); ?>
+            <?php endif ?>
+
+            <!-- Hiển thị lỗi tồn kho -->
+            <?php if (!empty($_SESSION['errors']) && $_GET['status'] ?? '' === 'stock-error'): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">Rất tiếc, sản phẩm hiện không đủ số lượng!</h4>
+                    <ul style="margin-bottom: 0;">
+                        <?php foreach ($_SESSION['errors'] as $error): ?>
+                            <li><?= htmlspecialchars($error) ?></li>
+                        <?php endforeach ?>
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <?php unset($_SESSION['errors']); unset($_SESSION['flash']); ?>
+            <?php endif ?>
+
+            <!-- Hiển thị lỗi thanh toán -->
+            <?php if (($_GET['status'] ?? '') === 'error'): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading"> Thanh toán thất bại</h4>
+                    <p>Giao dịch thanh toán của bạn không thành công. Vui lòng thử lại.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif ?>
+
+            <!-- Hiển thị success -->
+            <?php if (($_GET['status'] ?? '') === 'success'): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <h4 class="alert-heading">✓ Thanh toán thành công</h4>
+                    <p>Đơn hàng của bạn đã được tạo thành công. Vui lòng chờ xanh nhân viên liên hệ.</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif ?>
+
             <form action="<?= BASE_URL . '?act=xu-ly-thanh-toan' ?>" method="POST" id="main-checkout-form">
+                <input type="hidden" name="direct_san_pham_id" value="<?= htmlspecialchars($direct_san_pham_id ?? '') ?>">
+                <input type="hidden" name="direct_so_luong" value="<?= htmlspecialchars($direct_so_luong ?? 1) ?>">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="checkout-billing-details-wrap">

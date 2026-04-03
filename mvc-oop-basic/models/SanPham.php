@@ -178,4 +178,108 @@ class SanPham
             return [];
         }
     }
+
+    /**
+     * Kiểm tra tồn kho cho sản phẩm
+     * @param int $id - ID sản phẩm
+     * @param int $soLuong - Số lượng cần kiểm tra
+     * @return array ['status' => true/false, 'message' => 'thông báo', 'product' => chi tiết sản phẩm]
+     */
+    public function checkStock($id, $soLuong)
+    {
+        try {
+            // Kiểm tra sản phẩm có tồn tại không
+            $sanPham = $this->getDetailSanPham($id);
+            
+            if (!$sanPham) {
+                return [
+                    'status' => false,
+                    'message' => 'Sản phẩm không tồn tại',
+                    'product' => null
+                ];
+            }
+
+            // Kiểm tra số lượng trong kho
+            if ($sanPham['so_luong'] < $soLuong) {
+                return [
+                    'status' => false,
+                    'message' => 'Sản phẩm ' . $sanPham['ten_san_pham'] . ' chỉ còn ' . $sanPham['so_luong'] . ' sản phẩm, không đủ số lượng bạn yêu cầu',
+                    'product' => $sanPham
+                ];
+            }
+
+            // Kiểm tra trạng thái của sản phẩm
+            if ($sanPham['trang_thai'] != 1) {
+                return [
+                    'status' => false,
+                    'message' => 'Sản phẩm ' . $sanPham['ten_san_pham'] . ' hiện không còn bán',
+                    'product' => $sanPham
+                ];
+            }
+
+            return [
+                'status' => true,
+                'message' => 'Kiểm tra tồn kho thành công',
+                'product' => $sanPham
+            ];
+        } catch (Exception $e) {
+            error_log("SanPham::checkStock error: " . $e->getMessage());
+            return [
+                'status' => false,
+                'message' => 'Lỗi kiểm tra tồn kho',
+                'product' => null
+            ];
+        }
+    }
+
+    /**
+     * Giảm số lượng sản phẩm trong kho
+     * @param int $id - ID sản phẩm
+     * @param int $soLuong - Số lượng cần giảm
+     * @return bool - True nếu thành công, False nếu thất bại
+     */
+    public function decreaseStock($id, $soLuong)
+    {
+        try {
+            // Lấy số lượng hiện tại
+            $sanPham = $this->getDetailSanPham($id);
+            
+            if (!$sanPham) {
+                error_log("SanPham::decreaseStock - Sản phẩm ID: $id không tồn tại");
+                return false;
+            }
+
+            // Kiểm tra số lượng có đủ không
+            if ($sanPham['so_luong'] < $soLuong) {
+                error_log("SanPham::decreaseStock - Sản phẩm ID: $id không đủ số lượng để giảm");
+                return false;
+            }
+
+            // Giảm số lượng (có thể về 0)
+            $newQuantity = max(0, $sanPham['so_luong'] - $soLuong);
+            
+            $sql = "UPDATE san_phams SET so_luong = :so_luong";
+            $params = [':so_luong' => $newQuantity, ':id' => $id];
+
+            // Nếu số lượng về 0, tự động đổi trạng thái thành dừng bán (trang_thai = 0)
+            if ($newQuantity <= 0) {
+                $sql .= ", trang_thai = 0";
+                error_log("SanPham::decreaseStock - Sản phẩm ID: $id hết hàng, tự động đổi trạng thái sang dừng bán");
+            }
+
+            $sql .= " WHERE id = :id";
+            
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute($params);
+
+            if ($result) {
+                error_log("SanPham::decreaseStock - Giảm thành công sản phẩm ID: $id, giảm: $soLuong, còn lại: $newQuantity");
+            }
+            
+            return $result;
+        } catch (Exception $e) {
+            error_log("SanPham::decreaseStock error: " . $e->getMessage());
+            return false;
+        }
+    }
 }

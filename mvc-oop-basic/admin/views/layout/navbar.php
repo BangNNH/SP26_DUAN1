@@ -21,14 +21,7 @@
 
     </ul>
 
-    <ul class="navbar-nav ml-auto">
-        <div class="d-flex align-items-center gap-4">
-            <div class="search-container d-none d-lg-block">
-                <span class="material-symbols-outlined">search</span>
-                <input placeholder="Tìm kiếm sản phẩm..." type="text" />
-            </div>
-        </div>
-    </ul>
+
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Điều hướng thông báo -->

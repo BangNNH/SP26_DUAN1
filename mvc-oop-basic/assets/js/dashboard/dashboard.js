@@ -218,7 +218,6 @@
   }
 
   function updateDashboard(data, from, to) {
-    // ✅ querySelector trong scope filteredDashboard thôi
     const filtered = document.getElementById("filteredDashboard");
 
     filtered.querySelector(".doanh-thu").innerText = Number(
@@ -233,48 +232,46 @@
   }
 
   function renderTopProducts(products) {
+    if (!products || !products.length) return;
+
     const container = document.querySelector(
       "#filteredDashboard .top-products-container",
     );
+
     if (!container) return;
 
     container.innerHTML = "";
-    const maxQty = products.length
-      ? Math.max(...products.map((p) => p.total_quantity || 0))
-      : 0;
-    const maxRevenue = products.length
-      ? Math.max(...products.map((p) => p.total_revenue || 0))
-      : 0;
+
+    const maxQty = Math.max(...products.map((p) => p.total_quantity || 0));
+    const maxRevenue = Math.max(...products.map((p) => p.total_revenue || 0));
 
     products.forEach((item) => {
       const percentQty = maxQty ? (item.total_quantity / maxQty) * 100 : 0;
       const percentRevenue = maxRevenue
         ? (item.total_revenue / maxRevenue) * 100
         : 0;
-      container.innerHTML +=
-        '<div class="bar-group">' +
-        '  <div class="bars">' +
-        '    <div class="bar-units" style="height:' +
-        percentQty +
-        '%">' +
-        '      <span class="bar-value text-danger">' +
-        Number(item.total_quantity || 0).toLocaleString() +
-        "</span>" +
-        "    </div>" +
-        '    <div class="bar-revenue" style="height:' +
-        percentRevenue +
-        '%">' +
-        '      <span class="bar-value text-danger-emphasis">' +
-        Number(item.total_revenue || 0).toLocaleString() +
-        "đ</span>" +
-        "    </div>" +
-        "  </div>" +
-        '  <div class="text-center mt-3">' +
-        '    <p class="mb-0 fw-bold small text-truncate">' +
-        (item.ten_san_pham || "N/A") +
-        "</p>" +
-        "  </div>" +
-        "</div>";
+
+      container.innerHTML += `
+      <div class="bar-group">
+        <div class="bars">
+          <div class="bar-units" style="height:${percentQty}%">
+            <span class="bar-value text-danger">
+              ${Number(item.total_quantity || 0).toLocaleString()}
+            </span>
+          </div>
+          <div class="bar-revenue" style="height:${percentRevenue}%">
+            <span class="bar-value text-danger-emphasis">
+              ${Number(item.total_revenue || 0).toLocaleString()}đ
+            </span>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <p class="mb-0 fw-bold small text-truncate">
+            ${item.ten_san_pham || "N/A"}
+          </p>
+        </div>
+      </div>
+    `;
     });
   }
 

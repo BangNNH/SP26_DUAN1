@@ -23,6 +23,8 @@
     <div class="checkout-page-wrapper section-padding pt-4">
         <div class="container">
             <form action="<?= BASE_URL . '?act=xu-ly-thanh-toan' ?>" method="POST" id="main-checkout-form">
+                <input type="hidden" name="direct_san_pham_id" value="<?= htmlspecialchars($direct_san_pham_id ?? '') ?>">
+                <input type="hidden" name="direct_so_luong" value="<?= htmlspecialchars($direct_so_luong ?? 1) ?>">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="checkout-billing-details-wrap">

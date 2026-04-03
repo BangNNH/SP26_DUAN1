@@ -16,10 +16,7 @@
     <div class="container-fluid p-2" id="mainDashboard">
         <!-- Page Header -->
         <div class="d-flex justify-content-between align-items-end mb-4">
-            <div>
-                <h3 class="display-6 fw-extrabold mt-1 mb-3">Thống kê</h3>
-                <p class="text-muted">Tổng quan về doanh thu và đơn hàng</p>
-            </div>
+            <!-- Lọc theo ngày -->
             <button class="btn btn-primary-executive d-flex align-items-center gap-2" data-bs-toggle="modal"
                 data-bs-target="#dateFilterModal">
                 <span class="material-symbols-outlined">
@@ -55,7 +52,7 @@
             </div>
         </div>
         <!-- Summary Cards -->
-        <div class="row g-4 mb-5">
+        <div class="row g-3 mb-3">
             <!-- doanh thu theo ngày -->
             <?php
             $isTang = $phanTram >= 0;
@@ -354,10 +351,6 @@
     <div class="container-fluid p-2" id="filteredDashboard" style="display:none">
         <!-- Page Header -->
         <div class=" d-flex justify-content-between align-items-end mb-4">
-            <div>
-                <h3 class="display-6 fw-extrabold mt-1 mb-3">Thống kê</h3>
-                <p class="text-muted">Tổng quan về doanh thu và đơn hàng</p>
-            </div>
             <button id="clearFilter" class="btn btn-primary-executive d-flex align-items-center gap-2">
                 <span class="material-symbols-outlined">
                     arrow_back
@@ -366,7 +359,7 @@
             </button>
         </div>
         <div class="row g-4">
-            <div class="row g-4 mb-5">
+            <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <div class="custom-card metric-card-red d-flex flex-column justify-content-between">
                         <div>
@@ -476,7 +469,7 @@
                         <?php foreach ($topUsers as $user): ?>
                             <div class="user-item">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img class="avatar" src="<?= BASE_URL_ADMIN ?>assets/images/users/user-1.jpg" />
+                                    <img class="avatar" src="<?= BASE_URL_ADMIN ?>assets/img/avatar.png" />
                                     <div>
                                         <p class=" mb-0 fw-bold small text-dark">
                                             <?= $user['ho_ten'] ?>
@@ -498,22 +491,24 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!-- chuyển dữ liệu db sang js -->
-    <script>
-        window.data7Ngay = <?= json_encode($data7Ngay) ?>;
-        window.data12Thang = <?= json_encode($data12Thang) ?>;
-        window.ADMIN_URL = "<?= BASE_URL_ADMIN ?>index.php";
-    </script>
-    <script src="<?= BASE_ASSETS ?>js/dashboard/dashboard.js"></script>
-    <!--////////////////// Footer //////////////////-->
-    <?php include './views/layout/footer.php' ?>
-    <!--//////////////////End Footer //////////////////-->
 
-    <!-- Page specific script -->
+<!-- chuyển dữ liệu db sang js -->
+<script>
+    window.data7Ngay = <?= json_encode($data7Ngay) ?>;
+    window.data12Thang = <?= json_encode($data12Thang) ?>;
+    window.ADMIN_URL = "<?= BASE_URL_ADMIN ?>index.php";
+</script>
+<script src="<?= BASE_ASSETS ?>js/dashboard/dashboard.js"></script>
+<!--////////////////// Footer //////////////////-->
+<?php include './views/layout/footer.php' ?>
+<!--//////////////////End Footer //////////////////-->
 
-    <!-- Code injected by live-server -->
+<!-- Page specific script -->
 
-    </body>
+<!-- Code injected by live-server -->
 
-    </html>
+</body>
+
+</html>

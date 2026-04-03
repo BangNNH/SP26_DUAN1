@@ -149,6 +149,14 @@ class OrderController
                     );
                 }
 
+                // Giảm tồn kho cho đơn mới (COD hoặc tất cả các phương thức khác)
+                $sanPhamModel = new SanPham();
+                foreach ($chiTietGioHang as $item) {
+                    $sanPhamId = $item['san_pham_id'] ?? $item['id'];
+                    $soLuong = $item['so_luong'];
+                    $sanPhamModel->decreaseStock($sanPhamId, $soLuong);
+                }
+
                 // CLEAR CART
                 if (!$isDirectPurchase) {
                     if (isset($_SESSION['user_client'])) {

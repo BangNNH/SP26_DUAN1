@@ -77,7 +77,7 @@
                                             <td><?= $sanPham['gia_san_pham'] ?></td>
                                             <td class="text-center"><?= $sanPham['so_luong'] ?></td>
                                             <td><?= $sanPham['ten_danh_muc'] ?></td>
-                                            <td class="text-center"><?= $sanPham['trang_thai'] == 1 ? 'Còn hàng' : 'Dừng bán' ?></td>
+                                            <td class="text-center"><?= $sanPham['trang_thai'] == 1 ? 'Còn hàng' : 'Hết hàng' ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-center" style="gap: 6px;">
                                                     <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id'] ?>"

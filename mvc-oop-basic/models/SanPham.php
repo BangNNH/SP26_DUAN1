@@ -203,7 +203,7 @@ class SanPham
             if ($sanPham['so_luong'] < $soLuong) {
                 return [
                     'status' => false,
-                    'message' => 'Sản phẩm ' . $sanPham['ten_san_pham'] . ' chỉ còn ' . $sanPham['so_luong'] . ' cái, không đủ số lượng bạn yêu cầu',
+                    'message' => 'Sản phẩm ' . $sanPham['ten_san_pham'] . ' chỉ còn ' . $sanPham['so_luong'] . ' sản phẩm, không đủ số lượng bạn yêu cầu',
                     'product' => $sanPham
                 ];
             }

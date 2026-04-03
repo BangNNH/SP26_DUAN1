@@ -5,6 +5,7 @@ class OrderController
     public $modelTaiKhoan;
     public $modelGioHang;
     public $modelDonHang;
+    public $modelSanPham;
 
 
     public function __construct()
@@ -12,7 +13,42 @@ class OrderController
         $this->modelTaiKhoan = new TaiKhoan();
         $this->modelGioHang = new GioHang();
         $this->modelDonHang = new DonHang();
+        $this->modelSanPham = new SanPham();
     }
+
+    /**
+     * Kiểm tra tồn kho cho các sản phẩm trong giỏ
+     * @param array $chiTietGioHang - Danh sách sản phẩm cần kiểm tra
+     * @return array ['status' => true/false, 'errors' => ['lỗi1', 'lỗi2', ...]]
+     */
+    private function validateStockForCheckout($chiTietGioHang)
+    {
+        $errors = [];
+
+        if (empty($chiTietGioHang)) {
+            $errors[] = 'Giỏ hàng của bạn trống';
+            return ['status' => false, 'errors' => $errors];
+        }
+
+        // Kiểm tra từng sản phẩm
+        foreach ($chiTietGioHang as $item) {
+            $san_pham_id = $item['san_pham_id'] ?? $item['id'];
+            $so_luong = $item['so_luong'];
+
+            $checkResult = $this->modelSanPham->checkStock($san_pham_id, $so_luong);
+
+            if (!$checkResult['status']) {
+                $errors[] = $checkResult['message'];
+            }
+        }
+
+        if (!empty($errors)) {
+            return ['status' => false, 'errors' => $errors];
+        }
+
+        return ['status' => true, 'errors' => []];
+    }
+
 
 
     public function thanhToan()
@@ -40,6 +76,14 @@ class OrderController
                     'hinh_anh' => $product['hinh_anh'],
                     'so_luong' => max(1, $direct_so_luong),
                 ];
+            } else {
+                // ========================================================
+                // THÔNG BÁO SẢN PHẨM KHÔNG TỒN TẠI (BỊ ADMIN XOÁ)
+                // ========================================================
+                $_SESSION['errors'] = ['Sản phẩm không tồn tại hoặc đã bị xoá bởi quản trị viên.'];
+                $_SESSION['flash'] = true;
+                header('Location: ' . BASE_URL . '?act=gio-hang&status=product-deleted');
+                exit();
             }
         } elseif (isset($_SESSION['user_client'])) {
             // LUỒNG USER LOGIN (DB)
@@ -51,9 +95,62 @@ class OrderController
             }
 
             $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            
+            // ========================================================
+            // KIỂM TRA SẢN PHẨM CÓ TỒN TẠI KHÔNG (TRỮ CASE BỊ ADMIN XOÁ)
+            // ========================================================
+            $sanPhamXoa = [];
+            $chiTietGioHangValid = [];
+            
+            foreach ($chiTietGioHang as $item) {
+                $sanPham = $this->modelSanPham->getDetailSanPham($item['san_pham_id']);
+                if ($sanPham) {
+                    $chiTietGioHangValid[] = $item;
+                } else {
+                    $sanPhamXoa[] = $item['ten_san_pham'];
+                    // Xoá chi tiết sản phẩm khỏi giỏ hàng
+                    $this->modelGioHang->deleteItem($user['id'], $item['san_pham_id']);
+                }
+            }
+            
+            $chiTietGioHang = $chiTietGioHangValid;
+            
+            // Nếu có sản phẩm bị xoá, thông báo cho khách hàng
+            if (!empty($sanPhamXoa)) {
+                $_SESSION['errors'] = ['Sản phẩm ' . implode(', ', $sanPhamXoa) . ' không tồn tại hoặc đã bị xoá bởi quản trị viên.'];
+                $_SESSION['flash'] = true;
+            }
         } else {
             // LUỒNG KHÁCH (SESSION)
             $chiTietGioHang = getCartFromSession();
+            
+            // ========================================================
+            // KIỂM TRA SẢN PHẨM CÓ TỒN TẠI KHÔNG (SESSION CASE)
+            // ========================================================
+            $sanPhamXoa = [];
+            $chiTietGioHangValid = [];
+            
+            foreach ($chiTietGioHang as $item) {
+                $sanPham = $this->modelSanPham->getDetailSanPham($item['san_pham_id']);
+                if ($sanPham) {
+                    $chiTietGioHangValid[] = $item;
+                } else {
+                    $sanPhamXoa[] = $item['ten_san_pham'];
+                }
+            }
+            
+            $chiTietGioHang = $chiTietGioHangValid;
+            
+            // Nếu có sản phẩm bị xoá, thông báo cho khách hàng
+            if (!empty($sanPhamXoa)) {
+                $_SESSION['errors'] = ['Sản phẩm ' . implode(', ', $sanPhamXoa) . ' không tồn tại hoặc đã bị xoá bởi quản trị viên.'];
+                $_SESSION['flash'] = true;
+                // Cập nhật session cart
+                $_SESSION['cart'] = [];
+                foreach ($chiTietGioHang as $item) {
+                    $_SESSION['cart'][$item['san_pham_id']] = $item;
+                }
+            }
         }
 
         require_once './views/thanhToan.php';
@@ -81,7 +178,7 @@ class OrderController
             $trang_thai_id = 1;
             $ma_don_hang = 'DH' . rand(1000, 9999);
 
-            // PHÂN LUỒNG
+            // PHÂN LUỒNG LẤY THÔNG TIN SẢN PHẨM
             if ($direct_san_pham_id) {
                 $chiTietGioHang = [];
                 $product = getProductById($direct_san_pham_id);
@@ -116,6 +213,19 @@ class OrderController
                 $chiTietGioHang = getCartFromSession();
             }
 
+            // ========================================================
+            // KIỂM TRA TỒN KHO TRƯỚC KHI TẠO ĐƠN HÀNG
+            // ========================================================
+            $stockValidation = $this->validateStockForCheckout($chiTietGioHang);
+
+            if (!$stockValidation['status']) {
+                // Có lỗi tồn kho - redirect về trang thanh toán với thông báo lỗi
+                $_SESSION['errors'] = $stockValidation['errors'];
+                $_SESSION['flash'] = true;
+                header('Location: ' . BASE_URL . '?act=thanh-toan&status=stock-error');
+                exit();
+            }
+
             // Thêm đơn hàng
             $donHang = $this->modelDonHang->addDonHang(
                 $tai_khoan_id,
@@ -140,13 +250,21 @@ class OrderController
                         ? $item['gia_khuyen_mai']
                         : $item['gia_san_pham'];
 
+                    $san_pham_id = $item['san_pham_id'] ?? $item['id'];
+                    $so_luong = $item['so_luong'];
+
                     $this->modelDonHang->addChiTietDonHang(
                         $donHang,
-                        $item['san_pham_id'] ?? $item['id'], // fix cho session
+                        $san_pham_id, // fix cho session
                         $donGia,
-                        $item['so_luong'],
-                        $donGia * $item['so_luong']
+                        $so_luong,
+                        $donGia * $so_luong
                     );
+
+                    // ========================================================
+                    // GIẢM SỐ LƯỢNG SẢN PHẨM TRONG KHO SAU KHI ĐẶT HÀNG THÀNH CÔNG
+                    // ========================================================
+                    $this->modelSanPham->decreaseStock($san_pham_id, $so_luong);
                 }
 
                 // CLEAR CART

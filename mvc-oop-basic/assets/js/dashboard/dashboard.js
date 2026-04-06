@@ -284,7 +284,7 @@
     users.forEach((user) => {
       const avatar = user.avatar
         ? user.avatar
-        : "https://i.imgur.com/6VBx3io.png";
+        : "<?php echo BASE_URL_Admin; ?>assets/img/avatar_default.jpg";
 
       container.innerHTML += `
       <div class="user-item d-flex justify-content-between align-items-center py-2">
@@ -349,8 +349,9 @@
     document.getElementById("dateFrom").value = formattedDate;
     document.getElementById("dateTo").value = formattedDate;
 
-    // 🔥 TỰ ĐỘNG CLICK LỌC
+    //TỰ ĐỘNG CLICK LỌC
     document.getElementById("filterBtn").click();
   });
+
   loadChart("day");
 });

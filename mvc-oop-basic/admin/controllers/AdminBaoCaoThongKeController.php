@@ -16,6 +16,7 @@ class AdminBaoCaoThongKeController
         //lấy doanh số theo ngày
 
         $data = $this->modelBaoCaoThongKe->getDoanhThuHomNayVaHomQua();
+        $topUsers = $this->modelBaoCaoThongKe->getTopUsers();
         $homNay = 0;
         $homQua = 0;
 

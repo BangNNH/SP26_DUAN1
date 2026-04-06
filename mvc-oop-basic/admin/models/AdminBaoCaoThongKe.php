@@ -234,4 +234,22 @@ class AdminBaoCaoThongKe
         $stmt->execute([':from' => $from, ':to' => $to]);
         return $stmt->fetchAll();
     }
+    public function getTopUsers()
+    {
+        $sql = "
+        SELECT 
+            tk.ho_ten,
+            tk.anh_dai_dien,
+            COUNT(dh.id) as total_orders,
+            SUM(dh.tong_tien) as total_spent
+        FROM don_hangs dh
+        JOIN tai_khoans tk ON dh.tai_khoan_id = tk.id
+        WHERE dh.trang_thai_id = 9
+        GROUP BY tk.id, tk.ho_ten, tk.anh_dai_dien
+        ORDER BY total_spent DESC
+        LIMIT 5
+    ";
+
+        return $this->conn->query($sql)->fetchAll();
+    }
 }

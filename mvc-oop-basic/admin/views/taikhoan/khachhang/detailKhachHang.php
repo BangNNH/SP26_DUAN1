@@ -83,7 +83,7 @@
 
                             <div>
                                 <div style="font-size:11px; color:#999; text-transform:uppercase;">Giới tính</div>
-                                <div><?= $khachHang['gioi_tinh'] == 1 ? 'Nam' : 'Nữ' ?></div>
+                                <div><?= isset($khachHang['gioi_tinh']) ? ($khachHang['gioi_tinh'] == 1 ? 'Nam' : 'Nữ') : '' ?></div>
                             </div>
 
                             <div>
@@ -94,7 +94,7 @@
                             <div>
                                 <div style="font-size:11px; color:#999; text-transform:uppercase;">Trạng thái</div>
 
-                                <?php if($khachHang['trang_thai'] == 1): ?>
+                                <?php if (isset($khachHang['trang_thai']) && $khachHang['trang_thai'] == 1): ?>
                                 <span style="
                             background:#d4f8e8;
                             color:#27ae60;
@@ -105,7 +105,7 @@
                             display:inline-block;
                             margin-top:5px;
                         ">
-                                    ● Active
+                                    ● Hiển thị
                                 </span>
                                 <?php else: ?>
                                 <span style="
@@ -118,7 +118,7 @@
                             display:inline-block;
                             margin-top:5px;
                         ">
-                                    ● Inactive
+                                    ● Ẩn
                                 </span>
                                 <?php endif; ?>
                             </div>

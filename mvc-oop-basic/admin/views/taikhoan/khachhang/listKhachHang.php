@@ -68,7 +68,7 @@
                                                     onerror="this.onerror = null; this.src = 'https://weart.vn/wp-content/uploads/2025/06/chu-meo-cute-voi-bieu-cam-ngo-ngac-to-mo.jpg'"></td>
                                             <td><?= $khachHang['email'] ?></td>
                                             <td class="text-center"><?= $khachHang['so_dien_thoai'] ?></td>
-                                            <td class="text-center"><?= $khachHang['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
+                                            <td class="text-center"><?= $khachHang['trang_thai'] == 1 ? 'Hiển thị' : 'Ẩn' ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-center" style="gap: 6px;">
                                                     <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-khach-hang&id_khach_hang=' . $khachHang['id'] ?>"
@@ -126,6 +126,7 @@
 <script>
     $(function() {
         $("#example1").DataTable({
+            "order": [[0, "desc"]],
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,

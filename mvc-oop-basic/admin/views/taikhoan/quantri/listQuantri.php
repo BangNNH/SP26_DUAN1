@@ -70,7 +70,7 @@
                                             <td><?= $quanTri['ho_ten'] ?></td>
                                             <td><?= $quanTri['email'] ?></td>
                                             <td class="text-center"><?= $quanTri['so_dien_thoai'] ?></td>
-                                            <td class="text-center"><?= $quanTri['trang_thai'] == 1 ? 'Active' : 'Inactive' ?></td>
+                                            <td class="text-center"><?= $quanTri['trang_thai'] == 1 ? 'Hiển thị' : 'Ẩn' ?></td>
                                             <td>
                                                 <div class="d-flex justify-content-center" style="gap: 6px;">
                                                     <a href="<?= BASE_URL_ADMIN . '?act=form-sua-quan-tri&id_quan_tri=' . $quanTri['id'] ?>"
@@ -122,6 +122,7 @@
 <script>
     $(function() {
         $("#example1").DataTable({
+            "order": [[0, "desc"]],
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,

@@ -25,5 +25,5 @@ define('BASE_ASSETS_IMG', BASE_URL . 'assets/img/');
 define('PATH_ASSETS_IMG', PATH_ROOT . 'assets/img/');
 
 // ChatBot
-define('GEMINI_API_KEY', 'AIzaSyDvuFKCxo-blkjfYGynlL860mq5I5XvU40');
+define('GEMINI_API_KEY', 'AIzaSyCMKHCnWpwUA5_smCGnu16rFityhvObNqo');
 define('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent');

@@ -1,4 +1,186 @@
-table.table-bordered.dataTable tbody td {
+/* Kiểu giao diện chung cho admin */
+html,
+body {
+  min-height: 100%;
+  background: #f4f6fb;
+  font-family: 'Manrope', 'Source Sans Pro', sans-serif;
+  color: #1f2937;
+}
+
+.content-wrapper {
+  background: transparent;
+}
+
+.content-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.card {
+  border: 0;
+  border-radius: 18px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+}
+
+.card-header {
+  background: transparent;
+  border-bottom: 1px solid #eef2f7;
+  padding: 1rem 1.25rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card .alert {
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+.btn {
+  font-weight: 500;
+}
+
+.btn-primary,
+.btn-success,
+.btn-warning,
+.btn-danger,
+.btn-secondary {
+  border-radius: 10px;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 1rem;
+  color: #344054;
+  background-color: #ffffff;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 1rem 0.95rem;
+  vertical-align: middle;
+  border-top: 1px solid #e5e7eb;
+}
+
+.table thead th {
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-bottom: 2px solid #e2e8f0;
+  font-weight: 600;
+}
+
+.table tfoot th {
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.table.table-bordered th,
+.table.table-bordered td {
+  border: 1px solid #e2e8f0;
+}
+
+.table.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(15, 23, 42, 0.03);
+}
+
+.table tbody tr:hover {
+  background-color: rgba(59, 130, 246, 0.08);
+}
+
+.table img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.table .text-center {
+  text-align: center !important;
+}
+
+.table-responsive {
+  margin-bottom: 1rem;
+}
+
+.dataTables_wrapper .row > .col-sm-12,
+.dataTables_wrapper .row > .col-md-6 {
+  padding: 0.25rem 0;
+}
+
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  padding: 0.55rem 0.85rem;
+}
+
+.dataTables_wrapper .dt-buttons .btn {
+  border-radius: 10px;
+}
+
+.content-header .container-fluid {
+  padding-bottom: 0.5rem;
+}
+
+.content {
+  padding-top: 1.2rem;
+}
+
+/* Giữ dòng căn giữa cho bảng DataTable */
+.table.table-bordered.dataTable tbody td {
   vertical-align: middle !important;
-  /* text-align: center; */
+}
+
+/* Các lớp dùng chung giống trang chi tiết sản phẩm */
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #111827;
+}
+
+.card-main {
+  border-radius: 20px;
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+.divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 24px 0;
+}
+
+.info-grid p {
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.info-grid span:first-child {
+  color: #64748b;
+}
+
+.info-grid span:last-child {
+  font-weight: 600;
+}
+
+.btn-action {
+  color: #ffffff;
+  border: none;
+  padding: 0.55rem 0.95rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
 }

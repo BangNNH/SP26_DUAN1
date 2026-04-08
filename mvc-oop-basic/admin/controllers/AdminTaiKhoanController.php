@@ -271,11 +271,21 @@ class AdminTaiKhoanController
 
     public function deltailKhachHang()
     {
-        $id_khach_hang = $_GET['id_khach_hang'];
+        $id_khach_hang = $_GET['id_khach_hang'] ?? null;
+        if (empty($id_khach_hang)) {
+            $_SESSION['error'] = 'Không tìm thấy khách hàng.';
+            header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-khach-hang');
+            exit();
+        }
+
         $khachHang = $this->modelTaiKhoan->getDetailTaiKhoan($id_khach_hang);
+        if (!$khachHang) {
+            $_SESSION['error'] = 'Khách hàng không tồn tại.';
+            header("Location: " . BASE_URL_ADMIN . '?act=list-tai-khoan-khach-hang');
+            exit();
+        }
 
         $listDonHang = $this->modelDonHang->getDonHangFromKhachHang($id_khach_hang);
-
         $listBinhLuan = $this->modelSanPham->getBinhLuanFromKhachHang($id_khach_hang);
 
         require_once './views/taikhoan/khachhang/detailKhachHang.php';

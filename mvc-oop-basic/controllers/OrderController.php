@@ -18,7 +18,7 @@ class OrderController
     public function thanhToan()
     {
         $direct_san_pham_id = $_POST['san_pham_id'] ?? $_GET['san_pham_id'] ?? null;
-        $direct_so_luong = isset($_POST['so_luong']) ? (int)$_POST['so_luong'] : 1;
+        $direct_so_luong = isset($_POST['so_luong']) ? (int) $_POST['so_luong'] : 1;
 
         // Nếu user đã đăng nhập, luôn lấy thông tin user để fill form
         $user = null;
@@ -74,7 +74,7 @@ class OrderController
             $phuong_thuc_thanh_toan_id = $_POST['phuong_thuc_thanh_toan_id'];
 
             $direct_san_pham_id = $_POST['direct_san_pham_id'] ?? $_POST['san_pham_id'] ?? null;
-            $direct_so_luong = isset($_POST['direct_so_luong']) ? (int)$_POST['direct_so_luong'] : (int)($_POST['so_luong'] ?? 1);
+            $direct_so_luong = isset($_POST['direct_so_luong']) ? (int) $_POST['direct_so_luong'] : (int) ($_POST['so_luong'] ?? 1);
             $isDirectPurchase = !empty($direct_san_pham_id);
 
             $ngay_dat = date('Y-m-d H:i:s');
@@ -238,8 +238,13 @@ class OrderController
     public function huyDonHang()
     {
         if (isset(($_SESSION['user_client']))) {
+            var_dump($_SESSION['user_client']);
             // Lấy ra thông tin tài khoản đăng Nhập
-            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']['email']);
+            if (!$user) {
+                echo "Tài khoản không tồn tại";
+                exit;
+            }
             $tai_khoan_Id = $user['id'];
 
             //lấy id đơn hàng truyền từ BASE_URL

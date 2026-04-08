@@ -165,8 +165,8 @@ class TaiKhoan
     public function getTaiKhoanFromPhone($phone)
     {
     }
-    
-    public  function getAllUsers()
+
+    public function getAllUsers()
     {
-    }   
+    }
 }

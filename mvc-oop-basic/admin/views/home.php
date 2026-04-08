@@ -274,75 +274,88 @@
         </div>
         <!-- sản phẩm có doanh thu cao nhất và sản phẩm bán chạy nhất -->
         <div class="row g-4">
-            <div class="col-12">
-                <div class="card p-4">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="col-lg-7">
+                <div class="custom-card h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
                         <div>
-                            <h5 class="fw-bold mb-0">Top sản phẩm bán chạy</h5>
-                            <p class="text-muted small mb-0">
-                                Top sản phẩm bán chạy nhất & doanh số cao nhất
+                            <h3 class="h4 fw-bold text-dark">
+                                Top sản phẩm bán chạy nhất
+                            </h3>
+                            <p class="small text-muted mb-0">
+                                Sản phẩm có số lượng bán ra cao nhất trong khoảng thời gian đã chọn
                             </p>
                         </div>
-                        <div class="d-flex gap-4">
+                        <div class="d-flex gap-3">
                             <div class="d-flex align-items-center gap-2">
-                                <div style="width: 12px; height: 12px; background: #b70011"></div>
-                                <span class="text-muted fw-bold text-uppercase" style="font-size: 10px">
-                                    Số lượng
-                                </span>
+                                <div class="bg-danger rounded-1" style="width: 12px; height: 12px"></div>
+                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Sản phẩm</span>
                             </div>
                             <div class="d-flex align-items-center gap-2">
-                                <div style="width: 12px; height: 12px; background: #ffdad6"></div>
-                                <span class="text-muted fw-bold text-uppercase" style="font-size: 10px">
-                                    Doanh thu
-                                </span>
+                                <div class="bg-danger-subtle rounded-1" style="width: 12px; height: 12px"></div>
+                                <span class="small fw-bold text-uppercase" style="font-size: 10px">Doanh thu</span>
                             </div>
                         </div>
                     </div>
-
-                    <div class="vstack gap-4 top-products-container">
-
-                        <?php foreach ($topProducts as $item):
+                    <div class="top-products-container">
+                        <?php foreach ($topProducts as $item): ?>
+                            <?php
                             $percentQty = $maxQuantity > 0 ? ($item['total_quantity'] / $maxQuantity) * 100 : 0;
                             $percentRevenue = $maxRevenue > 0 ? ($item['total_revenue'] / $maxRevenue) * 100 : 0;
                             ?>
-
-                            <div class="product-item d-flex align-items-center gap-4">
-
-                                <!-- LEFT -->
-                                <div class="product-info">
-                                    <div class="fw-bold small">
+                            <div class="bar-group">
+                                <div class="bars">
+                                    <div class="bar-units" style="height: <?= $percentQty ?>%">
+                                        <span class="bar-value text-danger">
+                                            <?= number_format($item['total_quantity']) ?>
+                                        </span>
+                                    </div>
+                                    <div class="bar-revenue" style="height: <?= $percentRevenue ?>%">
+                                        <span class="bar-value text-danger-emphasis">
+                                            <?= number_format($item['total_revenue']) ?>đ
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <p class="mb-0 fw-bold small text-truncate">
                                         <?= $item['ten_san_pham'] ?>
-                                    </div>
-                                    <div class="text-muted small">
-                                        <?= $item['ten_danh_muc'] ?? 'N/A' ?>
-                                    </div>
+                                    </p>
                                 </div>
-
-                                <!-- RIGHT -->
-                                <div class="flex-grow-1">
-
-                                    <!-- SỐ LƯỢNG -->
-                                    <div class="progress-stack">
-                                        <div class="progress-bar-qty" style="width: <?= $percentQty ?>%"
-                                            title="<?= $item['total_quantity'] ?>">
-                                        </div>
-                                    </div>
-
-                                    <!-- DOANH THU -->
-                                    <div class=" progress-sub mt-2">
-                                        <div class="progress-bar-revenue" style="width: <?= $percentRevenue ?>%"
-                                            title="<?= number_format($item['total_revenue']) ?>đ">
-                                        </div>
-                                    </div>
-
-                                </div>
-
                             </div>
-
                         <?php endforeach; ?>
-
                     </div>
-
+                </div>
+            </div>
+            <!-- Active Users List -->
+            <div class="col-lg-5">
+                <div class="custom-card h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="h5 fw-bold text-dark">Top 5 khách hàng chi tiêu nhiều nhất</h3>
+                        <button class="btn btn-link text-muted p-0">
+                            <span class="material-symbols-outlined">more_horiz</span>
+                        </button>
+                    </div>
+                    <div class="user-list">
+                        <?php foreach ($topUsers as $user): ?>
+                            <div class="user-item">
+                                <div class="d-flex align-items-center gap-3">
+                                    <img class="avatar" src="<?= BASE_URL . 'assets/img/avatar_default.jpg' ?>" />
+                                    <div>
+                                        <p class=" mb-0 fw-bold small text-dark">
+                                            <?= $user['ho_ten'] ?>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="text-end">
+                                    <p class="mb-0 fw-extrabold text-danger">
+                                        <?= number_format($user['total_spent']) ?>đ
+                                    </p>
+                                    <p class="mb-0 text-muted" style="font-size: 10px">
+                                        <?= $user['total_orders'] ?> đơn
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -361,7 +374,7 @@
         <div class="row g-4">
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                    <div class="custom-card metric-card-red d-flex flex-column justify-content-between">
+                    <div class="custom-card metric-card-red d-flex flex-column">
                         <div>
                             <span class="badge bg-white bg-opacity-10 text-uppercase tracking-wider py-2 px-3">Tổng
                                 doanh thu</span>
@@ -469,7 +482,7 @@
                         <?php foreach ($topUsers as $user): ?>
                             <div class="user-item">
                                 <div class="d-flex align-items-center gap-3">
-                                    <img class="avatar" src="<?= BASE_URL_ADMIN ?>assets/img/avatar.png" />
+                                    <img class="avatar" src="<?= BASE_URL . 'assets/img/avatar_default.jpg' ?>" />
                                     <div>
                                         <p class=" mb-0 fw-bold small text-dark">
                                             <?= $user['ho_ten'] ?>

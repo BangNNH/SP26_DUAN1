@@ -330,19 +330,20 @@ main {
   border-radius: 1rem;
   border: 1px solid rgba(0, 0, 0, 0.05);
   box-shadow: var(--card-shadow);
-  padding: 2rem;
+  padding: 1rem 1.2rem;
+  min-height: auto;
 }
 
 .metric-card-red {
   background: linear-gradient(135deg, var(--primary-red), #b71c1c);
   color: white;
-  height: 256px;
+  height: 200px;
 }
 
 .metric-card-light {
   background: #f2f4f6;
   border: 1px solid rgba(0, 0, 0, 0.03);
-  height: 256px;
+  height: 200px;
 }
 
 /* Chart Components */

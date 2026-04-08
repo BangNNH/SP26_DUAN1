@@ -21,133 +21,12 @@ function getSortIcon($column, $current_sort, $current_order) {
 <?php include './views/layout/navbar.php' ?>
 <?php include './views/layout/sidebar.php' ?>
 
-<style>
-    body {
-        font-size: 16px;
-        color: #1f2937;
-    }
-
-    .page-title {
-        font-size: 26px;
-    }
-
-    .card-main {
-        border-radius: 16px;
-        border: none;
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
-    }
-
-    .section-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 12px;
-    }
-
-    .divider {
-        height: 1px;
-        background: #e5e7eb;
-        margin: 20px 0;
-    }
-
-    .info-grid p {
-        margin-bottom: 8px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .info-grid span:first-child {
-        color: #6b7280;
-    }
-
-    .info-grid span:last-child {
-        font-weight: 500;
-    }
-
-    /* IMAGE */
-    .image-wrapper {
-        /* background: #f9fafb; */
-        border-radius: 14px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .product-image {
-        width: 100%;
-        max-height: 420px;
-        object-fit: contain;
-        transition: all 0.4s ease;
-    }
-
-    .fade-out {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-
-    .fade-in {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-
-    .thumb-list {
-        display: flex;
-        gap: 10px;
-        margin-top: 15px;
-        flex-wrap: wrap;
-    }
-
-    .thumb {
-        width: 70px;
-        height: 70px;
-        border-radius: 10px;
-        border: 1px solid #e5e7eb;
-        object-fit: cover;
-        cursor: pointer;
-        transition: 0.25s;
-    }
-
-    .thumb:hover {
-        transform: translateY(-3px);
-    }
-
-    .thumb.active {
-        border: 1px solid #111;
-    }
-
-    /* PRICE */
-    .price-main {
-        font-size: 28px;
-        color: #111;
-    }
-
-    .price-sale {
-        font-size: 14px;
-        color: #dc2626;
-    }
-
-    /* TABLE */
-    .table thead {
-        background: #f3f4f6;
-    }
-
-    .table tbody tr:hover {
-        background: #fafafa;
-    }
-
-    .btn-action {
-        color: #fff;
-        border: none;
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 13px;
-    }
-</style>
-
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Quản lý bình luận</h1>
+                    <h1 class="page-title">Quản lý bình luận</h1>
                 </div>
             </div>
         </div>
@@ -155,7 +34,7 @@ function getSortIcon($column, $current_sort, $current_order) {
 
     <section class="content">
         <div class="container-fluid">
-            <div class="card card-default">
+            <div class="card card-main">
                 <div class="card-header">
                     <h3 class="card-title">Bộ lọc tìm kiếm</h3>
                 </div>
@@ -191,7 +70,7 @@ function getSortIcon($column, $current_sort, $current_order) {
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card card-main">
                 <div class="card-body">
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -234,11 +113,7 @@ function getSortIcon($column, $current_sort, $current_order) {
                                         </td>
                                         <td><?= htmlspecialchars($bl['noi_dung']) ?></td>
                                         <td class="text-center">
-                                            <?php if ($bl['trang_thai'] == 1): ?>
-                                                <span class="badge badge-success">Hiển thị</span>
-                                            <?php else: ?>
-                                                <span class="badge badge-secondary">Ẩn</span>
-                                            <?php endif; ?>
+                                            <?= $bl['trang_thai'] == 1 ? 'Hiển thị' : 'Ẩn' ?>
                                         </td>
                                         <td class="text-center"> <?= date("d/m/Y", strtotime($bl['ngay_dang'])) ?></td>
                                         <td class="text-center">
@@ -257,7 +132,7 @@ function getSortIcon($column, $current_sort, $current_order) {
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
-                                    <td colspan="6" class="text-center">Không tìm thấy bình luận nào phù hợp.</td>
+                                    <td colspan="7" class="text-center">Không tìm thấy bình luận nào phù hợp.</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>

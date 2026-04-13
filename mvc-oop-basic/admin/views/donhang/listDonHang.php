@@ -44,7 +44,7 @@
                                         <th>Ngày đặt</th>
                                         <th>Tổng tiền</th>
                                         <th>Trạng thái</th>
-                                        <th>Thao tác</th>
+                                        <th>Thao tác <input type="checkbox" id="check-all"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,18 +73,18 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center" style="gap: 6px;">
-                                                    <a
-                                                        href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>"
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=chi-tiet-don-hang&id_don_hang=' . $donHang['id'] ?>"
                                                         class="btn btn-primary btn-sm">
                                                         <i class="fas fa-eye"></i>
 
                                                     </a>
-                                                    <a
-                                                        href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>"
+                                                    <a href="<?= BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $donHang['id'] ?>"
                                                         class="btn btn-warning btn-sm">
                                                         <i class="fas fa-edit"></i>
 
                                                     </a>
+                                                    <input type="checkbox" class="checkbox-item"
+                                                        value="<?= $donHang['id'] ?>">
                                                 </div>
                                             </td>
                                         </tr>
@@ -124,7 +124,7 @@
 
 <!-- Page specific script -->
 <script>
-    $(function() {
+    $(function () {
         $("#example1").DataTable({
             "order": [[0, "desc"]],
             "responsive": true,

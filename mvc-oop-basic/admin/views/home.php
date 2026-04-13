@@ -117,28 +117,31 @@
             $class = $isTang ? 'bg-red-light' : 'bg-slate-light';
             $icon = $isTang ? '+' : '';
             ?>
-
             <div class="col-md-3">
-                <div class="card p-4 stat-card">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div class="icon-box bg-red-light">
-                            <span class="material-symbols-outlined">shopping_cart</span>
+                <a href="<?= BASE_URL_ADMIN . '?act=don-hang' ?>">
+                    <div class="card p-4 stat-card">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div class="icon-box bg-red-light">
+                                <span class="material-symbols-outlined">shopping_cart</span>
+                            </div>
+
+                            <span class="badge-stat <?= $class ?>">
+                                <?= $icon . round($phanTramDon, 1) ?>%
+                            </span>
                         </div>
 
-                        <span class="badge-stat <?= $class ?>">
-                            <?= $icon . round($phanTramDon, 1) ?>%
-                        </span>
+                        <p class="text-secondary fw-bold text-uppercase mb-1">
+                            Đơn hàng mới
+                        </p>
+
+                        <h4 class="fw-black mb-0">
+                            <?= $homNayDon ?> đơn
+                        </h4>
                     </div>
-
-                    <p class="text-secondary fw-bold text-uppercase mb-1">
-                        Đơn hàng mới
-                    </p>
-
-                    <h4 class="fw-black mb-0">
-                        <?= $homNayDon ?> đơn
-                    </h4>
-                </div>
+                </a>
             </div>
+
+            <!-- tài khoản theo ngày -->
             <?php
             $isTang = $phanTramTaiKhoan >= 0;
             $class = $isTang ? 'bg-red-light' : 'bg-slate-light';

@@ -45,18 +45,24 @@
                                         <th>Số lượng</th>
                                         <th>Thành tiền</th>
                                     </tr>
-                                    <?php foreach ($chiTietDonHang as $item): ?>
+                                    <?php if (!empty($chiTietDonHang) && is_array($chiTietDonHang)): ?>
+                                        <?php foreach ($chiTietDonHang as $item): ?>
+                                            <tr class="text-center">
+                                                <td>
+                                                    <img class="img-fluid" src="<?= BASE_URL . $item['hinh_anh'] ?>"
+                                                        alt="Product" width="100px">
+                                                </td>
+                                                <td><?= $item['ten_san_pham'] ?></td>
+                                                <td><?= number_format($item['don_gia'], 0, ',', '.') ?> VNĐ</td>
+                                                <td><?= $item['so_luong'] ?></td>
+                                                <td><?= number_format($item['thanh_tien'], 0, ',', '.') ?> VNĐ</td>
+                                            </tr>
+                                        <?php endforeach ?>
+                                    <?php else: ?>
                                         <tr class="text-center">
-                                            <td>
-                                                <img class="img-fluid" src="<?= BASE_URL . $item['hinh_anh'] ?>"
-                                                    alt="Product" width="100px">
-                                            </td>
-                                            <td><?= $item['ten_san_pham'] ?></td>
-                                            <td><?= number_format($item['don_gia'], 0, ',', '.') ?> VNĐ</td>
-                                            <td><?= $item['so_luong'] ?></td>
-                                            <td><?= number_format($item['thanh_tien'], 0, ',', '.') ?> VNĐ</td>
+                                            <td colspan="5" class="text-danger py-4">Không tìm thấy dữ liệu chi tiết sản phẩm của đơn hàng này.</td>
                                         </tr>
-                                    <?php endforeach ?>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>

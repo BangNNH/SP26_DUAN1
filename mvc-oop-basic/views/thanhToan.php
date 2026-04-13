@@ -175,12 +175,29 @@
                 </div>
             </form>
             <form action="?act=momo-payment" method="POST" id="momo-payment-form" style="display: none;">
-                <input type="hidden" name="total_momo" value="<?= $tongGioHang + 30000 ?>">
                 <input type="hidden" name="ten_nguoi_nhan" id="momo_ten">
                 <input type="hidden" name="email_nguoi_nhan" id="momo_email">
                 <input type="hidden" name="sdt_nguoi_nhan" id="momo_sdt">
                 <input type="hidden" name="dia_chi_nguoi_nhan" id="momo_diachi">
                 <input type="hidden" name="ghi_chu" id="momo_ghichu">
+
+                <?php if (isset($_POST['is_mua_ngay']) && $_POST['is_mua_ngay'] == 1): ?>
+                    <input type="hidden" name="is_mua_ngay" value="1">
+                    <input type="hidden" name="san_pham_id" value="<?= $_POST['san_pham_id'] ?? '' ?>">
+                    <input type="hidden" name="ten_san_pham" value="<?= $_POST['ten_san_pham'] ?? '' ?>">
+                    <input type="hidden" name="gia_san_pham" value="<?= $_POST['gia_san_pham'] ?? '' ?>">
+                    <input type="hidden" name="so_luong" value="<?= $_POST['so_luong'] ?? 1 ?>">
+                    
+                    <?php 
+                        // Tính lại tổng tiền Momo (Giá x Số lượng + Phí ship 30k)
+                        $gia = (int)($_POST['gia_san_pham'] ?? 0);
+                        $soluong = (int)($_POST['so_luong'] ?? 1);
+                        $total_momo = ($gia * $soluong) + 30000;
+                    ?>
+                    <input type="hidden" name="total_momo" value="<?= $total_momo ?>">
+                <?php else: ?>
+                    <input type="hidden" name="total_momo" value="<?= $tongGioHang + 30000 ?>">
+                <?php endif; ?>
             </form>
         </div>
     </div>

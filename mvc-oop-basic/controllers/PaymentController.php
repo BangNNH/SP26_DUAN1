@@ -2,8 +2,8 @@
 // Gọi Model để sử dụng
 require_once './models/DonHang.php';
 require_once './models/PaymentModel.php';
-require_once './models/GioHang.php'; // Đã bổ sung gọi Model GioHang
-require_once './models/SanPham.php'; // Gọi Model SanPham để kiểm tra tồn kho
+require_once './models/GioHang.php';
+require_once './models/SanPham.php';
 
 class PaymentController
 {
@@ -14,33 +14,21 @@ class PaymentController
 
     /**
      * Kiểm tra tồn kho trước khi thanh toán
-     * @param int $tai_khoan_id - ID tài khoản
+     * @param array $itemsToCheckout - Danh sách sản phẩm cần thanh toán
      * @return array ['status' => true/false, 'errors' => ['lỗi1', 'lỗi2', ...]]
      */
-    private function validateStockBeforePayment($tai_khoan_id)
+    private function validateStockBeforePayment($itemsToCheckout)
     {
         $errors = [];
-        $gioHangModel = new GioHang();
         $sanPhamModel = new SanPham();
 
-        // Lấy giỏ hàng của user
-        $gioHang = $gioHangModel->getGioHangFromUser($tai_khoan_id);
-
-        if (!$gioHang) {
-            $errors[] = 'Giỏ hàng không tồn tại';
+        if (empty($itemsToCheckout)) {
+            $errors[] = 'Không có sản phẩm nào để thanh toán.';
             return ['status' => false, 'errors' => $errors];
         }
 
-        // Lấy danh sách chi tiết giỏ hàng
-        $chiTietGioHang = $gioHangModel->getDetailGioHang($gioHang['id']);
-
-        if (!$chiTietGioHang || empty($chiTietGioHang)) {
-            $errors[] = 'Giỏ hàng của bạn trống';
-            return ['status' => false, 'errors' => $errors];
-        }
-
-        // Kiểm tra từng sản phẩm
-        foreach ($chiTietGioHang as $item) {
+        // Kiểm tra từng sản phẩm trong danh sách (từ Giỏ hàng hoặc Mua ngay)
+        foreach ($itemsToCheckout as $item) {
             $checkResult = $sanPhamModel->checkStock($item['san_pham_id'], $item['so_luong']);
 
             if (!$checkResult['status']) {
@@ -57,13 +45,10 @@ class PaymentController
 
     public function momo_payment()
     {
-        // ========================================================
-        // BƯỚC 1: NHẬN DỮ LIỆU TỪ FORM ẨN VÀ CHUẨN BỊ LƯU DB
-        // ========================================================
+        // 1. Lấy thông tin chung của đơn hàng
         $amount_raw = $_POST['total_momo'] ?? 0;
         $tong_tien = (string)intval($amount_raw); 
 
-        // Lấy thông tin khách hàng từ Form ẩn (JS đã copy qua)
         $tai_khoan_id = $_SESSION['user_client']['id'] ?? null; 
         $ten_nguoi_nhan = $_POST['ten_nguoi_nhan'] ?? 'Khách lẻ';
         $email_nguoi_nhan = $_POST['email_nguoi_nhan'] ?? '';
@@ -71,27 +56,48 @@ class PaymentController
         $dia_chi_nguoi_nhan = $_POST['dia_chi_nguoi_nhan'] ?? '';
         $ghi_chu = $_POST['ghi_chu'] ?? '';
         
-        $phuong_thuc_thanh_toan_id = 3; // 3 là ID MoMo của bạn
-        $trang_thai_id = 1; // 1: Chờ thanh toán
-        $ngay_dat = date('Y-m-d H:i:s'); // Thời gian hiện tại
-        $ma_don_hang = 'DH' . time(); // Sinh mã đơn hàng ngẫu nhiên (VD: DH1712000)
+        $phuong_thuc_thanh_toan_id = 3; // 3 là MoMo
+        $trang_thai_id = 1; 
+        $ngay_dat = date('Y-m-d H:i:s'); 
+        $ma_don_hang = 'DH' . time(); 
 
-        // ========================================================
-        // BƯỚC 1.5: KIỂM TRA TỒN KHO
-        // ========================================================
-        $stockValidation = $this->validateStockBeforePayment($tai_khoan_id);
+        // 2. Phân loại nguồn dữ liệu sản phẩm (Giỏ hàng vs Mua ngay)
+        $itemsToCheckout = [];
+        $gioHangModel = new GioHang();
+        $gioHang = null;
+        
+        // Kiểm tra cờ 'is_mua_ngay' từ form gửi lên
+        $is_mua_ngay = isset($_POST['is_mua_ngay']) && $_POST['is_mua_ngay'] == 1;
+
+        if ($is_mua_ngay) {
+            // Lấy dữ liệu 1 sản phẩm trực tiếp từ form POST
+            $itemsToCheckout[] = [
+                'san_pham_id' => $_POST['san_pham_id'],
+                'so_luong' => $_POST['so_luong'],
+                'gia_khuyen_mai' => $_POST['gia_san_pham'], // Dùng giá từ form gửi sang
+                'gia_san_pham' => $_POST['gia_san_pham'],
+                'ten_san_pham' => $_POST['ten_san_pham'] ?? 'Sản phẩm mua ngay'
+            ];
+        } else {
+            // Lấy toàn bộ sản phẩm từ Giỏ Hàng
+            $gioHang = $gioHangModel->getGioHangFromUser($tai_khoan_id);
+            if ($gioHang) {
+                $itemsToCheckout = $gioHangModel->getDetailGioHang($gioHang['id']);
+            }
+        }
+
+        // 3. Validate tồn kho trước khi lưu DB
+        $stockValidation = $this->validateStockBeforePayment($itemsToCheckout);
 
         if (!$stockValidation['status']) {
-            // Có lỗi tồn kho
+            // Có lỗi tồn kho -> Quay lại báo lỗi
             $_SESSION['errors'] = $stockValidation['errors'];
             $_SESSION['flash'] = true;
             header('Location: ' . BASE_URL . '?act=thanh-toan&status=stock-error');
             exit();
         }
 
-        // ========================================================
-        // BƯỚC 2: GỌI MODEL LƯU VỎ ĐƠN HÀNG VÀO DATABASE
-        // ========================================================
+        // 4. Lưu thông tin đơn hàng gốc vào DB
         $donHangModel = new DonHang();
         $realOrderId = $donHangModel->addDonHang(
             $tai_khoan_id,
@@ -107,47 +113,28 @@ class PaymentController
             $ma_don_hang
         );
 
-        // ========================================================
-        // BƯỚC 2.5: LƯU CHI TIẾT SẢN PHẨM VÀO ĐƠN HÀNG
-        // ========================================================
         if ($realOrderId) {
-            $gioHangModel = new GioHang();
-            
-            // 1. Lấy thông tin giỏ hàng của user hiện tại
-            $gioHang = $gioHangModel->getGioHangFromUser($tai_khoan_id);
+            // 5. Lưu chi tiết đơn hàng (Đã xóa tên sản phẩm)
+            foreach ($itemsToCheckout as $sanPham) {
+                $donGia = $sanPham['gia_khuyen_mai'] ?: $sanPham['gia_san_pham'];
+                $thanhTien = $donGia * $sanPham['so_luong'];
 
-            if ($gioHang) {
-                // 2. Lấy danh sách sản phẩm dựa vào ID giỏ hàng
-                $chiTietGioHang = $gioHangModel->getDetailGioHang($gioHang['id']);
-
-                if ($chiTietGioHang) {
-                    foreach ($chiTietGioHang as $sanPham) {
-                        $donGia = $sanPham['gia_khuyen_mai'] ?: $sanPham['gia_san_pham'];
-                        $thanhTien = $donGia * $sanPham['so_luong'];
-
-                        // Insert từng sản phẩm vào bảng chi_tiet_don_hangs
-                        $donHangModel->addChiTietDonHang(
-                            $realOrderId,
-                            $sanPham['san_pham_id'], 
-                            $donGia,
-                            $sanPham['so_luong'],
-                            $thanhTien,
-                            $sanPham['ten_san_pham'] ?? null
-                        );
-                    }
+                $donHangModel->addChiTietDonHang(
+                    $realOrderId,
+                    $sanPham['san_pham_id'], 
+                    $donGia,
+                    $sanPham['so_luong'],
+                    $thanhTien
+                );
+            }
                     
-                    // 3. Xóa chi tiết giỏ hàng sau khi mua thành công
-                    // Mình thấy bạn có viết sẵn hàm clearDetailGioHang rồi này!
-                    // $gioHangModel->clearDetailGioHang($gioHang['id']); 
-                }
+            // 6. Xóa chi tiết giỏ hàng (Chỉ xóa nếu thanh toán từ giỏ hàng)
+            if (!$is_mua_ngay && $gioHang) {
+                $gioHangModel->clearDetailGioHang($gioHang['id']); 
             }
 
-            // ========================================================
-            // BƯỚC 3: TẠO CHỮ KÝ VÀ CHUYỂN HƯỚNG SANG MOMO
-            // ========================================================
-            // FIX LỖI 41: Thêm time() vào phía sau ID thật để tạo ra 1 chuỗi hoàn toàn độc nhất
+            // 7. Cấu hình và gọi API MoMo
             $orderId = $realOrderId . "_" . time(); 
-            
             $orderInfo = "Thanh toan don hang MoMo";
             $requestId = (string)time();
             $requestType = "payWithATM";
@@ -156,7 +143,7 @@ class PaymentController
             $redirectUrl = BASE_URL . "?act=payment-callback";
             $ipnUrl = BASE_URL . "?act=payment-callback";
 
-            // Tạo chuỗi mã hóa CHUẨN THỨ TỰ
+            // Tạo chuỗi mã hóa CHUẨN THỨ TỰ cho MoMo
             $rawHash = "accessKey=" . $this->accessKey . 
                        "&amount=" . $tong_tien . 
                        "&extraData=" . $extraData . 
@@ -210,7 +197,7 @@ class PaymentController
         $transId = $_GET['transId'] ?? null; 
         $message = $_GET['message'] ?? '';
 
-        // FIX LỖI 41: Tách chuỗi để lấy lại ID thật của đơn hàng (vd: số 15)
+        // Tách chuỗi để lấy lại ID thật của đơn hàng trong database
         $orderIdParts = explode('_', $momoOrderId);
         $orderId = $orderIdParts[0]; 
 
@@ -220,12 +207,10 @@ class PaymentController
 
         if ($resultCode == 0) {
             // Thanh toán thành công -> Đổi trạng thái đơn hàng
-            $paymentModel->updatePaymentStatus($orderId, 2);
+            $paymentModel->updatePaymentStatus($orderId, 4);
             $paymentModel->insertPaymentHistory($orderId, $transId, $amount, $message);
             
-            // ========================================================
-            // GIẢM SỐ LƯỢNG SẢN PHẨM TRONG KHO SAU KHI THANH TOÁN MOMO THÀNH CÔNG
-            // ========================================================
+            // Lấy chi tiết đơn hàng để trừ tồn kho
             $chiTietDonHang = $donHangModel->getChiTietDonHangByDonHangId($orderId);
             
             if ($chiTietDonHang) {

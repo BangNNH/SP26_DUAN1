@@ -109,8 +109,16 @@
                                         <div class="two-btn" bis_skin_checked="1">
                                             <?php if ($sanPham['trang_thai'] == 1): ?>
                                                 <form action="<?= BASE_URL . '?act=thanh-toan' ?>" method="POST">
+                                                    <input type="hidden" name="is_mua_ngay" value="1">
+
                                                     <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                    <input type="hidden" name="ten_san_pham" value="<?= $sanPham['ten_san_pham'] ?>">
+
+                                                    <input type="hidden" name="gia_san_pham" value="<?= $sanPham['gia_khuyen_mai'] ?: $sanPham['gia_san_pham'] ?>">
+
+                                                    <input type="hidden" name="total_momo" value="<?= $sanPham['gia_khuyen_mai'] ?: $sanPham['gia_san_pham'] ?>">
                                                     <input type="hidden" name="so_luong" value="1">
+
                                                     <button type="submit" class="btn btn-buy">
                                                         Mua ngay
                                                     </button>

@@ -308,29 +308,32 @@ class AdminTaiKhoanController
             // Xử lí kiểm tra thông tin đăng nhập
             $user = $this->modelTaiKhoan->checkLogin($email, $password);
 
-            // Nếu trả về dữ liệu (dạng string) là đăng nhập thành công
-            if (is_string($user)) {
-                // Lưu email vào session để dùng hiển thị
-                $_SESSION['user_admin'] = $user;
-                header("Location: " . BASE_URL_ADMIN);
-                exit();
-            } else {
-                // Lỗi thì lưu lỗi vào session và xoá session user nếu có
-                unset($_SESSION['user_admin']);
-                $_SESSION['error'] = $user;
-                $_SESSION['flash'] = true;
-
-                header("Location: " . BASE_URL_ADMIN . '?act=login-admin');
-                exit();
+            // Nếu trả về email hợp lệ thì đăng nhập thành công
+            if (is_string($user) && filter_var($user, FILTER_VALIDATE_EMAIL)) {
+                $account = $this->modelTaiKhoan->getTaiKhoanformEmail($user);
+                if ($account && !empty($account['id'])) {
+                    $_SESSION['user_admin'] = $user;
+                    $_SESSION['admin_id'] = $account['id'];
+                    header("Location: " . BASE_URL_ADMIN);
+                    exit();
+                }
             }
+
+            // Lỗi thì lưu lỗi vào session và xoá session user nếu có
+            unset($_SESSION['user_admin']);
+            unset($_SESSION['admin_id']);
+            $_SESSION['error'] = is_string($user) ? $user : 'Đăng nhập thất bại.';
+            $_SESSION['flash'] = true;
+
+            header("Location: " . BASE_URL_ADMIN . '?act=login-admin');
+            exit();
         }
     }
     public function logout()
     {
-        if (isset($_SESSION['user_admin'])) {
-            unset($_SESSION['user_admin']);
-            header("Location: " . BASE_URL_ADMIN . '?act=login-admin');
-        }
+        unset($_SESSION['user_admin']);
+        unset($_SESSION['admin_id']);
+        header("Location: " . BASE_URL_ADMIN . '?act=login-admin');
     }
 
     public function formEditCaNhanQuanTri()

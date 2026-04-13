@@ -207,7 +207,7 @@ class PaymentController
 
         if ($resultCode == 0) {
             // Thanh toán thành công -> Đổi trạng thái đơn hàng
-            $paymentModel->updatePaymentStatus($orderId, 2);
+            $paymentModel->updatePaymentStatus($orderId, 4);
             $paymentModel->insertPaymentHistory($orderId, $transId, $amount, $message);
             
             // Lấy chi tiết đơn hàng để trừ tồn kho

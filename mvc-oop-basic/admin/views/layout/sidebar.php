@@ -2,18 +2,27 @@
     <div class="sidebar">
         <?php
         $adminInfo = [];
-        if (isset($_SESSION['user_admin'])) {
+        $adminEmail = null;
+        if (!empty($_SESSION['user_admin']) && filter_var($_SESSION['user_admin'], FILTER_VALIDATE_EMAIL)) {
+            $adminEmail = $_SESSION['user_admin'];
             $taiKhoanModel = new AdminTaiKhoan();
-            $adminInfo = $taiKhoanModel->getTaiKhoanformEmail($_SESSION['user_admin']);
+            if (!empty($_SESSION['admin_id'])) {
+                $adminInfo = $taiKhoanModel->getDetailTaiKhoan($_SESSION['admin_id']) ?: [];
+            }
+            if (empty($adminInfo)) {
+                $adminInfo = $taiKhoanModel->getTaiKhoanformEmail($adminEmail) ?: [];
+            }
         }
+        $adminName = $adminInfo['ho_ten'] ?? $adminEmail ?? 'Admin';
         ?>
+        
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="<?= !empty($adminInfo['anh_dai_dien']) ? BASE_URL . $adminInfo['anh_dai_dien'] : BASE_URL_ADMIN . 'assets/dist/img/user2-160x160.jpg' ?>" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">
-                    <?= htmlspecialchars($adminInfo['ho_ten'] ?? ($_SESSION['user_admin'] ?? 'Admin')) ?>
+                    <?= htmlspecialchars($adminName) ?>
                 </a>
             </div>
         </div>

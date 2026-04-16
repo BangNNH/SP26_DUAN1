@@ -164,7 +164,7 @@
         <img src="https://cdn-icons-png.flaticon.com/512/8943/8943377.png" width="60" style="filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.3));">
     </div>
 
-    <iframe id="ai-frame" src="/SP26_DUAN1/chat-plugin.php" style="display:none; position:fixed; bottom:160px; right:30px; width:350px; height:600px; border:none; box-shadow:0 5px 25px rgba(0,0,0,0.2); border-radius:15px; z-index:9999;"></iframe>
+    <iframe id="ai-frame" src="/SP26_DUAN1/chat-plugin.php" style="display:none; position:fixed; bottom:160px; right:30px; width:350px; height:420px; border:none; box-shadow:0 5px 25px rgba(0,0,0,0.2); border-radius:15px; z-index:9999;"></iframe>
 
     <script>
         function toggleAI() {

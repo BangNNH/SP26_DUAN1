@@ -136,10 +136,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['message'])) {
 
     body { 
         font-family: 'Inter', 'Segoe UI', sans-serif; 
-        background: #eef2f7; 
         display: flex; 
         justify-content: center; 
-        align-items: center; 
+        align-items: end; 
         height: 100vh; 
         margin: 0; 
         padding: 10px;
@@ -148,9 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['message'])) {
     /* 2. KHUNG CHAT CHÍNH - ĐÃ THU NHỎ */
     #chat-container { 
         width: 100%; 
-        max-width: 360px; /* Thu hẹp từ 400px xuống 360px */
-        height: 80vh; 
-        max-height: 580px; /* Giảm chiều cao xuống một chút */
+        /* max-width: 360px; */
+        height: 100vh; 
+        /* max-height: 580px;  */
         background: #ffffff; 
         border-radius: 18px; 
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
@@ -261,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['message'])) {
 <body>
     <div id="chat-container">
         <h2>
-            <span>Tôi là Hoài Păng Păng</span>
+            <span>Chatbot</span>
             <a href="?clear=1" class="clear-btn">Làm mới</a>
         </h2>
 

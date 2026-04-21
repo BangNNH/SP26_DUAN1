@@ -45,9 +45,9 @@
                     <?php
                     if ($donHang['trang_thai_id'] == 1) {
                         $colorAlerts = 'primary';
-                    } elseif ($donHang['trang_thai_id'] >= 2 && ($donHang['trang_thai_id'] <= 9)) {
+                    } elseif ($donHang['trang_thai_id'] >= 2 && ($donHang['trang_thai_id'] <= 8)) {
                         $colorAlerts = 'warning';
-                    } elseif ($donHang['trang_thai_id'] == 10) {
+                    } elseif ($donHang['trang_thai_id'] == 9) {
                         $colorAlerts = 'success';
                     } else {
                         $colorAlerts = 'danger';

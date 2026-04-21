@@ -265,8 +265,8 @@
             </span>
           </div>
         </div>
-        <div class="text-center mt-3">
-          <p class="mb-0 fw-bold small text-truncate">
+        <div class="text-center mt-3" style = "width: 100%;">
+          <p class="mb-0 fw-bold small text-truncate" style = "width: 100%;">
             ${item.ten_san_pham || "N/A"}
           </p>
         </div>
@@ -284,7 +284,7 @@
     users.forEach((user) => {
       const avatar = user.avatar
         ? user.avatar
-        : "<?php echo BASE_URL_Admin; ?>assets/img/avatar_default.jpg";
+        : "<?php echo BASE_URL_Admin . assets/img/avatar_default.jpg?>";
 
       container.innerHTML += `
       <div class="user-item d-flex justify-content-between align-items-center py-2">

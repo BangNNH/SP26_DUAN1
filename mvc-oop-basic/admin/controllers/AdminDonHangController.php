@@ -27,9 +27,6 @@ class AdminDonHangController
         $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang();
 
         require_once './views/donhang/detailDonHang.php';
-
-
-
     }
 
     // //hiển thị form sửa
@@ -94,6 +91,7 @@ class AdminDonHangController
                     $ghi_chu,
                     $trang_thai_id
                 );
+                $_SESSION['success'] = 'Cập nhật thông tin đơn hàng thành công.';
                 header("Location: " . BASE_URL_ADMIN . '?act=don-hang');
                 exit();
             } else {

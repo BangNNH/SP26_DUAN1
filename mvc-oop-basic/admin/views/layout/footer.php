@@ -1,8 +1,8 @@
-<footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
+<footer class="main-footer text-center">
+    <!-- <div class="float-right d-none d-sm-block">
         By <b>Lang Xi Cham</b>
-    </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io" class="admin-link">ALF For Youth</a>.</strong> All
+    </div> -->
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io" class="admin-link">Watch Hub</a>.</strong> All
     rights reserved.
 </footer>
 

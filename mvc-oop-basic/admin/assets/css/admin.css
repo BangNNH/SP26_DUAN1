@@ -118,9 +118,9 @@ body {
   padding: 0.55rem 0.85rem;
 }
 
-.dataTables_wrapper .dt-buttons .btn {
+/* .dataTables_wrapper .dt-buttons .btn {
   border-radius: 10px;
-}
+} */
 
 .content-header .container-fluid {
   padding-bottom: 0.5rem;

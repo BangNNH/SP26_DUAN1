@@ -136,7 +136,7 @@
 <script>
     $(function() {
         $("#example1").DataTable({
-            "order": [[0, "desc"]],
+            "order": [[0, "asc"]],
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,

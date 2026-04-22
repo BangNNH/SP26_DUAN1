@@ -35,7 +35,7 @@ class AdminSanPhamController
                 'ten_san_pham'   => trim($_POST['ten_san_pham'] ?? ''),
                 'gia_san_pham'   => $_POST['gia_san_pham'] ?? '',
                 'gia_khuyen_mai' => $_POST['gia_khuyen_mai'] ?? null,
-                'so_luong'       => $_POST['so_luong'] ?? '0',
+                'so_luong'       => $_POST['so_luong'] ?? '',
                 'ngay_nhap'      => $_POST['ngay_nhap'] ?? '',
                 'danh_muc_id'    => $_POST['danh_muc_id'] ?? '',
                 'trang_thai'     => $_POST['trang_thai'] ?? '',
@@ -84,8 +84,10 @@ class AdminSanPhamController
                 $errors['gia_khuyen_mai'] = 'Giá khuyến mãi phải nhỏ hơn giá gốc.';
             }
 
-            if (empty($data['so_luong'])) {
+            if (empty($data['so_luong']) && $data['so_luong'] !== '0') {
                 $errors['so_luong'] = 'Số lượng không được để trống.';
+            } elseif (!is_numeric($data['so_luong']) || (int)$data['so_luong'] < 0) {
+                $errors['so_luong'] = 'Số lượng phải là một số nguyên không âm.';
             }
 
             if (empty($data['code'])) {
@@ -195,8 +197,6 @@ class AdminSanPhamController
             ];
 
             $hinh_anh = $_FILES['hinh_anh'] ?? null;
-
-            // validate
             $errors = [];
             if (empty($data['ten_san_pham'])) {
                 $errors['ten_san_pham'] = 'Tên sản phẩm không được để trống.';
@@ -207,8 +207,10 @@ class AdminSanPhamController
             if (!empty($data['gia_khuyen_mai']) && $data['gia_khuyen_mai'] > $data['gia_san_pham']) {
                 $errors['gia_khuyen_mai'] = 'Giá khuyến mãi phải nhỏ hơn giá gốc.';
             }
-            if (empty($data['so_luong'])) {
+            if (empty($data['so_luong']) && $data['so_luong'] !== '0') {
                 $errors['so_luong'] = 'Số lượng không được để trống.';
+            } elseif (!is_numeric($data['so_luong']) || (int)$data['so_luong'] < 0) {
+                $errors['so_luong'] = 'Số lượng phải là một số nguyên không âm.';
             }
             if (empty($data['code'])) {
                 $errors['code'] = 'Mã code không được để trống.';

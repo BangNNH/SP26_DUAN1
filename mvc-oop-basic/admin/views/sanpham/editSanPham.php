@@ -166,6 +166,9 @@
                                     <div class="col-md-4 form-group">
                                         <label>Số lượng <span class="text-danger">*</span></label>
                                         <input type="number" name="so_luong" class="form-control" value="<?= $sanPham['so_luong'] ?>">
+                                        <?php if (isset($_SESSION['errors']['so_luong'])): ?>
+                                            <small class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></small>
+                                        <?php endif; ?>
                                     </div>
 
                                     <div class="col-md-4 form-group">

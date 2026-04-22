@@ -80,10 +80,9 @@
                                 <div class="form-group col-6">
                                     <label>Số lượng <span class="text-danger">*</span></label>
                                     <input type="number" class="form-control" name="so_luong">
-                                    <?php if (isset($_SESSION['errors']['so_luong'])) { ?>
-                                        <p class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></p>
-                                    <?php
-                                    } ?>
+                                    <?php if (isset($_SESSION['errors']['so_luong'])): ?>
+                                        <small class="text-danger"><?= $_SESSION['errors']['so_luong'] ?></small>
+                                    <?php endif; ?>
                                 </div>
 
                                 <!-- Ngày nhập -->
